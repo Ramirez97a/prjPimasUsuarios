@@ -1,0 +1,734 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Pimas_PlataformaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Tematicas">
+    <Key>
+      <PropertyRef Name="TematicaID" />
+    </Key>
+    <Property Name="TematicaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NombreTematica" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ParentTematicaID" Type="int" />
+  </EntityType>
+  <EntityType Name="TipoAssets">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Assets">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Content" Type="image" />
+    <Property Name="Image" Type="image" />
+    <Property Name="TypeContent" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="ExternalLink" Type="varchar" MaxLength="120" />
+    <Property Name="AssetPublic" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Downloadable" Type="bit" />
+    <Property Name="TipoAssetID" Type="int" />
+    <Property Name="TematicaId" Type="int" />
+  </EntityType>
+  <EntityType Name="AssetsGroup">
+    <Key>
+      <PropertyRef Name="GroupID" />
+      <PropertyRef Name="AssetsID" />
+    </Key>
+    <Property Name="GroupID" Type="int" Nullable="false" />
+    <Property Name="AssetsID" Type="int" Nullable="false" />
+    <Property Name="Assigned" Type="int" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ParentID" Type="int" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CategoryAssets">
+    <Key>
+      <PropertyRef Name="AssetsID" />
+      <PropertyRef Name="CategoryID" />
+    </Key>
+    <Property Name="AssetsID" Type="int" Nullable="false" />
+    <Property Name="CategoryID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Comments">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdWall" Type="int" Nullable="false" />
+    <Property Name="IdUsers" Type="int" Nullable="false" />
+    <Property Name="Content" Type="varchar(max)" Nullable="false" />
+    <Property Name="ParentID" Type="int" />
+    <Property Name="Creation" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Countries">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="ISO" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Citizenship" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Downloads">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="FileID" Type="int" Nullable="false" />
+    <Property Name="RequesterID" Type="int" Nullable="false" />
+    <Property Name="DateTimeStamp" Type="datetime" Nullable="false" />
+    <Property Name="DateTimeExpire" Type="datetime" Nullable="false" />
+    <Property Name="DownloadsMade" Type="int" />
+  </EntityType>
+  <EntityType Name="Files">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="300" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+    <Property Name="CoverImage" Type="image" Nullable="false" />
+    <Property Name="Content" Type="image" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GroupT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="OrganizationID" Type="int" Nullable="false" />
+    <Property Name="StatusID" Type="int" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Privacy" Type="int" Nullable="false" />
+    <Property Name="Expiration" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Invitation">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="GroupID" Type="int" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Status" Type="int" Nullable="false" />
+    <Property Name="AccessNumber" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Level">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Organization">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Responsible" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Phone" Type="int" Nullable="false" />
+    <Property Name="Address" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrganizationUsers">
+    <Key>
+      <PropertyRef Name="OrganizationID" />
+      <PropertyRef Name="UsersID" />
+    </Key>
+    <Property Name="OrganizationID" Type="int" Nullable="false" />
+    <Property Name="UsersID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Requesters">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="60" Nullable="false" />
+    <Property Name="Surnames" Type="varchar" MaxLength="60" Nullable="false" />
+    <Property Name="Phone" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CountryID" Type="int" Nullable="false" />
+    <Property Name="RoleID" Type="int" Nullable="false" />
+    <Property Name="LevelID" Type="int" />
+    <Property Name="Intitution" Type="varchar" MaxLength="60" />
+    <Property Name="InstitutionType" Type="varchar" MaxLength="50" />
+    <Property Name="ReferencedBy" Type="varchar" MaxLength="60" Nullable="false" />
+    <Property Name="Feedback" Type="varchar" MaxLength="255" />
+    <Property Name="SubscriptionAuthorized" Type="bit" />
+  </EntityType>
+  <EntityType Name="Rol">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Status">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Subject">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="AssetsID" Type="int" Nullable="false" />
+    <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="StatusID" Type="int" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Surname" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Profile" Type="int" Nullable="false" />
+    <Property Name="ExpirationDate" Type="date" />
+    <Property Name="EmailActive" Type="int" Nullable="false" />
+    <Property Name="InvitationCant" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UsersGroupT">
+    <Key>
+      <PropertyRef Name="RoleID" />
+      <PropertyRef Name="GroupID" />
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="RoleID" Type="int" Nullable="false" />
+    <Property Name="GroupID" Type="int" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Wall">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Priority" Type="int" Nullable="false" />
+    <Property Name="Estado" Type="bit" Nullable="false" />
+    <Property Name="Content" Type="varchar(max)" />
+    <Property Name="Date" Type="datetime" />
+    <Property Name="Creation" Type="datetime" Nullable="false" />
+    <Property Name="IdGroup" Type="int" Nullable="false" />
+    <Property Name="IdUsers" Type="int" Nullable="false" />
+    <Property Name="IdAssets" Type="int" />
+  </EntityType>
+  <EntityType Name="WallAssets">
+    <Key>
+      <PropertyRef Name="IdAssets" />
+      <PropertyRef Name="IdWall" />
+    </Key>
+    <Property Name="IdAssets" Type="int" Nullable="false" />
+    <Property Name="IdWall" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Tematicas__Paren__20ACD28B">
+    <End Role="Tematicas" Type="Self.Tematicas" Multiplicity="0..1" />
+    <End Role="Tematicas1" Type="Self.Tematicas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tematicas">
+        <PropertyRef Name="TematicaID" />
+      </Principal>
+      <Dependent Role="Tematicas1">
+        <PropertyRef Name="ParentTematicaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Assets_Category">
+    <End Role="Category" Type="Self.Category" Multiplicity="1" />
+    <End Role="CategoryAssets" Type="Self.CategoryAssets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CategoryAssets">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Assets_Groupe">
+    <End Role="Assets" Type="Self.Assets" Multiplicity="1" />
+    <End Role="AssetsGroup" Type="Self.AssetsGroup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Assets">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AssetsGroup">
+        <PropertyRef Name="AssetsID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Assets_Tematica">
+    <End Role="Tematicas" Type="Self.Tematicas" Multiplicity="0..1" />
+    <End Role="Assets" Type="Self.Assets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tematicas">
+        <PropertyRef Name="TematicaID" />
+      </Principal>
+      <Dependent Role="Assets">
+        <PropertyRef Name="TematicaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Assets_TipoAssets">
+    <End Role="TipoAssets" Type="Self.TipoAssets" Multiplicity="0..1" />
+    <End Role="Assets" Type="Self.Assets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoAssets">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Assets">
+        <PropertyRef Name="TipoAssetID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AssetsWall">
+    <End Role="Wall" Type="Self.Wall" Multiplicity="1" />
+    <End Role="WallAssets" Type="Self.WallAssets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Wall">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="WallAssets">
+        <PropertyRef Name="IdWall" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Category_Assets">
+    <End Role="Assets" Type="Self.Assets" Multiplicity="1" />
+    <End Role="CategoryAssets" Type="Self.CategoryAssets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Assets">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CategoryAssets">
+        <PropertyRef Name="AssetsID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Coments">
+    <End Role="Comments" Type="Self.Comments" Multiplicity="0..1" />
+    <End Role="Comments1" Type="Self.Comments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Comments">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Comments1">
+        <PropertyRef Name="ParentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CommentsGroupT">
+    <End Role="Wall" Type="Self.Wall" Multiplicity="1" />
+    <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Wall">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Comments">
+        <PropertyRef Name="IdWall" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CommentsUsers">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Comments">
+        <PropertyRef Name="IdUsers" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Countries">
+    <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+    <End Role="Requesters" Type="Self.Requesters" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Countries">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Requesters">
+        <PropertyRef Name="CountryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Files">
+    <End Role="Files" Type="Self.Files" Multiplicity="1" />
+    <End Role="Downloads" Type="Self.Downloads" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Files">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Downloads">
+        <PropertyRef Name="FileID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Group_Use">
+    <End Role="GroupT" Type="Self.GroupT" Multiplicity="1" />
+    <End Role="UsersGroupT" Type="Self.UsersGroupT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GroupT">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UsersGroupT">
+        <PropertyRef Name="GroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Groupe_Assets">
+    <End Role="GroupT" Type="Self.GroupT" Multiplicity="1" />
+    <End Role="AssetsGroup" Type="Self.AssetsGroup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GroupT">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AssetsGroup">
+        <PropertyRef Name="GroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GroupT">
+    <End Role="Status" Type="Self.Status" Multiplicity="1" />
+    <End Role="GroupT" Type="Self.GroupT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="GroupT">
+        <PropertyRef Name="StatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Level">
+    <End Role="Level" Type="Self.Level" Multiplicity="0..1" />
+    <End Role="Requesters" Type="Self.Requesters" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Level">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Requesters">
+        <PropertyRef Name="LevelID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Organizatio_User">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="OrganizationUsers" Type="Self.OrganizationUsers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OrganizationUsers">
+        <PropertyRef Name="UsersID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Organization">
+    <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+    <End Role="GroupT" Type="Self.GroupT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="GroupT">
+        <PropertyRef Name="OrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parent">
+    <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+    <End Role="Category1" Type="Self.Category" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Category1">
+        <PropertyRef Name="ParentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Requesters">
+    <End Role="Requesters" Type="Self.Requesters" Multiplicity="1" />
+    <End Role="Downloads" Type="Self.Downloads" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Requesters">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Downloads">
+        <PropertyRef Name="RequesterID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Role_Use">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+    <End Role="UsersGroupT" Type="Self.UsersGroupT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UsersGroupT">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Roles">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+    <End Role="Requesters" Type="Self.Requesters" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Requesters">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Status">
+    <End Role="Status" Type="Self.Status" Multiplicity="1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="StatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Subject_Assets">
+    <End Role="Assets" Type="Self.Assets" Multiplicity="1" />
+    <End Role="Subject" Type="Self.Subject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Assets">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Subject">
+        <PropertyRef Name="AssetsID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Organization">
+    <End Role="Organization" Type="Self.Organization" Multiplicity="1" />
+    <End Role="OrganizationUsers" Type="Self.OrganizationUsers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OrganizationUsers">
+        <PropertyRef Name="OrganizationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Use">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="UsersGroupT" Type="Self.UsersGroupT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UsersGroupT">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Wall_Group">
+    <End Role="GroupT" Type="Self.GroupT" Multiplicity="1" />
+    <End Role="Wall" Type="Self.Wall" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GroupT">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Wall">
+        <PropertyRef Name="IdGroup" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Wall_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Wall" Type="Self.Wall" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Wall">
+        <PropertyRef Name="IdUsers" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WallAssets">
+    <End Role="Assets" Type="Self.Assets" Multiplicity="1" />
+    <End Role="WallAssets" Type="Self.WallAssets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Assets">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="WallAssets">
+        <PropertyRef Name="IdAssets" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Pimas_PlataformaModelStoreContainer">
+    <EntitySet Name="Tematicas" EntityType="Self.Tematicas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TipoAssets" EntityType="Self.TipoAssets" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Assets" EntityType="Self.Assets" Schema="dev_pimas" store:Type="Tables" />
+    <EntitySet Name="AssetsGroup" EntityType="Self.AssetsGroup" Schema="dev_pimas" store:Type="Tables" />
+    <EntitySet Name="Category" EntityType="Self.Category" Schema="dev_pimas" store:Type="Tables" />
+    <EntitySet Name="CategoryAssets" EntityType="Self.CategoryAssets" Schema="dev_pimas" store:Type="Tables" />
+    <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dev_pimas" store:Type="Tables" />
+    <EntitySet Name="Countries" EntityType="Self.Countries" Schema="dev_pimas" store:Type="Tables" />
+    <EntitySet Name="Downloads" EntityType="Self.Downloads" Schema="dev_pimas" store:Type="Tables" />
+    <EntitySet Name="Files" EntityType="Self.Files" Schema="dev_pimas" store:Type="Tables" />
+    <EntitySet Name="GroupT" EntityType="Self.GroupT" Schema="dev_pimas" store:Type="Tables" />
+    <EntitySet Name="Invitation" EntityType="Self.Invitation" Schema="dev_pimas" store:Type="Tables" />
+    <EntitySet Name="Level" EntityType="Self.Level" Schema="dev_pimas" store:Type="Tables" />
+    <EntitySet Name="Organization" EntityType="Self.Organization" Schema="dev_pimas" store:Type="Tables" />
+    <EntitySet Name="OrganizationUsers" EntityType="Self.OrganizationUsers" Schema="dev_pimas" store:Type="Tables" />
+    <EntitySet Name="Requesters" EntityType="Self.Requesters" Schema="dev_pimas" store:Type="Tables" />
+    <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dev_pimas" store:Type="Tables" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dev_pimas" store:Type="Tables" />
+    <EntitySet Name="Status" EntityType="Self.Status" Schema="dev_pimas" store:Type="Tables" />
+    <EntitySet Name="Subject" EntityType="Self.Subject" Schema="dev_pimas" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dev_pimas" store:Type="Tables" />
+    <EntitySet Name="UsersGroupT" EntityType="Self.UsersGroupT" Schema="dev_pimas" store:Type="Tables" />
+    <EntitySet Name="Wall" EntityType="Self.Wall" Schema="dev_pimas" store:Type="Tables" />
+    <EntitySet Name="WallAssets" EntityType="Self.WallAssets" Schema="dev_pimas" store:Type="Tables" />
+    <AssociationSet Name="FK__Tematicas__Paren__20ACD28B" Association="Self.FK__Tematicas__Paren__20ACD28B">
+      <End Role="Tematicas" EntitySet="Tematicas" />
+      <End Role="Tematicas1" EntitySet="Tematicas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Assets_Category" Association="Self.FK_Assets_Category">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="CategoryAssets" EntitySet="CategoryAssets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Assets_Groupe" Association="Self.FK_Assets_Groupe">
+      <End Role="Assets" EntitySet="Assets" />
+      <End Role="AssetsGroup" EntitySet="AssetsGroup" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Assets_Tematica" Association="Self.FK_Assets_Tematica">
+      <End Role="Tematicas" EntitySet="Tematicas" />
+      <End Role="Assets" EntitySet="Assets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Assets_TipoAssets" Association="Self.FK_Assets_TipoAssets">
+      <End Role="TipoAssets" EntitySet="TipoAssets" />
+      <End Role="Assets" EntitySet="Assets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AssetsWall" Association="Self.FK_AssetsWall">
+      <End Role="Wall" EntitySet="Wall" />
+      <End Role="WallAssets" EntitySet="WallAssets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Category_Assets" Association="Self.FK_Category_Assets">
+      <End Role="Assets" EntitySet="Assets" />
+      <End Role="CategoryAssets" EntitySet="CategoryAssets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Coments" Association="Self.FK_Coments">
+      <End Role="Comments" EntitySet="Comments" />
+      <End Role="Comments1" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CommentsGroupT" Association="Self.FK_CommentsGroupT">
+      <End Role="Wall" EntitySet="Wall" />
+      <End Role="Comments" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CommentsUsers" Association="Self.FK_CommentsUsers">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Comments" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Countries" Association="Self.FK_Countries">
+      <End Role="Countries" EntitySet="Countries" />
+      <End Role="Requesters" EntitySet="Requesters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Files" Association="Self.FK_Files">
+      <End Role="Files" EntitySet="Files" />
+      <End Role="Downloads" EntitySet="Downloads" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Group_Use" Association="Self.FK_Group_Use">
+      <End Role="GroupT" EntitySet="GroupT" />
+      <End Role="UsersGroupT" EntitySet="UsersGroupT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Groupe_Assets" Association="Self.FK_Groupe_Assets">
+      <End Role="GroupT" EntitySet="GroupT" />
+      <End Role="AssetsGroup" EntitySet="AssetsGroup" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GroupT" Association="Self.FK_GroupT">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="GroupT" EntitySet="GroupT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Level" Association="Self.FK_Level">
+      <End Role="Level" EntitySet="Level" />
+      <End Role="Requesters" EntitySet="Requesters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Organizatio_User" Association="Self.FK_Organizatio_User">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="OrganizationUsers" EntitySet="OrganizationUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Organization" Association="Self.FK_Organization">
+      <End Role="Organization" EntitySet="Organization" />
+      <End Role="GroupT" EntitySet="GroupT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parent" Association="Self.FK_Parent">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="Category1" EntitySet="Category" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Requesters" Association="Self.FK_Requesters">
+      <End Role="Requesters" EntitySet="Requesters" />
+      <End Role="Downloads" EntitySet="Downloads" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Role_Use" Association="Self.FK_Role_Use">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="UsersGroupT" EntitySet="UsersGroupT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Roles" Association="Self.FK_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Requesters" EntitySet="Requesters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Status" Association="Self.FK_Status">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Subject_Assets" Association="Self.FK_Subject_Assets">
+      <End Role="Assets" EntitySet="Assets" />
+      <End Role="Subject" EntitySet="Subject" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Organization" Association="Self.FK_User_Organization">
+      <End Role="Organization" EntitySet="Organization" />
+      <End Role="OrganizationUsers" EntitySet="OrganizationUsers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Use" Association="Self.FK_User_Use">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UsersGroupT" EntitySet="UsersGroupT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Wall_Group" Association="Self.FK_Wall_Group">
+      <End Role="GroupT" EntitySet="GroupT" />
+      <End Role="Wall" EntitySet="Wall" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Wall_Users" Association="Self.FK_Wall_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Wall" EntitySet="Wall" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WallAssets" Association="Self.FK_WallAssets">
+      <End Role="Assets" EntitySet="Assets" />
+      <End Role="WallAssets" EntitySet="WallAssets" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
