@@ -1,0 +1,15 @@
+﻿
+.navbar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-left {
+    order: 1; /* Cambia el orden a 1 para el primer ul */
+}
+
+.navbar-right {
+    order: 2; /* Cambia el orden a 2 para el segundo ul */
+}
+

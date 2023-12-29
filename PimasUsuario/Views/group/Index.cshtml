@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Infraestructure.Models.GroupT>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutDash.cshtml";
+}
+
+<h2 class="h1-responsive font-weight-500 text-center mb-4 pb-1">Mis grupos</h2>
+<div class="row">
+    <div class="row row-cols-2 row-cols-md-3">
+        @foreach (var item in Model)
+        {
+            <div class="col mb-2">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="row d-flex flex-column align-items-center justify-content-center">
+                            <div class="col-md-6 col-sm-6 col-12 d-flex flex-column align-items-center justify-content-center">
+                                <img src="~/Content/imagenes/users_icon-icons.com_57999.png" style="width: 50px; height: 50px;" />
+                                <a href="@Url.Action("Grupos","group")"  data-value="@item.ID"> <h6 style="color: #038512; font-weight:bold;" class="text-center">@Html.DisplayFor(p => item.Description)</h6></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
