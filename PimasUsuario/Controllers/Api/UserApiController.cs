@@ -124,14 +124,14 @@ namespace PimasUsuario.Controllers.Api
 
         [HttpPost]
         [Route("login")]
-        public async Task<IHttpActionResult> Login(string usermail, string userPassword)
+        public async Task<IHttpActionResult> Login(LoginModel user)
         {
             ResponseModel response = new ResponseModel();
             try
             {
                 IServiceUsers service = new ServiceUser();
 
-                Users Users = await service.Login(usermail,userPassword);
+                Users Users = await service.Login(user.Email,user.Password);
 
                 if (Users == null )
                 {
@@ -143,7 +143,8 @@ namespace PimasUsuario.Controllers.Api
                 {
                     response.StatusCode = (int)HttpStatusCode.OK;
                     response.Message = "Usuario autorizado";
-                    response.Data = Users;
+
+                   
                 }
 
                 return Json(response);

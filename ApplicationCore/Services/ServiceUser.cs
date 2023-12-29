@@ -32,7 +32,8 @@ namespace ApplicationCore.Services
 
         public async Task<Users> Login(string usermail, string userPassword)
         {
-            return await repository.Login(usermail,userPassword);
+            string codifiedPass = Security.EncrypthAES(userPassword);
+            return await repository.Login(usermail, codifiedPass);
         }
     }
 }
