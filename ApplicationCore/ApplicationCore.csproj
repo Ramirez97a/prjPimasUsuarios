@@ -46,6 +46,7 @@
     <Compile Include="Services\IServiceUsers.cs" />
     <Compile Include="Services\ServiceAssets.cs" />
     <Compile Include="Services\ServiceUser.cs" />
+    <Compile Include="Utils\Security.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Infraestructure\Infraestructure.csproj">

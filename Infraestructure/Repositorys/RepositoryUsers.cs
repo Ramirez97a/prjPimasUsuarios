@@ -107,9 +107,9 @@ namespace Infraestructure.Repositorys
                 Users User = new Users();
                 using (MyContext ctx = new MyContext())
                 {
-                    User = ctx.Users.Include("UsersGroupT").
-                                  Where(p => p.Email == usermail && p.Password.Equals(userPassword)).
-                                  FirstOrDefault<Users>();
+                    User = await ctx.Users.Include("UsersGroupT")
+                                  .Where(p => p.Email == usermail && p.Password.Equals(userPassword))
+                                  .FirstOrDefaultAsync();
                 }
 
                 return User;

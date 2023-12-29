@@ -17,8 +17,7 @@ namespace PimasUsuario.Controllers
             IEnumerable<GroupT> lista = null;
             IServiceUsers _ServiceUsers = new ServiceUser();
             int userid = 70022022;
-
-            // Asegúrate de que el método getGropsByUser es async
+          
             lista = await _ServiceUsers.getGropsByUser(userid);
 
             return View(lista);
