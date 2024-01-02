@@ -97,7 +97,7 @@ namespace PimasUsuario.Controllers.Api
             {
                 IServiceAssets service = new ServiceAssets();
 
-                IEnumerable<Assets> asset = await service.getByTematic(tematicId);
+                IEnumerable<Assets> asset = await service.getAllSubtematic(PtamaticId,tematicId);
 
                 if (asset == null || !asset.Any())
                 {
