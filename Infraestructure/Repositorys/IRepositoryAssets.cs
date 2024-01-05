@@ -12,5 +12,6 @@ namespace Infraestructure.Repositorys
         Task<Assets> getAsset(int assetId);
         Task<IEnumerable<Assets>> getByTematic(int tematicId);
         Task<IEnumerable<Assets> >getAllSubtematic(int PtamaticId, int tematicId);
+        Task<IEnumerable<Assets>> getByGroup(int id);
     }
 }

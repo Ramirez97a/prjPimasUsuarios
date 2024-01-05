@@ -27,6 +27,11 @@ namespace ApplicationCore.Services
             return await repository.getAsset(assetId);
         }
 
+        public async Task<IEnumerable<Assets>> getByGroup(int id)
+        {
+            return await repository.getByGroup(id);
+        }
+
         public async Task<IEnumerable<Assets>> getByTematic(int tematicId)
         {
             return await repository.getByTematic(tematicId);

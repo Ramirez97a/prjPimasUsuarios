@@ -20,10 +20,10 @@ namespace Infraestructure.Repositorys
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
 
-                     assetsByTematicaWithParent = await ctx.Assets
-                        .Where(a => a.Tematicas.TematicaID == tematicId &&
-                                    a.Tematicas.ParentTematicaID == PtamaticId)
-                        .ToListAsync();
+                    assetsByTematicaWithParent = await ctx.Assets
+                       .Where(a => a.Tematicas.TematicaID == tematicId &&
+                                   a.Tematicas.ParentTematicaID == PtamaticId)
+                       .ToListAsync();
 
                     return assetsByTematicaWithParent;
                 }
@@ -44,7 +44,7 @@ namespace Infraestructure.Repositorys
 
         public async Task<Assets> getAsset(int assetId)
         {
-            Assets  asset = new Assets();
+            Assets asset = new Assets();
             try
             {
                 using (MyContext ctx = new MyContext())
@@ -52,13 +52,44 @@ namespace Infraestructure.Repositorys
                     ctx.Configuration.LazyLoadingEnabled = false;
 
                     asset = await ctx.Assets
-                        .Where(a => a.ID== assetId)
+                        .Where(a => a.ID == assetId)
                         .FirstOrDefaultAsync();
 
-                   
+
                 }
 
                 return asset;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "Error en la base de datos: \n" + dbEx.Message;
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "Error en el servidor: \n" + ex.Message;
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<Assets>> getByGroup(int id)
+        {
+            IEnumerable<Assets> assetsByTematica = null;
+            try
+            {
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+
+                    assetsByTematica = await ctx.GroupT
+                        .Where(g => g.ID == id) // Filtrar por el ID del GroupT deseado
+                        .SelectMany(g => g.AssetsGroup) // Obtener todos los AssetsGroup asociados al GroupT
+                        .Select(ag => ag.Assets).ToListAsync();
+
+
+                }
+
+                return assetsByTematica;
             }
             catch (DbUpdateException dbEx)
             {
@@ -81,11 +112,11 @@ namespace Infraestructure.Repositorys
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
 
-                     assetsByTematica =await ctx.Assets
-                        .Where(a => a.Tematicas.TematicaID == tematicId)
-                        .ToListAsync();
+                    assetsByTematica = await ctx.Assets
+                       .Where(a => a.Tematicas.TematicaID == tematicId)
+                       .ToListAsync();
 
-                   
+
                 }
 
                 return assetsByTematica;
