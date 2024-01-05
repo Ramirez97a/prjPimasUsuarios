@@ -6,49 +6,51 @@
 
 
 <div class="form-container">
+    @*@using (Html.BeginForm("Login", "Login", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {*@
+        <div class="brand-wrapper">
+            <img src="~/Content/Imagenes/Logo_inicio.png" alt="logo" class="logo" style="width: 100px;position: absolute;left: 60px;margin-top: 31px;">
+        </div>
+        <div class="form-form">
 
-    <div class="brand-wrapper">
-        <img src="~/Content/Imagenes/Logo_inicio.png" alt="logo" class="logo" style="width: 100px;position: absolute;left: 60px;margin-top: 31px;">
-    </div>
-    <div class="form-form">
+            <div class="form-form-wrap">
+                <div class="form-container">
+                    <div class="form-content">
 
-        <div class="form-form-wrap">
-            <div class="form-container">
-                <div class="form-content">
+                        <h1 class="" style="text-align:center; margin-bottom:50px;">Inicio de Sesión</h1>
+                        <form class="text-left">
+                            <div class="form">
+                                <div id="email-field" class="field-wrapper input">
+                                    <input id="email" name="email" type="text" value="" placeholder="Email">
+                                </div>
+                                @*mb-2*@
+                                <div id="email-field" class="field-wrapper input">
+                                    <input id="password" name="password" type="text" value="" placeholder="Contraseña">
+                                </div>
+                                <div class="d-sm-flex justify-content-between">
 
-                    <h1 class="" style="text-align:center; margin-bottom:50px;">Inicio de Sesión</h1>
-                    <form class="text-left">
-                        <div class="form">
-                            <div id="email-field" class="field-wrapper input">
-                                <input id="email" name="email" type="text" value="" placeholder="Identificación">
+                                    <button style="border-radius: 10px;" type="button" class="btn btn-block" id="btnsuccesLogin">
+                                        Ingresar
+                                    </button>
+                                </div>
+
+                                <div class="field-wrapper">
+                                    <a href="@Url.Action("ForgotPassword", "Login")" class="forgot-pass-link">¿Has olvidado la contraseña?</a>
+                                </div>
+
                             </div>
-                            @*mb-2*@
-                            <div id="email-field" class="field-wrapper input">
-                                <input id="email" name="email" type="text" value="" placeholder="Contraseña">
-                            </div>
-                            <div class="d-sm-flex justify-content-between">
+                        </form>
 
-                                <button style="border-radius: 10px; " type="submit" class="btn btn-block" id="btnsucces">
-                                    Ingresar
-                                </button>
-                            </div>
-
-                            <div class="field-wrapper">
-                                <a href="@Url.Action("ForgotPassword","Login")" class="forgot-pass-link">¿Has olvidado la contraseña?</a>
-                            </div>
-
-                        </div>
-                    </form>
-
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="form-image">
-        <div class="l-image">
+        <div class="form-image">
+            <div class="l-image">
+            </div>
         </div>
+    
     </div>
-</div>
 
 
 

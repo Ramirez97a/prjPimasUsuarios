@@ -12,13 +12,16 @@ namespace PimasUsuario.Controllers
     public class groupController : Controller
     {
         // GET: group
+
         public async Task<ActionResult> Index()
         {
             IEnumerable<GroupT> lista = null;
             IServiceUsers _ServiceUsers = new ServiceUser();
-            int userid = 70022022;
-          
-            lista = await _ServiceUsers.getGropsByUser(userid);
+
+            //Users userid = (Users)Session["userid"];
+            //int id = userid.ID;
+            // Asegúrate de que el método getGropsByUser es async
+            lista = await _ServiceUsers.getGropsByUser(1);
 
             return View(lista);
         }
