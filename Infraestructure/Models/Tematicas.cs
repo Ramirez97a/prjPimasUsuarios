@@ -9,6 +9,7 @@
 
 namespace Infraestructure.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -29,6 +30,9 @@ namespace Infraestructure.Models
         public virtual ICollection<Tematicas> Tematicas1 { get; set; }
         public virtual Tematicas Tematicas2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+        [JsonIgnore]
+
         public virtual ICollection<Assets> Assets { get; set; }
     }
 }
