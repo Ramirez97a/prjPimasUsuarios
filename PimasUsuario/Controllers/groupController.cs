@@ -13,15 +13,17 @@ namespace PimasUsuario.Controllers
     {
         // GET: group
 
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int userId)
         {
             IEnumerable<GroupT> lista = null;
             IServiceUsers _ServiceUsers = new ServiceUser();
 
-            //Users userid = (Users)Session["userid"];
-            //int id = userid.ID;
-            // Asegúrate de que el método getGropsByUser es async
-            lista = await _ServiceUsers.getGropsByUser(1);
+            
+            int id = userId;
+            
+            lista = await _ServiceUsers.getGropsByUser(id);
+            //ViewBag.UserId = userId;
+            TempData["UserId"] = id;
 
             return View(lista);
         }
