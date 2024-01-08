@@ -72,36 +72,38 @@ namespace Infraestructure.Repositorys
             }
         }
 
-        public async Task<IEnumerable<Assets>> getByGroup(int id)
-        {
-            IEnumerable<Assets> assetsByTematica = null;
-            try
+            public async Task<IEnumerable<Assets>> getByGroup(int id)
             {
-                using (MyContext ctx = new MyContext())
+                IEnumerable<Assets> assetsByTematica = null;
+                try
                 {
-                    ctx.Configuration.LazyLoadingEnabled = false;
+                    using (MyContext ctx = new MyContext())
+                    {
+                        ctx.Configuration.LazyLoadingEnabled = false;
 
-                    assetsByTematica = await ctx.GroupT
-                        .Where(g => g.ID == id) // Filtrar por el ID del GroupT deseado
-                        .SelectMany(g => g.AssetsGroup) // Obtener todos los AssetsGroup asociados al GroupT
-                        .Select(ag => ag.Assets).ToListAsync();
+                        assetsByTematica = await ctx.GroupT
+                            .Where(g => g.ID == id) // Filtrar por el ID del GroupT deseado
+                            .SelectMany(g => g.AssetsGroup) // Obtener todos los AssetsGroup asociados al GroupT
+                            .Select(ag => ag.Assets)
+                            .Include(a => a.Tematicas)
+                            .ToListAsync();
 
 
+                    }
+
+                    return assetsByTematica;
                 }
-
-                return assetsByTematica;
+                catch (DbUpdateException dbEx)
+                {
+                    string mensaje = "Error en la base de datos: \n" + dbEx.Message;
+                    throw new Exception(mensaje);
+                }
+                catch (Exception ex)
+                {
+                    string mensaje = "Error en el servidor: \n" + ex.Message;
+                    throw;
+                }
             }
-            catch (DbUpdateException dbEx)
-            {
-                string mensaje = "Error en la base de datos: \n" + dbEx.Message;
-                throw new Exception(mensaje);
-            }
-            catch (Exception ex)
-            {
-                string mensaje = "Error en el servidor: \n" + ex.Message;
-                throw;
-            }
-        }
 
         public async Task<IEnumerable<Assets>> getByTematic(int tematicId)
         {
