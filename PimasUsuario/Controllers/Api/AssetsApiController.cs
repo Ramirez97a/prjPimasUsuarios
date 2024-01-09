@@ -123,7 +123,7 @@ namespace PimasUsuario.Controllers.Api
                 return Json(response);
             }
         }
-        [HttpGet]
+          [HttpGet]
         [Route("getByGroup")]
         public async Task<IHttpActionResult> getByGroup(int id)
         {
@@ -132,7 +132,7 @@ namespace PimasUsuario.Controllers.Api
             {
                 IServiceAssets service = new ServiceAssets();
 
-                IEnumerable<Assets> asset = await service.getByGroup(id);
+                IEnumerable<Assets> asset = await service.getByGroup(id);             
 
                 if (asset == null)
                 {
@@ -146,7 +146,7 @@ namespace PimasUsuario.Controllers.Api
                     response.Message = "Asset encontrado";
                     response.Data = asset;
                 }
-
+               
                 return Json(response);
             }
             catch (Exception e)

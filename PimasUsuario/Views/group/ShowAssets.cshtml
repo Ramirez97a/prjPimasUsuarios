@@ -1,0 +1,169 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ShowAssets</title>
+    <script src="~/ViewerJS/PDF/build/pdf.js" type="module"></script>
+    <script src="~/ViewerJS/PDF/build/pdf.worker.js" type="module"></script>
+    <script src="~/ViewerJS/PDF/build/pdf.sandbox.js" type="module"></script>
+    <style>
+
+        #the-canvas {
+            border: 1px solid black;
+            direction: ltr;
+        }
+    </style>
+</head>
+<body style="text-align:center;">
+    <div class="row">
+        <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+            <h3 class="card-header white-text" style="text-align:center; background-color:#133E6D; color:#fff">Contenido</h3>
+        </div>
+    </div>
+    @*<div style="text-align: right;">
+            @{
+                Infraestructure.Models.Users oUsuario = null;
+                oUsuario = Session["User"] as Infraestructure.Models.Users;
+
+                if (oUsuario != null)
+                {
+                    if (oUsuario.Profile == 3)
+                    {
+                        <a class="btn btn-outline-dark btn-lg btn-rounded mb-2" id="getlink" href="javascript:void();"><i class="far fa-copy"></i> Copiar Enlace</a>
+                    }
+                }
+            }
+            <a class="btn btn-outline-dark btn-lg btn-rounded mb-2" onclick="goBack()"><i class="far fa-arrow-alt-circle-left"></i> Regresar</a>
+            <div class="d-flex justify-content-center mx-5 mt-3 mb-5">
+                <div class="spinner-grow text-danger align-self-center" id="loader" style="display:none;"></div>
+            </div>
+        </div>*@
+
+    <div id="btnControl" @*style="display:none;*@>
+        <button id="prev">Anterior</button>
+        <button id="next">Siguiente</button>
+        &nbsp; &nbsp;
+        <span>Página: <span id="page_num"></span> / <span id="page_count"></span></span>
+    </div>
+
+    <canvas id="the-canvas" @*style="display:none;*@><p>Por favor espere...</p></canvas>
+
+</body>
+
+</html>
+
+<script>
+
+    //function goBack() {
+    //    window.history.back();
+    //}
+
+</script>
+
+<script type="module">
+    document.getElementById("loader").style.display = "block";
+   var url = '/Assets/archivo/1';
+
+  // Loaded via <script> tag, create shortcut to access PDF.js exports.
+  var { pdfjsLib } = globalThis;
+
+  // The workerSrc property shall be specified.
+  pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.mjs';
+
+  var pdfDoc = null,
+      pageNum = 1,
+      pageRendering = false,
+      pageNumPending = null,
+      scale = 2,
+      canvas = document.getElementById('the-canvas'),
+      ctx = canvas.getContext('2d');
+
+
+  function renderPage(num) {
+    pageRendering = true;
+    // Using promise to fetch the page
+    pdfDoc.getPage(num).then(function(page) {
+      var viewport = page.getViewport({scale: scale});
+      canvas.height = viewport.height;
+      canvas.width = viewport.width;
+
+      // Render PDF page into canvas context
+      var renderContext = {
+        canvasContext: ctx,
+        viewport: viewport
+      };
+      var renderTask = page.render(renderContext);
+
+      // Wait for rendering to finish
+      renderTask.promise.then(function() {
+        pageRendering = false;
+        if (pageNumPending !== null) {
+          // New page rendering is pending
+          renderPage(pageNumPending);
+          pageNumPending = null;
+        }
+      });
+    });
+
+    // Update page counters
+    document.getElementById('page_num').textContent = num;
+  }
+
+  /**
+   * If another page rendering in progress, waits until the rendering is
+   * finised. Otherwise, executes rendering immediately.
+   */
+  function queueRenderPage(num) {
+    if (pageRendering) {
+      pageNumPending = num;
+    } else {
+      renderPage(num);
+    }
+  }
+
+  /**
+   * Displays previous page.
+   */
+  function onPrevPage() {
+    if (pageNum <= 1) {
+      return;
+    }
+    pageNum--;
+    queueRenderPage(pageNum);
+  }
+  document.getElementById('prev').addEventListener('click', onPrevPage);
+
+  /**
+   * Displays next page.
+   */
+  function onNextPage() {
+    if (pageNum >= pdfDoc.numPages) {
+      return;
+    }
+    pageNum++;
+    queueRenderPage(pageNum);
+  }
+  document.getElementById('next').addEventListener('click', onNextPage);
+
+  /**
+   * Asynchronously downloads PDF.
+   */
+  pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
+    pdfDoc = pdfDoc_;
+    document.getElementById('page_count').textContent = pdfDoc.numPages;
+
+      document.getElementById("loader").style.display = "none";
+      document.getElementById("btnControl").style.display = "block";
+      var canvas = document.getElementById('the-canvas');
+      canvas.removeAttribute('style');
+    // Initial/first page rendering
+      renderPage(pageNum);
+  });
+</script>
+

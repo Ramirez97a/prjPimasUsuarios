@@ -22,13 +22,20 @@ namespace PimasUsuario.Controllers
             int id = userId;
             
             lista = await _ServiceUsers.getGropsByUser(id);
-            //ViewBag.UserId = userId;
-            TempData["UserId"] = id;
+           
+            ViewBag.UserId = userId;
 
             return View(lista);
         }
         public ActionResult Grupos()
         {
+           
+
+            return View();
+        }
+        public ActionResult ShowAssets()
+        {
+
             return View();
         }
     }
