@@ -158,5 +158,41 @@ namespace PimasUsuario.Controllers.Api
                 return Json(response);
             }
         }
+
+        [HttpGet]
+        [Route("getContend")]
+        public async Task<IHttpActionResult> getContend(int id)
+        {
+            ResponseModel response = new ResponseModel();
+            try
+            {
+                IServiceAssets service = new ServiceAssets();
+
+              byte[] asset = await service.getContend(id);
+
+                if (asset == null)
+                {
+                    response.StatusCode = (int)HttpStatusCode.NotFound;
+                    response.Message = "Asset no encontrado verifique el id ";
+
+                }
+                else
+                {
+                    response.StatusCode = (int)HttpStatusCode.OK;
+                    response.Message = "Asset encontrado";
+                    response.Data = asset;
+                }
+
+                return Json(response);
+            }
+            catch (Exception e)
+            {
+
+                response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                response.Message = e.Message;
+
+                return Json(response);
+            }
+        }
     }
 }
