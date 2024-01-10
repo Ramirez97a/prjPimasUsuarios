@@ -36,5 +36,10 @@ namespace ApplicationCore.Services
         {
             return await repository.getByTematic(tematicId);
         }
+
+        public async Task<byte[]> getContend(int id)
+        {
+            return await repository.getContend(id);
+        }
     }
 }

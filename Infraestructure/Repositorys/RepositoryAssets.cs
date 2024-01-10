@@ -134,5 +134,35 @@ namespace Infraestructure.Repositorys
                 throw;
             }
         }
+
+        public async Task<byte[]> getContend(int id)
+        {
+           byte[] assetsByTematica ;
+            try
+            {
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+
+                    assetsByTematica = await ctx.Assets
+                        .Where(asset => asset.ID == id)
+                .Select(asset => asset.Content)
+                .FirstOrDefaultAsync();
+
+                }
+
+                return assetsByTematica;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "Error en la base de datos: \n" + dbEx.Message;
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "Error en el servidor: \n" + ex.Message;
+                throw;
+            }
+        }
     }
 }
