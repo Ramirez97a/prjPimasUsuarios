@@ -53,14 +53,14 @@ namespace PimasUsuario.Controllers.Api
 
         [HttpGet]
         [Route("byTematic")]
-        public async Task<IHttpActionResult> getByTematic(int tematicId)
+        public async Task<IHttpActionResult> getByTematic(int tematicId, int group)
         {
             ResponseModel response = new ResponseModel();
             try
             {
                 IServiceAssets service = new ServiceAssets();
 
-                IEnumerable< Assets> asset = await service.getByTematic(tematicId);
+                IEnumerable< Assets> asset = await service.getByTematic(tematicId,group);
 
                 if (asset == null || !asset.Any())
                 {
@@ -97,7 +97,7 @@ namespace PimasUsuario.Controllers.Api
             {
                 IServiceAssets service = new ServiceAssets();
 
-                IEnumerable<Assets> asset = await service.getByTematic(tematicId);
+                IEnumerable<Assets> asset = await service.getByTematic(tematicId,1);
 
                 if (asset == null || !asset.Any())
                 {

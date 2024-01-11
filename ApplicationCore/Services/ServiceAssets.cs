@@ -32,9 +32,9 @@ namespace ApplicationCore.Services
             return await repository.getByGroup(id);
         }
 
-        public async Task<IEnumerable<Assets>> getByTematic(int tematicId)
+        public async Task<IEnumerable<Assets>> getByTematic(int tematicId, int group)
         {
-            return await repository.getByTematic(tematicId);
+            return await repository.getByTematic(tematicId,group);
         }
 
         public async Task<byte[]> getContend(int id)
