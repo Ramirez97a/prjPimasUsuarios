@@ -1,0 +1,46 @@
+﻿using Infraestructure.Models;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Infraestructure.Repositorys
+{
+    public class RepositoryGroup : IRepositoryGruop
+    {
+        public async Task<IEnumerable<Tematicas>> getTematicByGroup(int id)
+        {
+            IEnumerable<Tematicas> tematicas = null;
+            try
+            {
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+
+                    tematicas = await (from groupT in ctx.GroupT
+                                       join assetsGroup in ctx.AssetsGroup on groupT.ID equals assetsGroup.GroupID
+                                       join asset in ctx.Assets on assetsGroup.AssetsID equals asset.ID
+                                       join tematica in ctx.Tematicas on asset.TematicaId equals tematica.TematicaID
+                                       where groupT.ID == id
+                                       select tematica).ToListAsync();
+
+                }
+
+                return tematicas;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "Error en la base de datos: \n" + dbEx.Message;
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "Error en el servidor: \n" + ex.Message;
+                throw;
+            }
+        }
+    }
+}
