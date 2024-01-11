@@ -72,7 +72,7 @@ namespace Infraestructure.Repositorys
             }
         }
 
-            public async Task<IEnumerable<Assets>> getByGroup(int id)
+        public async Task<IEnumerable<Assets>> getByGroup(int id)
             {
                 IEnumerable<Assets> assetsByTematica = null;
                 try

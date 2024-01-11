@@ -156,6 +156,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Api\AssetsApiController.cs" />
+    <Compile Include="Controllers\Api\GroupApiController.cs" />
     <Compile Include="Controllers\Api\UserApiController.cs" />
     <Compile Include="Controllers\groupController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
