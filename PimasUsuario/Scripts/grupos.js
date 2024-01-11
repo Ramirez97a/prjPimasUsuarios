@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-
+    alert("jo");
     function showLoader() {
         document.getElementById('overlay').style.display = 'block';
         document.getElementById('loader').style.display = 'block';
@@ -35,7 +35,12 @@
         cardContairnerAssest.removeAttribute('style');
     })
 
-  
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Obtener el valor del parámetro 'id'
+    const id = urlParams.get('id');
+    console.log(id);
+   
   
 });
 
@@ -127,7 +132,7 @@ function agregarAssest(data) {
                 <div class="card-body d-flex flex-column align-items-center justify-content-center">
                     <h6 style="color: #038512; font-weight:bold;" class="text-center">${asset.Title}</h6>
                     <p class="text-center">${asset.Description}</p>
-                    <a href="/group/ShowAssets" class="btn btn-primary">Ver contenido</a>
+                    <a href='/group/ShowAssets?id=${asset.ID} 'target="_blank" class="btn btn-primary">Ver contenido</a>
                 </div>
             </div>
         `;      
@@ -137,5 +142,6 @@ function agregarAssest(data) {
 
 
 obtenerDatosYAgregarElemento();
+
 
 

@@ -77,6 +77,7 @@
     <Compile Include="Models\Files.cs">
       <DependentUpon>PimasStudents.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FileShowContent.cs" />
     <Compile Include="Models\GroupT.cs">
       <DependentUpon>PimasStudents.tt</DependentUpon>
     </Compile>

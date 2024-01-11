@@ -1,8 +1,10 @@
 ﻿using Infraestructure.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -72,38 +74,38 @@ namespace Infraestructure.Repositorys
             }
         }
 
-            public async Task<IEnumerable<Assets>> getByGroup(int id)
+        public async Task<IEnumerable<Assets>> getByGroup(int id)
+        {
+            IEnumerable<Assets> assetsByTematica = null;
+            try
             {
-                IEnumerable<Assets> assetsByTematica = null;
-                try
+                using (MyContext ctx = new MyContext())
                 {
-                    using (MyContext ctx = new MyContext())
-                    {
-                        ctx.Configuration.LazyLoadingEnabled = false;
+                    ctx.Configuration.LazyLoadingEnabled = false;
 
-                        assetsByTematica = await ctx.GroupT
-                            .Where(g => g.ID == id) // Filtrar por el ID del GroupT deseado
-                            .SelectMany(g => g.AssetsGroup) // Obtener todos los AssetsGroup asociados al GroupT
-                            .Select(ag => ag.Assets)
-                            .Include(a => a.Tematicas)
-                            .ToListAsync();
+                    assetsByTematica = await ctx.GroupT
+                        .Where(g => g.ID == id) // Filtrar por el ID del GroupT deseado
+                        .SelectMany(g => g.AssetsGroup) // Obtener todos los AssetsGroup asociados al GroupT
+                        .Select(ag => ag.Assets)
+                        .Include(a => a.Tematicas)
+                        .ToListAsync();
 
 
-                    }
-
-                    return assetsByTematica;
                 }
-                catch (DbUpdateException dbEx)
-                {
-                    string mensaje = "Error en la base de datos: \n" + dbEx.Message;
-                    throw new Exception(mensaje);
-                }
-                catch (Exception ex)
-                {
-                    string mensaje = "Error en el servidor: \n" + ex.Message;
-                    throw;
-                }
+
+                return assetsByTematica;
             }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "Error en la base de datos: \n" + dbEx.Message;
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "Error en el servidor: \n" + ex.Message;
+                throw;
+            }
+        }
 
         public async Task<IEnumerable<Assets>> getByTematic(int tematicId)
         {
@@ -137,7 +139,7 @@ namespace Infraestructure.Repositorys
 
         public async Task<byte[]> getContend(int id)
         {
-           byte[] assetsByTematica ;
+            byte[] assetsByTematica;
             try
             {
                 using (MyContext ctx = new MyContext())
@@ -162,6 +164,52 @@ namespace Infraestructure.Repositorys
             {
                 string mensaje = "Error en el servidor: \n" + ex.Message;
                 throw;
+            }
+        }
+        public FileShowContent AssetFileShow(int id)
+        {
+            FileShowContent assets = null;
+            try
+            {
+
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+
+                    using (var connection = new SqlConnection(ctx.Database.Connection.ConnectionString))
+                    {
+                        connection.Open();
+
+                        using (var command = new SqlCommand("USP_GetAssetsByAssestID", connection))
+                        {
+                            command.CommandType = CommandType.StoredProcedure;
+                            command.Parameters.Add(new SqlParameter("@AssestID", id));
+
+                            using (var reader = command.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    assets = new FileShowContent
+                                    {
+                                        Title = reader["Title"].ToString(),
+                                        Content = (byte[])reader["Content"]
+                                    };
+                                }
+                            }
+                        }
+                    }
+                }
+                return assets;
+            }
+            catch (DbUpdateException dbEx)
+            {
+              
+                throw dbEx;
+            }
+            catch (Exception ex)
+            {
+              
+                throw ex;
             }
         }
     }

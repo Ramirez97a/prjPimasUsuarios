@@ -1853,6 +1853,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Login.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\pdf.js" />
     <Content Include="ViewerJS\compatibility.js" />
     <Content Include="ViewerJS\example.local.css" />
     <Content Include="ViewerJS\images\kogmbh.png" />
@@ -1957,7 +1958,6 @@
     <Content Include="Views\Login\ForgotPasswordChange.cshtml" />
     <Content Include="Views\group\Grupos.cshtml" />
     <Content Include="Views\group\Index.cshtml" />
-    <Content Include="Views\group\ShowAssets.cshtml" />
     <Content Include="ViewerJS\PDF\build\pdf.js.map" />
     <Content Include="ViewerJS\PDF\build\pdf.sandbox.js.map" />
     <Content Include="ViewerJS\PDF\build\pdf.worker.js.map" />
@@ -2263,6 +2263,7 @@
     <Content Include="ViewerJS\PDF\web\standard_fonts\LICENSE_FOXIT" />
     <Content Include="ViewerJS\PDF\web\standard_fonts\LICENSE_LIBERATION" />
     <Content Include="ViewerJS\PDF\web\viewer.js.map" />
+    <Content Include="Views\group\ShowAssets.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

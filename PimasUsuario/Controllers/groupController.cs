@@ -33,10 +33,35 @@ namespace PimasUsuario.Controllers
 
             return View();
         }
-        public ActionResult ShowAssets()
+        public ActionResult ShowAssets(int id)
         {
 
             return View();
+        }
+        public FileResult archivo(int? id)
+        {
+            try
+            {
+                FileShowContent assets;
+                IServiceAssets servicesAssets = new ServiceAssets();
+                assets = servicesAssets.AssetFileShow(id.Value);
+
+                if (assets != null)
+                {
+
+                }
+
+                // Crear un objeto anónimo con los dos campos que deseas devolver
+                return File(assets.Content, "application/pdf", assets.Title + ".pdf");
+
+            }
+            catch (Exception ex)            {
+              
+                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
+                TempData.Keep();
+                // Redireccion a la captura del Error
+                return null;
+            }
         }
     }
 }
