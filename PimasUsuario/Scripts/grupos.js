@@ -1,5 +1,7 @@
-﻿$(document).ready(function () {
-    alert("jo");
+﻿
+
+$(document).ready(function () {
+  
     function showLoader() {
         document.getElementById('overlay').style.display = 'block';
         document.getElementById('loader').style.display = 'block';
@@ -18,15 +20,27 @@
         contengrupoElement.removeAttribute('style');
     }, 19000);
 
-   /* obtenerDatosYAgregarElemento();*/
-
+   /*obtenerDatosYAgregarElemento();*/
+     
     $('#filtros').on('click', function (event) {
         event.preventDefault();
+        var idTematica = document.getElementById('idfantastaSubtematica').value;
+        console.log(idTematica);
         var cardContairnerAssest = document.getElementById('cardContairnerAssest');
         cardContairnerAssest.removeAttribute('style');
+        obtenerDatosGetByTematicYAgregarElemento(idTematica);
+
+    });
+    $('#filtrosAll').on('click', function (event) {
+        obtenerDatosYAgregarElemento();
 
     });
 
+
+  
+    $(document).on('click', '#subtematica', function () {
+        event.preventDefault();
+    })
 
     $(document).on('click', '#filtros', function () {
         $('#collapseExample').collapse('hide');
@@ -35,19 +49,36 @@
         cardContairnerAssest.removeAttribute('style');
     })
 
-    const urlParams = new URLSearchParams(window.location.search);
+    $(document).on('click', '#tematicatxt', function () {
+        
+        var tematicaid;
+        var elementosA = document.querySelectorAll('[data-bs-toggle="collapse"]');
+        var spanUnidad = document.getElementById('unidadHeader');
+        elementosA.forEach(function (elementoA) {
+            if (elementoA.getAttribute('aria-expanded') === 'true') {
+                tematicaid = elementoA.getAttribute('value');
 
-    // Obtener el valor del parámetro 'id'
-    const id = urlParams.get('id');
-    console.log(id);
+                if (tematicaid == 1) {
+                    spanUnidad.textContent = 'Limites';
+                }
+                else {
+                    spanUnidad.textContent = 'Derivadas';
+                }
+            }
+        });
+       
+     
+     })
+
    
   
 });
 
-function obtenerDatosYAgregarElemento() {
-    var idGrupo = window.location.pathname.split('/').pop();
-    var url = `https://localhost:44366/api/Assets/getByGroup?id=${idGrupo}`;
 
+function obtenerDatosGetByTematicYAgregarElemento(idTematica) {
+    var idGrupo = window.location.pathname.split('/').pop();   
+    
+    var url = `https://localhost:44366/api/Assets/byTematic?tematicId=${idTematica}&group=${idGrupo}`;
     fetch(url, {
         method: "GET",
         headers: {
@@ -62,8 +93,61 @@ function obtenerDatosYAgregarElemento() {
         })
         .then(data => {
             console.log(data);
-            agregarElementosTematicas(data);
             agregarAssest(data);
+        })
+        .catch(error => {
+            console.error('Error en la solicitud:', error);
+        });
+}
+
+
+function obtenerDatosYAgregarElemento() {
+    var idGrupo = window.location.pathname.split('/').pop();
+    var url = `https://localhost:44366/api/Assets/getByGroup?id=${idGrupo}`;
+  
+
+    fetch(url, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Error en la solicitud. Código: " + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+                      
+            agregarAssest(data);
+        })
+        .catch(error => {
+            console.error('Error en la solicitud:', error);
+        });
+}
+
+
+function obtenerDatosSubtematicasYAgregarElemento() {
+    var idGrupo = window.location.pathname.split('/').pop();
+    var url = `https://localhost:44366/api/Group/tematics?id=${idGrupo}`;
+
+    fetch(url, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Error en la solicitud. Código: " + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+          
+            agregarElementosTematicas(data);
+           /* agregarAssest(data);*/
         })
         .catch(error => {
             console.error('Error en la solicitud:', error);
@@ -72,47 +156,77 @@ function obtenerDatosYAgregarElemento() {
 
 function agregarElementosTematicas(data) {
     var ul = document.getElementById('accordionExample');
-   
+    const tematicas = [
+        { id: 1, nombre: 'Limites' },
+        { id: 2, nombre: 'Derivadas' }
+    ];
 
     // Limpiar el contenido actual de la lista
     ul.innerHTML = '';
 
+    // Agregar el contenido HTML antes del bucle forEach
+    var contenidoInicial = `
+        <li class="menu active ">
+            <a href="#" class="dropdown-toggle" id="btnhome">
+                <div>
+                    <img src="/Content/imagenes/Logo_inicio.png" alt="logo" width="30px" height="30px" style="margin-right:40px;"><span>PIMAS</span>
+                </div>
+            </a>
+        </li>
+    `;
+    ul.innerHTML += contenidoInicial;
+
+    // Objeto para almacenar temáticas agrupadas por ParentTematicaID
+    var tematicasAgrupadas = {};
+
     data.Data.forEach((item, index) => {
-        if (item.Tematicas && item.Tematicas.NombreTematica) {
-            const tematicaId = item.Tematicas.TematicaID;
-            const tematica = item.Tematicas.NombreTematica;
+        if (item.NombreTematica && item.ParentTematicaID) {
+            const tematicaId = item.ParentTematicaID;
+            const tematica = item.NombreTematica;
+            const tematicaIDItem = item.TematicaID; // Nuevo - obtener el TematicaID
+            // Crear un array si no existe para el ParentTematicaID actual
+            tematicasAgrupadas[tematicaId] = tematicasAgrupadas[tematicaId] || [];
 
-            var nuevoLi = document.createElement('li');
-            nuevoLi.className = 'menu';
-
-            nuevoLi.innerHTML = `
-                  <li class="menu active ">
-                        <a href="#" class="dropdown-toggle" id="btnhome">
-                            <div class="">
-                                <img src="/Content/imagenes/Logo_inicio.png" alt="logo" width="30px" height="30px" style="margin-right:40px;"<span>PIMAS</span>
-                            </div>
-
-                        </a>
-
-                    </li>
-                <a href="#tematica" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle" value="${tematicaId}">
-                    <div>
-                        <span>Unidad: ${tematica}</span>
-                    </div>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </div>
-                </a>
-                <ul class="collapse submenu list-unstyled" id="tematica" data-bs-parent="#accordionExample">
-                    <li><a href="component_tabs.html">reactivar</a></li>
-                    <li><a href="component_accordion.html">reactivar</a></li>
-                    <li><a href="component_accordion.html">reactivar</a></li>
-                    <li><a href="component_accordion.html">reactivar</a></li>
-                </ul>
-            `;
-            ul.appendChild(nuevoLi);
+            // Agregar la tematica al array correspondiente
+            tematicasAgrupadas[tematicaId].push({ tematica, tematicaIDItem });
         }
     });
+
+    // Recorrer el objeto y agregar las temáticas al DOM
+    for (const [tematicaId, tematicasArray] of Object.entries(tematicasAgrupadas)) {
+        var nuevoLi = document.createElement('li');
+        nuevoLi.className = 'menu';
+
+        const tematicaEncontrada = tematicas.find(t => t.id == tematicaId);
+
+        nuevoLi.innerHTML = `
+            <a href="#tematica_${tematicaId}" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle" id="tematicatxt" value="${tematicaId}" >
+                <div>
+                    <span id="idUnidad">Unidad: ${tematicaEncontrada.nombre}</span>
+                </div>
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
+            </a>
+            <ul class="collapse submenu list-unstyled" id="tematica_${tematicaId}" data-bs-parent="#accordionExample">
+                ${tematicasArray.map(({ tematica, tematicaIDItem }) => `<li><a href="component_tabs.html"  data-tematica-id-item="${tematicaIDItem}"  id="subtematica">${tematica}</a></li>`).join('')}
+            </ul>
+        `;
+        ul.appendChild(nuevoLi);
+    }
+
+    // Agregar evento para gestionar el estado de los elementos
+    ul.querySelectorAll('[data-bs-toggle="collapse"]').forEach((element) => {
+        element.addEventListener('click', function() {
+            const collapseTarget = document.querySelector(element.getAttribute('href'));
+            ul.querySelectorAll('.collapse.show').forEach((collapse) => {
+                if (collapse !== collapseTarget) {
+                    collapse.classList.remove('show');
+                }
+            });
+        });
+    });
+    obtenerdatosnav();
 }
 
 
@@ -142,6 +256,41 @@ function agregarAssest(data) {
 
 
 obtenerDatosYAgregarElemento();
+obtenerDatosSubtematicasYAgregarElemento();
 
+function obtenerdatosnav() {
+    var tematicaid;    
+    var subtematica;
+    var subtematicaTxt;
+    var ul = document.getElementById('accordionExample');    
+    var elementosA = document.querySelectorAll('[data-bs-toggle="collapse"]');
+    var spanUnidad = document.getElementById('subtematicasHeader');
+    var profesor = document.getElementById('profesor');
+    ul.querySelectorAll('[data-tematica-id-item]').forEach((element) => {
+        element.addEventListener('click', function () {
+            subtematica = element.getAttribute('data-tematica-id-item');
+            subtematicaTxt = element.innerHTML;
+           
+           
+            elementosA.forEach(function (elementoA) {
+                if (elementoA.getAttribute('aria-expanded') === 'true') {
+                    tematicaid = elementoA.getAttribute('value');
 
+                    
+                }
+            });
 
+            spanUnidad.textContent = `${subtematicaTxt}`;
+            profesor.textContent = 'Luis';
+
+            document.getElementById('idfantastaSubtematica').value = `${subtematica}`;
+
+            console.log('subtematica:', subtematica);
+            console.log('texto subtematica:', subtematicaTxt);
+            console.log('tematica:', tematicaid);
+           
+        });
+    });
+}
+
+  

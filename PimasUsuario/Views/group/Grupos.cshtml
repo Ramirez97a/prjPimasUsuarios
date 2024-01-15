@@ -10,7 +10,7 @@
 </head>
 <div class="overlay" id="overlay"></div>
 <div class="d-flex justify-content-center mx-5 mt-3 mb-5">
-    <div class="spinner-grow text-danger align-self-center" id="loader" s></div>
+    <div class="spinner-grow text-danger align-self-center" id="loader" ></div>
 </div>
 <div id="contengrupo" style="display:none;">
     <div class="form-row mb-4">
@@ -18,15 +18,16 @@
             <div class="row">
                 <div class="col">
                     <div>
-                        <label for="inputEmail4">Unidad: <span>Limites</span></label>
+                        <label for="inputEmail4">Unidad: <span id="unidadHeader"></span></label>
                     </div>
                     <div>
-                        <label for="inputEmail4">Profesor: <span>Luis</span></label>
+                        <label for="inputEmail4">Profesor: <span id="profesor"></span></label>
                     </div>
                 </div>
                 <div class="col">
                     <div>
-                        <label for="inputEmail4">Capitulo: <span>Concepto de limites</span></label>
+                        <label for="inputEmail4">Capitulo: <span id="subtematicasHeader"></span></label>
+                        <input type="text" name="name" id="idfantastaSubtematica" value=""  style="display:none;"/>
                     </div>
                 </div>
             </div>
@@ -138,6 +139,18 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col mb-2">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="row d-flex flex-column align-items-center justify-content-center">
+                                        <div class="col-md-6 col-sm-6 col-12 d-flex flex-column align-items-center justify-content-center">
+                                            <img src="~/Content/imagenes/Imagen.jpeg" style="width: 50px; height: 50px;" />
+                                            <a href="@Url.Action("Grupos","group")" id="filtrosAll"> <h6 style="color: #3DA1BF;" class="text-center">Ver todos</h6></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -145,7 +158,7 @@
         </div>
 
         @*container de assest Inicio*@
-        <div class="row row-cols-2 row-cols-md-2 row-cols-lg-3" id="cardContairnerAssest" style="display:none;">
+        <div class="row row-cols-2 row-cols-md-2 row-cols-lg-3" id="cardContairnerAssest" @*style="display:none;"*@>
 
         </div>
     </div>
