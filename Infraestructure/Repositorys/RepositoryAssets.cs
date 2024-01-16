@@ -240,5 +240,61 @@ namespace Infraestructure.Repositorys
                 throw ex;
             }
         }
+
+        public async Task<IEnumerable<Assets>> getByGroupLow(int group)
+        {
+            IEnumerable<Assets> assetsByTematica = null;
+            try
+            {
+                List<Assets> listaPartial = new List<Assets>();
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+                    using (var connection = new SqlConnection(ctx.Database.Connection.ConnectionString))
+                    {
+                        await connection.OpenAsync();
+
+                        using (var command = new SqlCommand("GetAssetsByGroupLow", connection))
+                        {
+                            command.CommandType = CommandType.StoredProcedure;
+
+                            // Parámetros del procedimiento almacenado
+                            command.Parameters.AddWithValue("@GroupID", group);
+
+                            using (var reader = command.ExecuteReader())
+                            {
+                                while (await reader.ReadAsync())
+                                {
+                                    Assets assets = new Assets
+                                    {
+                                        ID = Convert.ToInt32(reader["ID"].ToString()),
+                                        Title = reader["Title"].ToString(),
+                                        Description = reader["Description"].ToString(),
+                                        Image = reader["Image"] != DBNull.Value ? (byte[])reader["Image"] : null,
+                                        TypeContent = reader["TypeContent"].ToString(),
+                                        ExternalLink = reader["ExternalLink"] != DBNull.Value ? reader["ExternalLink"].ToString() : "",
+                                        AssetPublic = reader["AssetPublic"].ToString(),
+                                        Downloadable = reader["Downloadable"] != DBNull.Value ? (bool)reader["Downloadable"]: false ,
+                                        TipoAssetID = reader["TipoAssetID"] != DBNull.Value ? Convert.ToInt32(reader["TipoAssetID"]) : 0,
+                                        TematicaId = Convert.ToInt32(reader["TematicaId"].ToString()),
+                                    };
+
+                                    listaPartial.Add(assets);
+                                }
+                            }
+                        }
+                    }
+                }
+                return listaPartial;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                throw new Exception($"Error en la base de datos: \n{dbEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error en el servidor: \n{ex.Message}");
+            }
+        }
     }
 }

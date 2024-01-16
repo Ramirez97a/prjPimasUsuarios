@@ -14,6 +14,7 @@ namespace ApplicationCore.Services
         Task<IEnumerable<Assets>> getAllSubtematic(int PtamaticId, int tematicId);
         Task<IEnumerable<Assets>> getByGroup(int id);
         Task<byte[]> getContend(int id);
+        Task<IEnumerable<Assets>> getByGroupLow(int group);
         FileShowContent AssetFileShow(int id);
     }
 }

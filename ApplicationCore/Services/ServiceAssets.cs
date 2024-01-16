@@ -48,5 +48,10 @@ namespace ApplicationCore.Services
         {
             return  repository.AssetFileShow(id);
         }
+
+        public async Task<IEnumerable<Assets>> getByGroupLow(int group)
+        {
+            return await repository.getByGroupLow(group);
+        }
     }
 }

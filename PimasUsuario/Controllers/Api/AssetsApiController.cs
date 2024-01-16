@@ -170,7 +170,7 @@ namespace PimasUsuario.Controllers.Api
 
               byte[] asset = await service.getContend(id);
 
-                if (asset == null)
+                if (asset == null || !asset.Any())
                 {
                     response.StatusCode = (int)HttpStatusCode.NotFound;
                     response.Message = "Asset no encontrado verifique el id ";
@@ -194,6 +194,41 @@ namespace PimasUsuario.Controllers.Api
                 return Json(response);
             }
         }
-       
+
+        [HttpGet]
+        [Route("getByGroupLow")]
+        public async Task<IHttpActionResult> getByGroupLow(int id)
+        {
+            ResponseModel response = new ResponseModel();
+            try
+            {
+                IServiceAssets service = new ServiceAssets();
+
+                IEnumerable<Assets> asset = await service.getByGroupLow(id);
+
+                if (asset == null || !asset.Any())
+                {
+                    response.StatusCode = (int)HttpStatusCode.NotFound;
+                    response.Message = "Asset no encontrado verifique el id ";
+
+                }
+                else
+                {
+                    response.StatusCode = (int)HttpStatusCode.OK;
+                    response.Message = "Asset encontrado";
+                    response.Data = asset;
+                }
+
+                return Json(response);
+            }
+            catch (Exception e)
+            {
+
+                response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                response.Message = e.Message;
+
+                return Json(response);
+            }
+        }
     }
 }
