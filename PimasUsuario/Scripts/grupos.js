@@ -18,7 +18,7 @@ $(document).ready(function () {
         hideLoader();
         var contengrupoElement = document.getElementById('contengrupo');
         contengrupoElement.removeAttribute('style');
-    }, 19000);
+    }, 2000);
 
    /*obtenerDatosYAgregarElemento();*/
      
@@ -78,7 +78,7 @@ $(document).ready(function () {
 function obtenerDatosGetByTematicYAgregarElemento(idTematica) {
     var idGrupo = window.location.pathname.split('/').pop();   
     
-    var url = `https://localhost:44366/api/Assets/byTematic?tematicId=${idTematica}&group=${idGrupo}`;
+    var url = `/api/Assets/byTematic?tematicId=${idTematica}&group=${idGrupo}`;
     fetch(url, {
         method: "GET",
         headers: {
@@ -103,8 +103,8 @@ function obtenerDatosGetByTematicYAgregarElemento(idTematica) {
 
 function obtenerDatosYAgregarElemento() {
     var idGrupo = window.location.pathname.split('/').pop();
-    var url = `https://localhost:44366/api/Assets/getByGroupLow?id=${idGrupo}`;
-   /* var url = `https://localhost:44366/api/Assets/getByGroup?id=${idGrupo}`;*/
+    var url = `/api/Assets/getByGroupLow?id=${idGrupo}`;
+  
   
 
     fetch(url, {
@@ -131,7 +131,7 @@ function obtenerDatosYAgregarElemento() {
 
 function obtenerDatosSubtematicasYAgregarElemento() {
     var idGrupo = window.location.pathname.split('/').pop();
-    var url = `https://localhost:44366/api/Group/tematics?id=${idGrupo}`;
+    var url = `/api/Group/tematics?id=${idGrupo}`;
 
     fetch(url, {
         method: "GET",
