@@ -11,7 +11,7 @@
 function Login() {
     var email = $("#email").val();
     var password = $("#password").val();
-    var url = "https://localhost:44366/api/User/login"; 
+    var url = "api/User/login"; 
     let formData = {
         Email: email,
         Password: password
