@@ -103,7 +103,8 @@ function obtenerDatosGetByTematicYAgregarElemento(idTematica) {
 
 function obtenerDatosYAgregarElemento() {
     var idGrupo = window.location.pathname.split('/').pop();
-    var url = `https://localhost:44366/api/Assets/getByGroup?id=${idGrupo}`;
+    var url = `https://localhost:44366/api/Assets/getByGroupLow?id=${idGrupo}`;
+   /* var url = `https://localhost:44366/api/Assets/getByGroup?id=${idGrupo}`;*/
   
 
     fetch(url, {
@@ -267,6 +268,7 @@ function obtenerdatosnav() {
     var spanUnidad = document.getElementById('subtematicasHeader');
     var profesor = document.getElementById('profesor');
     ul.querySelectorAll('[data-tematica-id-item]').forEach((element) => {
+
         element.addEventListener('click', function () {
             subtematica = element.getAttribute('data-tematica-id-item');
             subtematicaTxt = element.innerHTML;
@@ -282,8 +284,12 @@ function obtenerdatosnav() {
 
             spanUnidad.textContent = `${subtematicaTxt}`;
             profesor.textContent = 'Luis';
-
             document.getElementById('idfantastaSubtematica').value = `${subtematica}`;
+
+            //var idTematica = document.getElementById('idfantastaSubtematica').value;
+            //console.log(idTematica);
+ ;
+            obtenerDatosGetByTematicYAgregarElemento(subtematica);
 
             console.log('subtematica:', subtematica);
             console.log('texto subtematica:', subtematicaTxt);
