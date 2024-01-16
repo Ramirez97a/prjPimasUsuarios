@@ -33,9 +33,14 @@ function Login() {
         .then(data => {
             console.log(data);
             const userId = data.userId;
-
-            window.location.href = "/group/Index?userId=" + userId;
-            console.log(userId);
+            if (data.StatusCode == 200) {
+                window.location.href = "/group/Index?userId=" + userId;
+                console.log(userId);
+            }
+            else {
+                alert("usuario no autorizado ");
+            }
+           
         })
         .catch(error => {
             console.error('Error en la solicitud:', error);
