@@ -137,13 +137,13 @@ namespace PimasUsuario.Controllers.Api
                 {
                     response.StatusCode = (int)HttpStatusCode.Unauthorized;
                     response.Message = "Usuario no autorizado ";
-
+                    
                 }
                 else
                 {
                     response.StatusCode = (int)HttpStatusCode.OK;
                     response.Message = "Usuario autorizado";
-
+                    response.userId = Users.ID;
 
                 }
 

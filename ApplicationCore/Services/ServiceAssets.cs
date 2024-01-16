@@ -17,6 +17,7 @@ namespace ApplicationCore.Services
             repository = new RepositoryAssets();
         }
 
+
         public async Task<IEnumerable<Assets>> getAllSubtematic(int PtamaticId, int tematicId)
         {
           return await  repository.getAllSubtematic(PtamaticId, tematicId);
@@ -32,9 +33,25 @@ namespace ApplicationCore.Services
             return await repository.getByGroup(id);
         }
 
-        public async Task<IEnumerable<Assets>> getByTematic(int tematicId)
+        public async Task<IEnumerable<Assets>> getByTematic(int tematicId, int group)
         {
-            return await repository.getByTematic(tematicId);
+            return await repository.getByTematic(tematicId,group);
+        }
+
+        public async Task<byte[]> getContend(int id)
+        {
+            return await repository.getContend(id);
+        }   
+      
+
+        public FileShowContent AssetFileShow(int id)
+        {
+            return  repository.AssetFileShow(id);
+        }
+
+        public async Task<IEnumerable<Assets>> getByGroupLow(int group)
+        {
+            return await repository.getByGroupLow(group);
         }
     }
 }

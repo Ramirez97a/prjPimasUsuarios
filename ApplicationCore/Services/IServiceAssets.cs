@@ -10,9 +10,11 @@ namespace ApplicationCore.Services
     public interface IServiceAssets
     {
         Task<Assets> getAsset(int assetId);
-        Task<IEnumerable<Assets>> getByTematic(int tematicId);
+        Task<IEnumerable<Assets>> getByTematic(int tematicId, int group);
         Task<IEnumerable<Assets>> getAllSubtematic(int PtamaticId, int tematicId);
         Task<IEnumerable<Assets>> getByGroup(int id);
-
+        Task<byte[]> getContend(int id);
+        Task<IEnumerable<Assets>> getByGroupLow(int group);
+        FileShowContent AssetFileShow(int id);
     }
 }

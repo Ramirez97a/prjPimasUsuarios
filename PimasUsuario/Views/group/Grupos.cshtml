@@ -4,136 +4,149 @@
     Layout = "~/Views/Shared/_LayoutDash.cshtml";
 }
 
-<style>
-    .form-group.col-md-6 ul {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        border: none;
-        background: none;
-    }
-</style>
+<head>
+    <link href="~/Content/grupos.css" rel="stylesheet" />
 
-
-<div class="form-row mb-4">
-    <div class="row">
+</head>
+<div class="overlay" id="overlay"></div>
+<div class="d-flex justify-content-center mx-5 mt-3 mb-5">
+    <div class="spinner-grow text-danger align-self-center" id="loader" ></div>
+</div>
+<div id="contengrupo" style="display:none;">
+    <div class="form-row mb-4">
         <div class="row">
-            <div class="col">
-                <div>
-                    <label for="inputEmail4">Unidad: <span>Limites</span></label>
-                </div>
-                <div>
-                    <label for="inputEmail4">Profesor: <span>Luis</span></label>
-                </div>
-            </div>
-            <div class="col">
-                <div>
-                    <label for="inputEmail4">Capitulo: <span>Concepto de limites</span></label>
-                </div>
-            </div>
-        </div>
-    </div>
-    <p>
-        <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-            Actividades
-        </a>
-
-    </p>
-    <div class="collapse" id="collapseExample">
-        <div class="card card-body">
             <div class="row">
-                <div class="row row-cols-2 row-cols-md-3">
-                    <div class="col mb-2">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <div class="row d-flex flex-column align-items-center justify-content-center">
-                                    <div class="col-md-6 col-sm-6 col-12 d-flex flex-column align-items-center justify-content-center">
-                                        <img src="~/Content/imagenes/Imagen.jpeg" style="width: 50px; height: 50px;" />
-                                        <a href="@Url.Action("Grupos","group")"> <h6 style="color: #3DA1BF;" class="text-center">Teoria y Ejercicios</h6></a>
+                <div class="col">
+                    <div>
+                        <label for="inputEmail4">Unidad: <span id="unidadHeader"></span></label>
+                    </div>
+                    <div>
+                        <label for="inputEmail4">Profesor: <span id="profesor"></span></label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div>
+                        <label for="inputEmail4">Capitulo: <span id="subtematicasHeader"></span></label>
+                        <input type="text" name="name" id="idfantastaSubtematica" value=""  style="display:none;"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p>
+            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Actividades
+            </a>
+
+        </p>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                <div class="row">
+                    <div class="row row-cols-2 row-cols-md-3">
+                        <div class="col mb-2">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="row d-flex flex-column align-items-center justify-content-center">
+                                        <div class="col-md-6 col-sm-6 col-12 d-flex flex-column align-items-center justify-content-center">
+                                            <img src="~/Content/imagenes/Imagen.jpeg" style="width: 50px; height: 50px;" />
+                                            <a href="@Url.Action("Grupos","group")" id="filtros"> <h6 style="color: #3DA1BF;" class="text-center">Teoria y Ejercicios</h6></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col mb-2">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <div class="row d-flex flex-column align-items-center justify-content-center">
-                                    <div class="col-md-6 col-sm-6 col-12 d-flex flex-column align-items-center justify-content-center">
-                                        <img src="~/Content/imagenes/Imagen.jpeg" style="width: 50px; height: 50px;" />
-                                        <h6 style="color: #3DA1BF;" class="text-center">Soluciones de los ejercicios</h6>
+                        <div class="col mb-2">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="row d-flex flex-column align-items-center justify-content-center">
+                                        <div class="col-md-6 col-sm-6 col-12 d-flex flex-column align-items-center justify-content-center">
+                                            <img src="~/Content/imagenes/Imagen.jpeg" style="width: 50px; height: 50px;" />
+                                            <h6 style="color: #3DA1BF;" class="text-center">Soluciones de los ejercicios</h6>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col mb-2">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <div class="row d-flex flex-column align-items-center justify-content-center">
-                                    <div class="col-md-6 col-sm-6 col-12 d-flex flex-column align-items-center justify-content-center">
-                                        <img src="~/Content/imagenes/Imagen.jpeg" style="width: 50px; height: 50px;" />
-                                        <h6 style="color: #3DA1BF;" class="text-center">Actividades</h6>
+                        <div class="col mb-2">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="row d-flex flex-column align-items-center justify-content-center">
+                                        <div class="col-md-6 col-sm-6 col-12 d-flex flex-column align-items-center justify-content-center">
+                                            <img src="~/Content/imagenes/Imagen.jpeg" style="width: 50px; height: 50px;" />
+                                            <h6 style="color: #3DA1BF;" class="text-center">Actividades</h6>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col mb-2">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <div class="row d-flex flex-column align-items-center justify-content-center">
-                                    <div class="col-md-6 col-sm-6 col-12 d-flex flex-column align-items-center justify-content-center">
-                                        <img src="~/Content/imagenes/Imagen.jpeg" style="width: 50px; height: 50px;" />
-                                        <h6 style="color: #3DA1BF;" class="text-center">Respuestas de las Actividades</h6>
+                        <div class="col mb-2">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="row d-flex flex-column align-items-center justify-content-center">
+                                        <div class="col-md-6 col-sm-6 col-12 d-flex flex-column align-items-center justify-content-center">
+                                            <img src="~/Content/imagenes/Imagen.jpeg" style="width: 50px; height: 50px;" />
+                                            <h6 style="color: #3DA1BF;" class="text-center">Respuestas de las Actividades</h6>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col mb-2">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <div class="row d-flex flex-column align-items-center justify-content-center">
-                                    <div class="col-md-6 col-sm-6 col-12 d-flex flex-column align-items-center justify-content-center">
-                                        <img src="~/Content/imagenes/Imagen.jpeg" style="width: 50px; height: 50px;" />
-                                        <h6 style="color: #3DA1BF;" class="text-center">Resumen</h6>
+                        <div class="col mb-2">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="row d-flex flex-column align-items-center justify-content-center">
+                                        <div class="col-md-6 col-sm-6 col-12 d-flex flex-column align-items-center justify-content-center">
+                                            <img src="~/Content/imagenes/Imagen.jpeg" style="width: 50px; height: 50px;" />
+                                            <h6 style="color: #3DA1BF;" class="text-center">Resumen</h6>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col mb-2">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <div class="row d-flex flex-column align-items-center justify-content-center">
-                                    <div class="col-md-6 col-sm-6 col-12 d-flex flex-column align-items-center justify-content-center">
-                                        <img src="~/Content/imagenes/Imagen.jpeg" style="width: 50px; height: 50px;" />
-                                        <h6 style="color: #3DA1BF;" class="text-center">Ejercicios adicionales con respuestas</h6>
+                        <div class="col mb-2">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="row d-flex flex-column align-items-center justify-content-center">
+                                        <div class="col-md-6 col-sm-6 col-12 d-flex flex-column align-items-center justify-content-center">
+                                            <img src="~/Content/imagenes/Imagen.jpeg" style="width: 50px; height: 50px;" />
+                                            <h6 style="color: #3DA1BF;" class="text-center">Ejercicios adicionales con respuestas</h6>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col mb-2">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <div class="row d-flex flex-column align-items-center justify-content-center">
-                                    <div class="col-md-6 col-sm-6 col-12 d-flex flex-column align-items-center justify-content-center">
-                                        <img src="~/Content/imagenes/Imagen.jpeg" style="width: 50px; height: 50px;" />
-                                        <h6 style="color: #3DA1BF;" class="text-center">Autoevaluacion</h6>
+                        <div class="col mb-2">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="row d-flex flex-column align-items-center justify-content-center">
+                                        <div class="col-md-6 col-sm-6 col-12 d-flex flex-column align-items-center justify-content-center">
+                                            <img src="~/Content/imagenes/Imagen.jpeg" style="width: 50px; height: 50px;" />
+                                            <h6 style="color: #3DA1BF;" class="text-center">Autoevaluacion</h6>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col mb-2">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <div class="row d-flex flex-column align-items-center justify-content-center">
-                                    <div class="col-md-6 col-sm-6 col-12 d-flex flex-column align-items-center justify-content-center">
-                                        <img src="~/Content/imagenes/Imagen.jpeg" style="width: 50px; height: 50px;" />
-                                        <h6 style="color: #3DA1BF;" class="text-center">Proyectos</h6>
+                        <div class="col mb-2">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="row d-flex flex-column align-items-center justify-content-center">
+                                        <div class="col-md-6 col-sm-6 col-12 d-flex flex-column align-items-center justify-content-center">
+                                            <img src="~/Content/imagenes/Imagen.jpeg" style="width: 50px; height: 50px;" />
+                                            <h6 style="color: #3DA1BF;" class="text-center">Proyectos</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col mb-2">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="row d-flex flex-column align-items-center justify-content-center">
+                                        <div class="col-md-6 col-sm-6 col-12 d-flex flex-column align-items-center justify-content-center">
+                                            <img src="~/Content/imagenes/Imagen.jpeg" style="width: 50px; height: 50px;" />
+                                            <a href="@Url.Action("Grupos","group")" id="filtrosAll"> <h6 style="color: #3DA1BF;" class="text-center">Ver todos</h6></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -141,9 +154,15 @@
                     </div>
                 </div>
             </div>
+
         </div>
 
+        @*container de assest Inicio*@
+        <div class="row row-cols-2 row-cols-md-2 row-cols-lg-3" id="cardContairnerAssest" @*style="display:none;"*@>
+
+        </div>
     </div>
+    @*container de assest Fin*@
 </div>
 
 

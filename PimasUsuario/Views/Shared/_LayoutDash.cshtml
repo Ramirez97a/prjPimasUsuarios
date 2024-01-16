@@ -1,5 +1,5 @@
 ﻿
-
+@{ var userId = TempData["UserId"] as int?; }
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,8 +41,8 @@
 
     @*css propios*@
     @*<link href="~/Content/Usuarios.css" rel="stylesheet" />
-    <link href="~/Content/AlquilerReportes.css" rel="stylesheet" />
-    <link href="~/Content/AlquilerContrato.css" rel="stylesheet" />*@
+        <link href="~/Content/AlquilerReportes.css" rel="stylesheet" />
+        <link href="~/Content/AlquilerContrato.css" rel="stylesheet" />*@
 
     <style>
         body.dark .layout-px-spacing, .layout-px-spacing {
@@ -151,7 +151,7 @@
                 <ul class="list-unstyled menu-categories" id="accordionExample">
 
                     <li class="menu active ">
-                        <a href="@Url.Action("Index","group")" class="dropdown-toggle">
+                        <a href="@Url.Action("Index","group",new {userId = userId})" class="dropdown-toggle" id="btnhome">
                             <div class="">
                                 <img src="~/Content/imagenes/Logo_inicio.png" alt="logo" width="30px" height="30px" style="margin-right:40px;"<span>PIMAS</span>
                             </div>
@@ -160,7 +160,7 @@
 
                     </li>
 
-                    
+
 
                     <li class="menu" style="display:none">
                         <a href="#components" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -244,9 +244,9 @@
         </div>
         <!--  END SIDEBAR  -->
         <!--  BEGIN CONTENT AREA  -->
-        <div id="content" class="main-content">
-            <div class="layout-px-spacing">
-
+        <div id="content" class="main-content" style="margin-top: 107px !important;">
+            <div class="layout-px-spacing" id="contenidgrupo">
+               
                 <div class="middle-content container-xxl p-0">
 
                     <!--  BEGIN BREADCRUMBS  -->
@@ -262,7 +262,7 @@
                         </div>
                     </div>
                     <!-- CONTENT AREA -->
-                    <div class="row layout-top-spacing">
+                    <div class="row ">
 
                         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                             @RenderBody()
@@ -310,7 +310,7 @@
 
     @*scripts propios*@
 
-    
+
 
     @* Finscripts propios*@
 
@@ -318,11 +318,6 @@
     @*scripts richtext*@
     <script src="~/Content/jquery.richtext.js"></script>
     <script type="text/javascript" src="~/Content/jquery.richtext.js"></script>
-    @*<script>
-            $(document).ready(function () {
-                $('.content').richText();
-            });
-        </script>*@
-
+   
 </body>
 </html>

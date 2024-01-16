@@ -53,14 +53,14 @@ namespace PimasUsuario.Controllers.Api
 
         [HttpGet]
         [Route("byTematic")]
-        public async Task<IHttpActionResult> getByTematic(int tematicId)
+        public async Task<IHttpActionResult> getByTematic(int tematicId, int group)
         {
             ResponseModel response = new ResponseModel();
             try
             {
                 IServiceAssets service = new ServiceAssets();
 
-                IEnumerable< Assets> asset = await service.getByTematic(tematicId);
+                IEnumerable< Assets> asset = await service.getByTematic(tematicId,group);
 
                 if (asset == null || !asset.Any())
                 {
@@ -97,7 +97,7 @@ namespace PimasUsuario.Controllers.Api
             {
                 IServiceAssets service = new ServiceAssets();
 
-                IEnumerable<Assets> asset = await service.getByTematic(tematicId);
+                IEnumerable<Assets> asset = await service.getByTematic(tematicId,1);
 
                 if (asset == null || !asset.Any())
                 {
@@ -123,7 +123,7 @@ namespace PimasUsuario.Controllers.Api
                 return Json(response);
             }
         }
-        [HttpGet]
+          [HttpGet]
         [Route("getByGroup")]
         public async Task<IHttpActionResult> getByGroup(int id)
         {
@@ -132,9 +132,81 @@ namespace PimasUsuario.Controllers.Api
             {
                 IServiceAssets service = new ServiceAssets();
 
-                IEnumerable<Assets> asset = await service.getByGroup(id);
+                IEnumerable<Assets> asset = await service.getByGroup(id);             
 
                 if (asset == null)
+                {
+                    response.StatusCode = (int)HttpStatusCode.NotFound;
+                    response.Message = "Asset no encontrado verifique el id ";
+
+                }
+                else
+                {
+                    response.StatusCode = (int)HttpStatusCode.OK;
+                    response.Message = "Asset encontrado";
+                    response.Data = asset;
+                }
+               
+                return Json(response);
+            }
+            catch (Exception e)
+            {
+
+                response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                response.Message = e.Message;
+
+                return Json(response);
+            }
+        }
+
+        [HttpGet]
+        [Route("getContend")]
+        public async Task<IHttpActionResult> getContend(int id)
+        {
+            ResponseModel response = new ResponseModel();
+            try
+            {
+                IServiceAssets service = new ServiceAssets();
+
+              byte[] asset = await service.getContend(id);
+
+                if (asset == null || !asset.Any())
+                {
+                    response.StatusCode = (int)HttpStatusCode.NotFound;
+                    response.Message = "Asset no encontrado verifique el id ";
+
+                }
+                else
+                {
+                    response.StatusCode = (int)HttpStatusCode.OK;
+                    response.Message = "Asset encontrado";
+                    response.Data = asset;
+                }
+
+                return Json(response);
+            }
+            catch (Exception e)
+            {
+
+                response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                response.Message = e.Message;
+
+                return Json(response);
+            }
+        }
+
+        [HttpGet]
+        [Route("getByGroupLow")]
+        public async Task<IHttpActionResult> getByGroupLow(int id)
+        {
+            ResponseModel response = new ResponseModel();
+            try
+            {
+                IServiceAssets service = new ServiceAssets();
+
+                IEnumerable<Assets> asset = await service.getByGroupLow(id);
+
+                if (asset == null || !asset.Any())
                 {
                     response.StatusCode = (int)HttpStatusCode.NotFound;
                     response.Message = "Asset no encontrado verifique el id ";
