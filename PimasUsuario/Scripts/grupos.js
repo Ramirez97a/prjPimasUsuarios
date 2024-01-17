@@ -20,7 +20,7 @@ $(document).ready(function () {
         contengrupoElement.removeAttribute('style');
     }, 2000);
 
-   /*obtenerDatosYAgregarElemento();*/
+ 
      
     $('#filtros').on('click', function (event) {
         event.preventDefault();
@@ -35,8 +35,25 @@ $(document).ready(function () {
         obtenerDatosYAgregarElemento();
 
     });
+    //$('#vertodos').on('click', function (event) {
+    
+      
 
+    //});
 
+    $(document).on('click', '#vertodos', function () {
+        event.preventDefault();
+        var elements = document.querySelectorAll('.show');
+        var tematicaElement = document.getElementById('tematicatxt');
+        obtenerDatosYAgregarElemento();
+
+      
+        elements.forEach(function (element) {
+            element.classList.remove('show');
+        });      
+        tematicaElement.setAttribute('aria-expanded', 'false');
+        
+    })
   
     $(document).on('click', '#subtematica', function () {
         event.preventDefault();
@@ -120,7 +137,7 @@ function obtenerDatosYAgregarElemento() {
             return response.json();
         })
         .then(data => {
-                      
+            console.log(data);
             agregarAssest(data);
         })
         .catch(error => {
@@ -173,7 +190,18 @@ function agregarElementosTematicas(data) {
                     <img src="/Content/imagenes/Logo_inicio.png" alt="logo" width="30px" height="30px" style="margin-right:40px;"><span>PIMAS</span>
                 </div>
             </a>
+           
         </li>
+        <li class="menu  ">
+            <a href="#" class="dropdown-toggle" id="vertodos" >
+                <div>
+                   <span>Ver todos</span>
+                </div>
+            </a>
+
+        </li>
+
+
     `;
     ul.innerHTML += contenidoInicial;
 

@@ -26,6 +26,42 @@ namespace PimasUsuario.Controllers
         {
             return View();
         }
-      
+
+        [HttpPost]      
+        public async Task<ActionResult> LoginUser(string usermail, string userPassword)
+        {
+            ResponseModel response = new ResponseModel();
+            try
+            {
+                IServiceUsers service = new ServiceUser();
+
+                Users Users = await service.Login(usermail, userPassword);
+
+                if (Users == null)
+                {
+                    response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    response.Message = "Usuario no autorizado ";
+
+                }
+                else
+                {
+                    response.StatusCode = (int)HttpStatusCode.OK;
+                    response.Message = "Usuario autorizado";
+                    response.userId = Users.ID;
+                    Session["User"] = Users;
+                }
+
+                return Json(response);
+            }
+            catch (Exception e)
+            {
+
+                response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                response.Message = e.Message;
+
+                return Json(response);
+            }
+        }
+
     }
 }
