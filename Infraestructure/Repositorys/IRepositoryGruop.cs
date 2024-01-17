@@ -10,5 +10,7 @@ namespace Infraestructure.Repositorys
    public interface IRepositoryGruop
     {
         Task<IEnumerable<Tematicas>> getTematicByGroup(int id);
+        Task<GroupT> getbyId(int assetId);
+
     }
 }

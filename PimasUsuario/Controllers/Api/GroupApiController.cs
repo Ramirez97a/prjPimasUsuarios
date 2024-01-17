@@ -49,5 +49,41 @@ namespace PimasUsuario.Controllers.Api
                 return Json(response);
             }
         }
+
+        [HttpGet]
+        [Route("id")]
+        public async Task<IHttpActionResult> getbyId(int id)
+        {
+            ResponseModel response = new ResponseModel();
+            try
+            {
+                IServiceGroup service = new ServiceGroup();
+
+                GroupT group = await service.getbyId(id);
+
+                if (group == null )
+                {
+                    response.StatusCode = (int)HttpStatusCode.NotFound;
+                    response.Message = "Temanicas no encontrado verifique el id del grupo ";
+
+                }
+                else
+                {
+                    response.StatusCode = (int)HttpStatusCode.OK;
+                    response.Message = "Tematicas encontrados";
+                    response.Data = group;
+                }
+
+                return Json(response);
+            }
+            catch (Exception e)
+            {
+
+                response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                response.Message = e.Message;
+
+                return Json(response);
+            }
+        }
     }
 }
