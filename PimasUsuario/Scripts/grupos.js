@@ -66,6 +66,10 @@ $(document).ready(function () {
     $(document).on('click', '#subtematica', function () {
         event.preventDefault();
     })
+    $(document).on('click', '#btnhome', function () {
+        window.location.href = `/group/Index`;
+
+    })
 
     $(document).on('click', '#filtros', function () {
         $('#collapseExample').collapse('hide');
@@ -212,7 +216,15 @@ function agregarElementosTematicas(data) {
         <li class="menu  ">
             <a href="#" class="dropdown-toggle" id="vertodos" >
                 <div>
-                   <span>Ver todos</span>
+                   <span>Grupos</span>
+                </div>
+            </a>
+
+        </li>
+        <li class="menu  ">
+            <a href="#" class="dropdown-toggle" id="vertodos" >
+                <div>
+                   <span>Todos los Archivos</span>
                 </div>
             </a>
 

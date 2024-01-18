@@ -2,35 +2,39 @@
 @{
     ViewBag.Title = "Grupos";
     Layout = "~/Views/Shared/_LayoutDash.cshtml";
+    int userId = ViewBag.UserId;
 }
 
 <head>
     <link href="~/Content/grupos.css" rel="stylesheet" />
 
 </head>
+
 <div class="overlay" id="overlay"></div>
 <div class="d-flex justify-content-center mx-5 mt-3 mb-5">
-    <div class="spinner-grow text-danger align-self-center" id="loader" ></div>
+    <div class="spinner-grow text-danger align-self-center" id="loader"></div>
 </div>
+<input type="text" name="name" value="@userId" id="useridFantasma" style="display:none;"/>
 <div id="contengrupo" style="display:none;">
     <div class="form-row mb-4">
         <div class="row">
             <div class="row">
                 <div class="col">
+
                     <div id="lblhidden" style="display:none;">
                         <label for="inputEmail4">Unidad: <span id="unidadHeader"></span></label>
                     </div>
                     <div>
                         <label for="inputEmail4">Grupo: <span id="Grupo"></span></label>
                     </div>
-                    
+
                 </div>
                 <div class="col">
                     <div id="lblhidden" style="display:none;">
                         <label for="inputEmail4">Capitulo: <span id="subtematicasHeader"></span></label>
                         <input type="text" name="name" id="idfantastaSubtematica" value="" style="display:none;" />
                     </div>
-                    <div id="lblhidden"style="display:none;">
+                    <div id="lblhidden" style="display:none;">
                         <label for="inputEmail4">Profesor: <span id="profesor"></span></label>
                     </div>
                 </div>
