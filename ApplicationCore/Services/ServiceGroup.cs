@@ -15,6 +15,12 @@ namespace ApplicationCore.Services
         {
             repository = new RepositoryGroup();
         }
+
+        public  async Task<GroupT> getbyId(int id)
+        {
+            return await repository.getbyId(id);
+        }
+
         public async Task<IEnumerable<Tematicas>> getTematicByGroup(int id)
         {
             return await repository.getTematicByGroup(id);

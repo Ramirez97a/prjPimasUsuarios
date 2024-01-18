@@ -20,12 +20,12 @@ $(document).ready(function () {
         contengrupoElement.removeAttribute('style');
     }, 2000);
 
-   /*obtenerDatosYAgregarElemento();*/
+ 
      
     $('#filtros').on('click', function (event) {
         event.preventDefault();
         var idTematica = document.getElementById('idfantastaSubtematica').value;
-        console.log(idTematica);
+      
         var cardContairnerAssest = document.getElementById('cardContairnerAssest');
         cardContairnerAssest.removeAttribute('style');
         obtenerDatosGetByTematicYAgregarElemento(idTematica);
@@ -35,8 +35,33 @@ $(document).ready(function () {
         obtenerDatosYAgregarElemento();
 
     });
+    //$('#vertodos').on('click', function (event) {
+    
+      
+
+    //});
+
+    $(document).on('click', '#vertodos', function () {
+        event.preventDefault();
+        var elements = document.querySelectorAll('.show');
+        var tematicaElement = document.getElementById('tematicatxt');
+        var lblhidden = document.querySelectorAll('[id*="lblhidden"]');
+
+        obtenerDatosYAgregarElemento();
+      
+        elements.forEach(function (element) {
+            element.classList.remove('show');
+        });    
+        
+        tematicaElement.setAttribute('aria-expanded', 'false');
 
 
+        // Itera sobre los elementos y elimina el atributo style
+        lblhidden.forEach(function (element) {
+            element.style.display = "none";
+        });
+        
+    })
   
     $(document).on('click', '#subtematica', function () {
         event.preventDefault();
@@ -47,6 +72,14 @@ $(document).ready(function () {
 
         var cardContairnerAssest = document.getElementById('cardContairnerAssest');
         cardContairnerAssest.removeAttribute('style');
+    })
+    $(document).on('click', '#tematicatxt', function () {
+        var elements = document.querySelectorAll('[id*="lblhidden"]');
+
+        // Itera sobre los elementos y elimina el atributo style
+        elements.forEach(function (element) {
+            element.removeAttribute("style");
+        });
     })
 
     $(document).on('click', '#tematicatxt', function () {
@@ -92,7 +125,7 @@ function obtenerDatosGetByTematicYAgregarElemento(idTematica) {
             return response.json();
         })
         .then(data => {
-            console.log(data);
+         
             agregarAssest(data);
         })
         .catch(error => {
@@ -120,13 +153,14 @@ function obtenerDatosYAgregarElemento() {
             return response.json();
         })
         .then(data => {
-                      
+          
             agregarAssest(data);
         })
         .catch(error => {
             console.error('Error en la solicitud:', error);
         });
 }
+
 
 
 function obtenerDatosSubtematicasYAgregarElemento() {
@@ -173,7 +207,18 @@ function agregarElementosTematicas(data) {
                     <img src="/Content/imagenes/Logo_inicio.png" alt="logo" width="30px" height="30px" style="margin-right:40px;"><span>PIMAS</span>
                 </div>
             </a>
+           
         </li>
+        <li class="menu  ">
+            <a href="#" class="dropdown-toggle" id="vertodos" >
+                <div>
+                   <span>Ver todos</span>
+                </div>
+            </a>
+
+        </li>
+
+
     `;
     ul.innerHTML += contenidoInicial;
 
@@ -255,9 +300,42 @@ function agregarAssest(data) {
     });
 }
 
+function obtenerDatosgetGruposYAgregarElemento() {
+    var idGrupo = window.location.pathname.split('/').pop();
+    var url = `/api/Group/id?id=${idGrupo}`;
+    var nameGrupo = document.getElementById('Grupo');
+ 
+
+
+    fetch(url, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Error en la solicitud. Código: " + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+                
+            nameGrupo.textContent = `${data.Data.Description}`;
+         
+        })
+        .catch(error => {
+            console.error('Error en la solicitud:', error);
+        });
+}
 
 obtenerDatosYAgregarElemento();
 obtenerDatosSubtematicasYAgregarElemento();
+
+obtenerDatosgetGruposYAgregarElemento();
+//obtenerDatosgetGruposYAgregarElemento();
+
+
 
 function obtenerdatosnav() {
     var tematicaid;    
@@ -272,30 +350,27 @@ function obtenerdatosnav() {
         element.addEventListener('click', function () {
             subtematica = element.getAttribute('data-tematica-id-item');
             subtematicaTxt = element.innerHTML;
-           
-           
+
+
             elementosA.forEach(function (elementoA) {
                 if (elementoA.getAttribute('aria-expanded') === 'true') {
                     tematicaid = elementoA.getAttribute('value');
 
-                    
+
                 }
             });
 
             spanUnidad.textContent = `${subtematicaTxt}`;
-            profesor.textContent = 'Luis';
+            profesor.textContent = 'Profesor Prueba';
             document.getElementById('idfantastaSubtematica').value = `${subtematica}`;
 
-            //var idTematica = document.getElementById('idfantastaSubtematica').value;
-            //console.log(idTematica);
- ;
             obtenerDatosGetByTematicYAgregarElemento(subtematica);
 
-            console.log('subtematica:', subtematica);
-            console.log('texto subtematica:', subtematicaTxt);
-            console.log('tematica:', tematicaid);
+           
+          
            
         });
+        
     });
 }
 

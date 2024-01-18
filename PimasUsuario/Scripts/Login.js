@@ -11,10 +11,10 @@
 function Login() {
     var email = $("#email").val();
     var password = $("#password").val();
-    var url = "api/User/login"; 
+    var url = "Login/LoginUser";
     let formData = {
-        Email: email,
-        Password: password
+        usermail: email,
+        userPassword: password
     };
 
     fetch(url, {
@@ -34,7 +34,8 @@ function Login() {
             console.log(data);
             const userId = data.userId;
             if (data.StatusCode == 200) {
-                window.location.href = "/group/Index?userId=" + userId;
+                //window.location.href = "/group/Index?userId=" + userId;
+                window.location.href = "/group/Index";
                 console.log(userId);
             }
             else {
