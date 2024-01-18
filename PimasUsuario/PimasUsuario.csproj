@@ -2266,6 +2266,7 @@
     <Content Include="ViewerJS\PDF\web\standard_fonts\LICENSE_LIBERATION" />
     <Content Include="ViewerJS\PDF\web\viewer.js.map" />
     <Content Include="Views\group\ShowAssets.cshtml" />
+    <Content Include="Views\Login\CreateUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

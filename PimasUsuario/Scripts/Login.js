@@ -4,6 +4,10 @@
         Login();
     });
 
+    $(document).on('click', '#btnsuccesCreate', function () {
+        createUser();
+
+    });
 
 });
 
@@ -48,3 +52,52 @@ function Login() {
         });
 }
 
+
+function createUser() {
+    var Identificacion = $("#Identificacion").val();
+    var Nombre = $("#Nombre").val();
+    var Apellidos = $("#Apellidos").val();
+    var perfil = $("#perfil").val();
+    var Email = $("#Email").val();
+    var password = $("#password").val();
+
+    var url = "api/User/create/createUser";
+
+    let formData = {
+        Identificacion: Identificacion,
+        Nombre: Nombre,
+        Apellidos: Apellidos,
+        perfil: perfil,
+        Email: Email,
+        password: password,
+    };
+
+    console.log(formData);
+    fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Error en la solicitud. Código: " + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {           
+            if (data.StatusCode == 200) {
+                alert("Usuario creado");
+                window.location.href = "/Login/Index";
+               
+            }
+            else {
+                alert("usuario no creado");
+            }
+
+        })
+        .catch(error => {
+            console.error('Error en la solicitud:', error);
+        });
+}

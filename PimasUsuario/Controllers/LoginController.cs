@@ -63,5 +63,10 @@ namespace PimasUsuario.Controllers
             }
         }
 
+        public ActionResult CreateUser()
+        {
+            return View();
+        }
     }
+
 }
