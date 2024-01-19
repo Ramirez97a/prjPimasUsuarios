@@ -25,7 +25,8 @@ namespace Infraestructure.Models
         public int TematicaID { get; set; }
         public string NombreTematica { get; set; }
         public Nullable<int> ParentTematicaID { get; set; }
-    
+       public string  ParentTematicaNombre { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tematicas> Tematicas1 { get; set; }
         public virtual Tematicas Tematicas2 { get; set; }
