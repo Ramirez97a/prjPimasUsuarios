@@ -13,5 +13,6 @@ namespace ApplicationCore.Services
         Task<Users> Login(string usermail, string userPassword);
         Task<IEnumerable<GroupT>> getGropsByUser(int userId);
         Task<Users> getById(int id);
+        Task<Users> Register(Users user);
     }
 }

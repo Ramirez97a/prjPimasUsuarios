@@ -126,6 +126,30 @@ namespace Infraestructure.Repositorys
             }
         }
 
+        public async Task<Users> Register(Users user)
+        {
+            try
+            {
+                Users User = new Users();
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+                    ctx.Users.Add(user);
+                   await ctx.SaveChangesAsync();
+                }
 
+                return User;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "Error en la base de datos: \n" + dbEx.Message;
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "Error en el servidor: \n" + ex.Message;
+                throw;
+            }
+        }
     }
 }
