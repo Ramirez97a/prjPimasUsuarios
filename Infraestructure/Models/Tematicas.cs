@@ -25,10 +25,16 @@ namespace Infraestructure.Models
         public int TematicaID { get; set; }
         public string NombreTematica { get; set; }
         public Nullable<int> ParentTematicaID { get; set; }
-        public virtual IEnumerable<Tematicas> Subtematicas { get; set; }
+        public virtual Tematicas TematicaPadre { get; set; }
+
+
+        [JsonIgnore]
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tematicas> Tematicas1 { get; set; }
+
+        [JsonIgnore]
+
         public virtual Tematicas Tematicas2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
 

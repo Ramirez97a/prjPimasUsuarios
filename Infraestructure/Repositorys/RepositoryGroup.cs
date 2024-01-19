@@ -63,12 +63,21 @@ namespace Infraestructure.Repositorys
 
                     tematicas = await tematicasQuery.ToListAsync();
 
-                    // Cargar las subtemáticas por separado
+                    // Cargar las temáticas padre por separado
+                    var tematicasPadreIds = tematicas
+                        .Where(t => t.ParentTematicaID.HasValue)
+                        .Select(t => t.ParentTematicaID.Value)
+                        .Distinct()
+                        .ToList();
+
+                    var tematicasPadre = await ctx.Tematicas
+                        .Where(t => tematicasPadreIds.Contains(t.TematicaID))
+                        .ToListAsync();
+
+                    // Asignar las temáticas padre a las respectivas temáticas
                     foreach (var tematica in tematicas)
                     {
-                        tematica.Subtematicas = await ctx.Tematicas
-                            .Where(subtematica => subtematica.ParentTematicaID == tematica.TematicaID)
-                            .ToListAsync();
+                        tematica.TematicaPadre = tematicasPadre.FirstOrDefault(t => t.TematicaID == tematica.ParentTematicaID);
                     }
                 }
 
