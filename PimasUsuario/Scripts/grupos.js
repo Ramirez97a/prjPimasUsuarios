@@ -35,12 +35,7 @@ $(document).ready(function () {
         obtenerDatosYAgregarElemento();
 
     });
-    //$('#vertodos').on('click', function (event) {
-    
-      
-
-    //});
-
+ 
     $(document).on('click', '#vertodos', function () {
         event.preventDefault();
         var elements = document.querySelectorAll('.show');
@@ -66,8 +61,10 @@ $(document).ready(function () {
     $(document).on('click', '#subtematica', function () {
         event.preventDefault();
     })
-    $(document).on('click', '#btnhome', function () {
-        window.location.href = `/group/Index`;
+    $(document).on('click', '#VerGrupos', function () {
+      
+
+        window.location.href = `/group/Index?`;
 
     })
 
@@ -140,8 +137,7 @@ function obtenerDatosGetByTematicYAgregarElemento(idTematica) {
 
 function obtenerDatosYAgregarElemento() {
     var idGrupo = window.location.pathname.split('/').pop();
-    var url = `/api/Assets/getByGroupLow?id=${idGrupo}`;
-  
+    var url = `/api/Assets/getByGroupLow?id=${idGrupo}`; 
   
 
     fetch(url, {
@@ -184,7 +180,7 @@ function obtenerDatosSubtematicasYAgregarElemento() {
             return response.json();
         })
         .then(data => {
-          
+            console.log(data);
             agregarElementosTematicas(data);
            /* agregarAssest(data);*/
         })
@@ -192,82 +188,67 @@ function obtenerDatosSubtematicasYAgregarElemento() {
             console.error('Error en la solicitud:', error);
         });
 }
-
 function agregarElementosTematicas(data) {
-    var ul = document.getElementById('accordionExample');
-    const tematicas = [
-        { id: 1, nombre: 'Limites' },
-        { id: 2, nombre: 'Derivadas' }
-    ];
+    const ul = document.getElementById('accordionExample');
 
     // Limpiar el contenido actual de la lista
     ul.innerHTML = '';
 
     // Agregar el contenido HTML antes del bucle forEach
-    var contenidoInicial = `
+    const contenidoInicial = `
         <li class="menu active ">
             <a href="#" class="dropdown-toggle" id="btnhome">
                 <div>
                     <img src="/Content/imagenes/Logo_inicio.png" alt="logo" width="30px" height="30px" style="margin-right:40px;"><span>PIMAS</span>
                 </div>
             </a>
-           
         </li>
-        <li class="menu  ">
-            <a href="#" class="dropdown-toggle" id="vertodos" >
+        <li class="menu">
+            <a href="#" class="dropdown-toggle" id="VerGrupos">
                 <div>
-                   <span>Grupos</span>
+                    <span>Grupos</span>
                 </div>
             </a>
-
         </li>
-        <li class="menu  ">
-            <a href="#" class="dropdown-toggle" id="vertodos" >
+        <li class="menu">
+            <a href="#" class="dropdown-toggle" id="vertodos">
                 <div>
-                   <span>Todos los Archivos</span>
+                    <span>Todos los Archivos</span>
                 </div>
             </a>
-
         </li>
-
-
     `;
     ul.innerHTML += contenidoInicial;
 
-    // Objeto para almacenar temáticas agrupadas por ParentTematicaID
-    var tematicasAgrupadas = {};
+    const tematicasAgrupadas = {};
 
-    data.Data.forEach((item, index) => {
-        if (item.NombreTematica && item.ParentTematicaID) {
-            const tematicaId = item.ParentTematicaID;
-            const tematica = item.NombreTematica;
-            const tematicaIDItem = item.TematicaID; // Nuevo - obtener el TematicaID
-            // Crear un array si no existe para el ParentTematicaID actual
-            tematicasAgrupadas[tematicaId] = tematicasAgrupadas[tematicaId] || [];
+    data.Data.forEach((item) => {
+        const { NombreTematica, ParentTematicaID, TematicaID, TematicaPadre } = item;
 
-            // Agregar la tematica al array correspondiente
-            tematicasAgrupadas[tematicaId].push({ tematica, tematicaIDItem });
+        if (NombreTematica && ParentTematicaID !== null) {
+            tematicasAgrupadas[ParentTematicaID] = tematicasAgrupadas[ParentTematicaID] || [];
+            tematicasAgrupadas[ParentTematicaID].push({ NombreTematica, TematicaID, TematicaPadre });
         }
     });
 
     // Recorrer el objeto y agregar las temáticas al DOM
     for (const [tematicaId, tematicasArray] of Object.entries(tematicasAgrupadas)) {
-        var nuevoLi = document.createElement('li');
+        const nuevoLi = document.createElement('li');
         nuevoLi.className = 'menu';
 
-        const tematicaEncontrada = tematicas.find(t => t.id == tematicaId);
+        const tematicaPadreNombre = tematicasArray[0]?.TematicaPadre?.NombreTematica || '';
 
         nuevoLi.innerHTML = `
-            <a href="#tematica_${tematicaId}" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle" id="tematicatxt" value="${tematicaId}" >
+            <a href="#tematica_${tematicaId}" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle" id="tematicatxt" value="${tematicaId}">
                 <div>
-                    <span id="idUnidad">Unidad: ${tematicaEncontrada.nombre}</span>
+                    <span id="idUnidad">Unidad: ${tematicaPadreNombre}</span>
                 </div>
                 <div>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </div>
             </a>
             <ul class="collapse submenu list-unstyled" id="tematica_${tematicaId}" data-bs-parent="#accordionExample">
-                ${tematicasArray.map(({ tematica, tematicaIDItem }) => `<li><a href="component_tabs.html"  data-tematica-id-item="${tematicaIDItem}"  id="subtematica">${tematica}</a></li>`).join('')}
+                ${tematicasArray.map(({ NombreTematica, TematicaID }) => `<li><a href="component_tabs.html"  data-tematica-id-item="${TematicaID}"  id="subtematica">${NombreTematica}</a></li>`).join('')}
             </ul>
         `;
         ul.appendChild(nuevoLi);
@@ -275,7 +256,7 @@ function agregarElementosTematicas(data) {
 
     // Agregar evento para gestionar el estado de los elementos
     ul.querySelectorAll('[data-bs-toggle="collapse"]').forEach((element) => {
-        element.addEventListener('click', function() {
+        element.addEventListener('click', function () {
             const collapseTarget = document.querySelector(element.getAttribute('href'));
             ul.querySelectorAll('.collapse.show').forEach((collapse) => {
                 if (collapse !== collapseTarget) {
