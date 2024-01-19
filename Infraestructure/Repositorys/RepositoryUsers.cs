@@ -1,8 +1,10 @@
 ﻿using Infraestructure.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -126,29 +128,46 @@ namespace Infraestructure.Repositorys
             }
         }
 
-        public async Task<Users> Register(Users user)
+        public async Task<Users> Register(Users usuario)
         {
             try
             {
-                Users User = new Users();
                 using (MyContext ctx = new MyContext())
                 {
-                    ctx.Configuration.LazyLoadingEnabled = false;
-                    ctx.Users.Add(user);
-                   await ctx.SaveChangesAsync();
+                    using (var connection = new SqlConnection(ctx.Database.Connection.ConnectionString))
+                    {
+                        await connection.OpenAsync();
+
+                        using (var command = new SqlCommand("SPRegisterUser", connection))
+                        {
+                            command.CommandType = CommandType.StoredProcedure;
+
+                            // Parámetros del procedimiento almacenado
+                            command.Parameters.AddWithValue("@ID", usuario.ID);
+                            command.Parameters.AddWithValue("@StatusID", usuario.StatusID);
+                            command.Parameters.AddWithValue("@Email", usuario.Email);
+                            command.Parameters.AddWithValue("@Name", usuario.Name);
+                            command.Parameters.AddWithValue("@Surname", usuario.Surname);
+                            command.Parameters.AddWithValue("@Password", usuario.Password);
+                            command.Parameters.AddWithValue("@Profile", usuario.Profile);
+                            command.Parameters.AddWithValue("@ExpirationDate", usuario.ExpirationDate ?? (object)DBNull.Value);
+                            command.Parameters.AddWithValue("@EmailActive", usuario.EmailActive);
+                            command.Parameters.AddWithValue("@InvitationCant", usuario.InvitationCant);
+
+                            await command.ExecuteNonQueryAsync();
+                        }
+                    }
                 }
 
-                return User;
+                return usuario;  // Devuelve el objeto Users después de la inserción
             }
             catch (DbUpdateException dbEx)
             {
-                string mensaje = "Error en la base de datos: \n" + dbEx.Message;
-                throw new Exception(mensaje);
+                throw new Exception($"Error en la base de datos: \n{dbEx.Message}");
             }
             catch (Exception ex)
             {
-                string mensaje = "Error en el servidor: \n" + ex.Message;
-                throw;
+                throw new Exception($"Error en el servidor: \n{ex.Message}");
             }
         }
     }
