@@ -60,8 +60,10 @@ function createUser() {
     var perfil = $("#perfil").val();
     var Email = $("#Email").val();
     var password = $("#password").val();
+    var ExpirationDate = "2024-12-31";
+    var StatusID = 1;
 
-    var url = "api/User/Register";
+    var url = "/api/User/Register";
 
     let formData = {
         ID: Identificacion,
@@ -70,9 +72,10 @@ function createUser() {
         Profile: perfil,
         Email: Email,
         Password: password,
+        ExpirationDate: ExpirationDate,
+        StatusID: StatusID
     };
 
-    console.log(formData);
     fetch(url, {
         method: "POST",
         headers: {
