@@ -52,22 +52,26 @@ namespace Infraestructure.Repositorys
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
 
-                    tematicas = await (from groupT in ctx.GroupT
-                                       join assetsGroup in ctx.AssetsGroup on groupT.ID equals assetsGroup.GroupID
-                                       join asset in ctx.Assets on assetsGroup.AssetsID equals asset.ID
-                                       join tematica in ctx.Tematicas on asset.TematicaId equals tematica.TematicaID
-                                       join parentTematica in ctx.Tematicas on tematica.ParentTematicaID equals parentTematica.TematicaID into parentGroup
-                                       from parent in parentGroup.DefaultIfEmpty()
-                                       where groupT.ID == id
-                                       select new Tematicas
-                                       {
-                                           TematicaID = tematica.TematicaID,
-                                           // Otras propiedades de Tematicas que necesites
+                    var tematicasQuery = (
+                        from groupT in ctx.GroupT
+                        join assetsGroup in ctx.AssetsGroup on groupT.ID equals assetsGroup.GroupID
+                        join asset in ctx.Assets on assetsGroup.AssetsID equals asset.ID
+                        join tematica in ctx.Tematicas on asset.TematicaId equals tematica.TematicaID
+                        where groupT.ID == id
+                        select tematica
+                    );
 
-                                           // Propiedad adicional para almacenar el nombre de la temática padre
-                                           ParentTematicaNombre = parent != null ? parent.NombreTematica : null
-                                       }).ToListAsync();
+                    tematicas = await tematicasQuery.ToListAsync();
+
+                    // Cargar las subtemáticas por separado
+                    foreach (var tematica in tematicas)
+                    {
+                        tematica.Subtematicas = await ctx.Tematicas
+                            .Where(subtematica => subtematica.ParentTematicaID == tematica.TematicaID)
+                            .ToListAsync();
+                    }
                 }
+
 
                 return tematicas;
             }
