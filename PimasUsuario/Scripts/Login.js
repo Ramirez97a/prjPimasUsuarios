@@ -61,15 +61,15 @@ function createUser() {
     var Email = $("#Email").val();
     var password = $("#password").val();
 
-    var url = "api/User/create/createUser";
+    var url = "api/User/Register";
 
     let formData = {
-        Identificacion: Identificacion,
-        Nombre: Nombre,
-        Apellidos: Apellidos,
-        perfil: perfil,
+        ID: Identificacion,
+        Name: Nombre,
+        Surname: Apellidos,
+        Profile: perfil,
         Email: Email,
-        password: password,
+        Password: password,
     };
 
     console.log(formData);
