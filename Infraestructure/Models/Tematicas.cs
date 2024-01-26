@@ -20,12 +20,15 @@ namespace Infraestructure.Models
         {
             this.Tematicas1 = new HashSet<Tematicas>();
             this.Assets = new HashSet<Assets>();
+          
         }
     
         public int TematicaID { get; set; }
         public string NombreTematica { get; set; }
         public Nullable<int> ParentTematicaID { get; set; }
-        public virtual Tematicas TematicaPadre { get; set; }
+
+     
+      
 
 
         [JsonIgnore]

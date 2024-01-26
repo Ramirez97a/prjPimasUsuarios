@@ -124,6 +124,7 @@
     <Compile Include="Models\Tematicas.cs">
       <DependentUpon>PimasStudents.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TematicTree.cs" />
     <Compile Include="Models\TipoAssets.cs">
       <DependentUpon>PimasStudents.tt</DependentUpon>
     </Compile>
