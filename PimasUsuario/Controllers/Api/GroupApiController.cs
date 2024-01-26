@@ -23,7 +23,7 @@ namespace PimasUsuario.Controllers.Api
             {
                 IServiceGroup service = new ServiceGroup();
 
-                IEnumerable<TematicTree> tematicas = await service.getTematicByGroup(id);
+                IEnumerable<OrderedTree> tematicas = await service.getTematicByGroup(id);
 
                 if (tematicas == null || !tematicas.Any())
                 {

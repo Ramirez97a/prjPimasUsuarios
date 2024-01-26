@@ -9,7 +9,7 @@ namespace Infraestructure.Repositorys
 {
    public interface IRepositoryGruop
     {
-        Task<IEnumerable<TematicTree>> getTematicByGroup(int id);
+        Task<IEnumerable<OrderedTree>> getTematicByGroup(int id);
         Task<GroupT> getbyId(int assetId);
 
     }

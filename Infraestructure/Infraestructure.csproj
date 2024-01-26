@@ -88,6 +88,7 @@
       <DependentUpon>PimasStudents.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\OrderedTree.cs" />
     <Compile Include="Models\Organization.cs">
       <DependentUpon>PimasStudents.tt</DependentUpon>
     </Compile>

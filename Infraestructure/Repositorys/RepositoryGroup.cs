@@ -96,7 +96,7 @@ namespace Infraestructure.Repositorys
         //    }
         //}
 
-        public async Task<IEnumerable<TematicTree>> getTematicByGroup(int id)
+        public async Task<IEnumerable<OrderedTree>> getTematicByGroup(int id)
         {
             IEnumerable<Tematicas> tematicas = null;
             try
@@ -130,7 +130,7 @@ namespace Infraestructure.Repositorys
                     // Construir la estructura de árbol
                     var arbolTematicas = BuildTematicasTree(tematicas, tematicasPadre);
 
-                    return arbolTematicas;
+                    return OrderedList(arbolTematicas);
                 }
             }
             catch (DbUpdateException dbEx)
@@ -181,6 +181,38 @@ namespace Infraestructure.Repositorys
                 return result;
         }
 
+        private List<OrderedTree> OrderedList(List<TematicTree> result)
+        {
+            try
+            {
+                if (result == null)
+                {
+                    return new List<OrderedTree>();
+                }
 
+                var groupedTemas = result
+                    .GroupBy(t => new { t.Id, t.Nombre })
+                    .Select(group => new OrderedTree
+                    {
+                        Id = group.Key.Id,
+                        Nombre = group.Key.Nombre,
+                        Hijos = group.Select(t => t.Hijo).Where(h => h != null).ToList(),
+                        Nietos = group.Select(t => t.Nieto).Where(n => n != null).ToList()
+                    })
+                    .ToList();
+
+                return groupedTemas;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "Error en la base de datos: \n" + dbEx.Message;
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "Error en el servidor: \n" + ex.Message;
+                throw;
+            }
+        }
     }
 }
