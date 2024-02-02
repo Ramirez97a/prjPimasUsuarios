@@ -1,0 +1,80 @@
+﻿.nav__list {
+    list-style: none;
+    padding: 0;
+}
+
+    .nav__list .tematicaid {
+        cursor: pointer;
+        display: block;
+        padding: 15px;
+        background-color: #0E1726;
+        color: white;
+        margin-bottom: 5px;
+        border-radius: 5px;
+    }
+    .nav__list #SubtematicaHijos {
+        cursor: pointer;
+        display: block;
+        padding: 15px 0px 15px 0px;
+        /* background-color: white;
+    color: black;*/
+        margin-bottom: 5px;
+        border-radius: 5px;
+    }
+
+
+
+        .nav__list #SubtematicaHijos:hover {
+            background-color: #4361EE;
+            color: white;
+        }
+
+.nav__list input[type="checkbox"] {
+    display: none;
+}
+
+.nav__list .group-list,
+.nav__list .sub-group-list,
+.nav__list .sub-sub-group-list {
+    list-style: none;
+    padding: 0;
+    margin-left: 20px;
+}
+
+.fa {
+    margin-right: 10px;
+}
+
+.fa-angle-right {
+    transition: transform 0.3s ease;
+}
+
+input[type="checkbox"]:checked + label .fa-angle-right {
+    transform: rotate(90deg);
+}
+
+.nav__list a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+    .nav__list a:hover {
+        /*  background-color: #ddd;*/
+    }
+/* Agregar estilos para el contenido colapsado */
+input[type="checkbox"] {
+    display: none;
+}
+
+    input[type="checkbox"] + label + ul {
+        display: none;
+        margin-left: 20px;
+    }
+
+    input[type="checkbox"]:checked + label + ul {
+        display: block;
+    }

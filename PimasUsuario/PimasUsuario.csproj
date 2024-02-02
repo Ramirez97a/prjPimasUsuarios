@@ -1309,6 +1309,7 @@
     <Content Include="Content\jquery.richtext.js" />
     <Content Include="Content\jquery.richtext.min.js" />
     <Content Include="Content\Login\login.css" />
+    <Content Include="Content\navLateral.css" />
     <Content Include="Content\plugins\animate\animate.css" />
     <Content Include="Content\plugins\apex\apexcharts.css" />
     <Content Include="Content\plugins\apex\apexcharts.min.js" />
@@ -1856,6 +1857,7 @@
     <Content Include="Scripts\Login.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\pdf.js" />
+    <Content Include="Scripts\text.js" />
     <Content Include="ViewerJS\compatibility.js" />
     <Content Include="ViewerJS\example.local.css" />
     <Content Include="ViewerJS\images\kogmbh.png" />
