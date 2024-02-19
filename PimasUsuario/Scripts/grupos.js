@@ -102,7 +102,7 @@ function obtenerDatosGetByTematicYAgregarElemento(idTematica) {
             }
             return response.json();
         })
-        .then(data => {
+        .then(data => {          
             agregarAssest(data);
         })
         .catch(error => {
@@ -111,7 +111,7 @@ function obtenerDatosGetByTematicYAgregarElemento(idTematica) {
 }
 
 
-function obtenerDatosYAgregarElemento() {
+function obtenerDatosYAgregarElemento(idfiltro) {
     var idGrupo = window.location.pathname.split('/').pop();
     var url = `/api/Assets/getByGroupLow?id=${idGrupo}`;
 
@@ -129,8 +129,10 @@ function obtenerDatosYAgregarElemento() {
             return response.json();
         })
         .then(data => {
-
-            agregarAssest(data);
+            console.log("esta es la data");
+            console.log(data);
+            console.log(" fin esta es la data");
+            agregarAssest(data, idfiltro);
         })
         .catch(error => {
             console.error('Error en la solicitud:', error);
@@ -156,7 +158,7 @@ function obtenerDatosSubtematicasYAgregarElemento() {
             return response.json();
         })
         .then(data => {
-            console.log(data);
+            
             agregarElementosTematicas(data);
             /* agregarAssest(data);*/
         })
@@ -251,30 +253,144 @@ function agregarElementosTematicas(data) {
 }
 
 
+function agregarAssest(data, idfiltro) {
+    console.log(idfiltro);
+    let imageUrl;
 
-function agregarAssest(data) {
+    if (idfiltro === "1") {
+        imageUrl = "/Content/imagenes/rojo.png";
+    }
+    else if (idfiltro === "2") {
+        imageUrl = "/Content/imagenes/Amarillo.png";
+
+    }
+    else if (idfiltro === "3") {
+        imageUrl = "/Content/imagenes/rosado.png";
+
+    }
+    else if (idfiltro === "4") {
+        imageUrl = "/Content/imagenes/VERDE.png";
+
+    }
+   
+
     const cardContainer = document.getElementById("cardContairnerAssest");
     cardContainer.innerHTML = "";
-    data.Data.forEach(asset => {
-        const card = document.createElement("div");
-        card.className = "col mb-2";
-        card.style.maxWidth = "300px";
 
-        // Crea la estructura de la tarjeta
-        const imageSrc = asset.Image ? `data:image/png;base64,${asset.Image}` : "/Content/imagenes/Imagen.jpeg";
-        card.innerHTML = `
-            <div class="card h-100">
-                <img src="${imageSrc}" class="card-img-top" alt="Asset Image" style="width: 100%; height: 100%;">
-                <div class="card-body d-flex flex-column align-items-center justify-content-center">
-                    <h6 style="color: #038512; font-weight:bold;" class="text-center">${asset.Title}</h6>
-                    <p class="text-center">${asset.Description}</p>
-                    <a href='/group/ShowAssets?id=${asset.ID} 'target="_blank" class="btn btn-primary">Ver contenido</a>
+    if (idfiltro) {      
+
+        const asset = data.Data.find(asset => asset.TipoAssetID === parseInt(idfiltro)); // Filtrar el asset que cumple con el filtro
+        if (asset) {
+            const cardColumn = document.createElement("div");
+            cardColumn.className = "col-lg-4 col-md-6 col-sm-12"; // Ocupa 4 columnas en pantallas grandes, 6 columnas en pantallas medianas y 12 columnas en pantallas pequeñas
+
+            const card = document.createElement("div");
+            card.className = "card mb-3";
+            card.id = "cardContenedor";
+            card.style.maxWidth = "100%"; // Ancho máximo para cada tarjeta
+            card.setAttribute("data-value", `${asset.TipoAssetID}`);
+
+            // Crea la estructura de la tarjeta
+            const imageSrc = asset.Image ? `data:image/png;base64,${asset.Image}` : "/Content/imagenes/Imagen.jpeg";
+            card.innerHTML = `
+            <div class="row g-0">
+                <div class="col">
+                    <div style="height: 100%;">
+                        <img src="${imageUrl}" class="img-fluid rounded-start" style="object-fit: cover; width: 100%; height: 100%;" alt="Asset Image">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card-body">
+                        <h5 class="card-title">${asset.Title}</h5>
+                        <p class="card-text">${asset.Description}</p>
+                        <a href='/group/ShowAssets?id=${asset.ID}' target="_blank" class="btn btn-primary">Ver contenido</a>
+                    </div>
                 </div>
             </div>
         `;
-        cardContainer.appendChild(card);
-    });
+
+            cardColumn.appendChild(card);
+            cardContainer.appendChild(cardColumn);
+        }
+    } else {
+        data.Data.forEach(asset => {
+            let imagenUrl;
+            if (asset.TipoAssetID === 1) {
+                imagenUrl = "/Content/imagenes/rojo.png";
+            }
+            else if (asset.TipoAssetID === 2) {
+                imagenUrl = "/Content/imagenes/Amarillo.png";
+
+            }
+            else if (asset.TipoAssetID === 3) {
+                imagenUrl = "/Content/imagenes/rosado.png";
+
+            }
+            else if (asset.TipoAssetID === 4) {
+                imagenUrl = "/Content/imagenes/VERDE.png";
+
+            }
+            const cardColumn = document.createElement("div");
+            cardColumn.className = "col-lg-4 col-md-6 col-sm-12"; // Ocupa 4 columnas en pantallas grandes, 6 columnas en pantallas medianas y 12 columnas en pantallas pequeñas
+
+            const card = document.createElement("div");
+            card.className = "card mb-3";
+            card.id = "cardContenedor";
+            card.style.maxWidth = "100%"; // Ancho máximo para cada tarjeta
+            card.setAttribute("data-value", `${asset.TipoAssetID}`);
+
+            // Crea la estructura de la tarjeta
+            const imageSrc = asset.Image ? `data:image/png;base64,${asset.Image}` : "/Content/imagenes/Imagen.jpeg";
+            card.innerHTML = `
+                <div class="row g-0">
+                    <div class="col">
+                    <div style="height: 100%;">
+                        <img src="${imagenUrl}" class="img-fluid rounded-start" style="height: 100%;" alt="Asset Image">
+                    </div>
+                </div>
+                    <div class="col">
+                        <div class="card-body">
+                            <h5 class="card-title">${asset.Title}</h5>
+                            <p class="card-text">${asset.Description}</p>
+                            <a href='/group/ShowAssets?id=${asset.ID}' target="_blank" class="btn btn-primary">Ver contenido</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            cardColumn.appendChild(card);
+            cardContainer.appendChild(cardColumn);
+        });
+    }
 }
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const filtros = document.querySelectorAll("#filtros");
+    filtros.forEach(filtro => {
+        filtro.addEventListener("click", function (event) {
+            event.preventDefault();
+            const idfiltro = filtro.getAttribute("data-value");
+            console.log("este es el id del filtro ");
+            console.log(idfiltro);
+            obtenerDatosYAgregarElemento(idfiltro)
+        });
+    });
+});
+
+//function filtrarTarjetas(valorFiltro) {
+//    const tarjetas = document.querySelectorAll("#cardContairnerAssest .card");
+//    tarjetas.forEach(tarjeta => {
+//        const tarjetaValue = tarjeta.getAttribute("data-value");
+//        if (tarjetaValue === valorFiltro || valorFiltro === "all") {
+//            tarjeta.style.display = "block";
+//        } else {
+//            tarjeta.style.display = "none";
+//        }
+//    });
+//}
+
+
+
 
 function obtenerDatosgetGruposYAgregarElemento() {
     var idGrupo = window.location.pathname.split('/').pop();
@@ -360,5 +476,4 @@ function obtenerdatosnav() {
         });
     });
 }
-
 
