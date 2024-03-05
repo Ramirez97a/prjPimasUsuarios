@@ -1,8 +1,10 @@
 ﻿using Infraestructure.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -126,6 +128,47 @@ namespace Infraestructure.Repositorys
             }
         }
 
+        public async Task<Users> Register(Users usuario)
+        {
+            try
+            {
+                using (MyContext ctx = new MyContext())
+                {
+                    using (var connection = new SqlConnection(ctx.Database.Connection.ConnectionString))
+                    {
+                        await connection.OpenAsync();
 
+                        using (var command = new SqlCommand("SPRegisterUser", connection))
+                        {
+                            command.CommandType = CommandType.StoredProcedure;
+
+                            // Parámetros del procedimiento almacenado
+                            command.Parameters.AddWithValue("@ID", usuario.ID);
+                            command.Parameters.AddWithValue("@StatusID", usuario.StatusID);
+                            command.Parameters.AddWithValue("@Email", usuario.Email);
+                            command.Parameters.AddWithValue("@Name", usuario.Name);
+                            command.Parameters.AddWithValue("@Surname", usuario.Surname);
+                            command.Parameters.AddWithValue("@Password", usuario.Password);
+                            command.Parameters.AddWithValue("@Profile", usuario.Profile);
+                            command.Parameters.AddWithValue("@ExpirationDate", usuario.ExpirationDate ?? (object)DBNull.Value);
+                            command.Parameters.AddWithValue("@EmailActive", usuario.EmailActive);
+                            command.Parameters.AddWithValue("@InvitationCant", usuario.InvitationCant);
+
+                            await command.ExecuteNonQueryAsync();
+                        }
+                    }
+                }
+
+                return usuario;  // Devuelve el objeto Users después de la inserción
+            }
+            catch (DbUpdateException dbEx)
+            {
+                throw new Exception($"Error en la base de datos: \n{dbEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error en el servidor: \n{ex.Message}");
+            }
+        }
     }
 }

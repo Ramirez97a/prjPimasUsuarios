@@ -1290,6 +1290,7 @@
     <Content Include="Content\imagenes\0707.jpg" />
     <Content Include="Content\imagenes\401 Error Unauthorized-rafiki %281%29.png" />
     <Content Include="Content\imagenes\401 Error Unauthorized-rafiki.svg" />
+    <Content Include="Content\imagenes\Amarillo.png" />
     <Content Include="Content\imagenes\artboard_123061.png" />
     <Content Include="Content\imagenes\folder_group_19081 %281%29.png" />
     <Content Include="Content\imagenes\folder_group_19081.png" />
@@ -1303,12 +1304,17 @@
     <Content Include="Content\imagenes\PDF.jpeg" />
     <Content Include="Content\imagenes\Plataforma register 1920x1380 %281%29.jpg" />
     <Content Include="Content\imagenes\PlataformaLogin.jpg" />
+    <Content Include="Content\imagenes\rojo.png" />
+    <Content Include="Content\imagenes\rosado.png" />
+    <Content Include="Content\imagenes\solid-color-image.png" />
     <Content Include="Content\imagenes\user.svg" />
     <Content Include="Content\imagenes\users_icon-icons.com_57999.png" />
+    <Content Include="Content\imagenes\VERDE.png" />
     <Content Include="Content\imagenes\Video.jpg" />
     <Content Include="Content\jquery.richtext.js" />
     <Content Include="Content\jquery.richtext.min.js" />
     <Content Include="Content\Login\login.css" />
+    <Content Include="Content\navLateral.css" />
     <Content Include="Content\plugins\animate\animate.css" />
     <Content Include="Content\plugins\apex\apexcharts.css" />
     <Content Include="Content\plugins\apex\apexcharts.min.js" />
@@ -1856,6 +1862,7 @@
     <Content Include="Scripts\Login.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\pdf.js" />
+    <Content Include="Scripts\text.js" />
     <Content Include="ViewerJS\compatibility.js" />
     <Content Include="ViewerJS\example.local.css" />
     <Content Include="ViewerJS\images\kogmbh.png" />
@@ -2265,6 +2272,7 @@
     <Content Include="ViewerJS\PDF\web\standard_fonts\LICENSE_LIBERATION" />
     <Content Include="ViewerJS\PDF\web\viewer.js.map" />
     <Content Include="Views\group\ShowAssets.cshtml" />
+    <Content Include="Views\Login\CreateUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

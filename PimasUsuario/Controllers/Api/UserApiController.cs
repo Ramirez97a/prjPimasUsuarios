@@ -159,5 +159,42 @@ namespace PimasUsuario.Controllers.Api
             }
         }
 
+        [HttpPost]
+        [Route("Register")]
+        public async Task<IHttpActionResult> Register(Users user)
+        {
+            ResponseModel response = new ResponseModel();
+            try
+            {
+                IServiceUsers service = new ServiceUser();
+
+                Users Users = await service.Register(user);
+
+                if (Users == null)
+                {
+                    response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    response.Message = "Usuario no registrado ";
+
+                }
+                else
+                {
+                    response.StatusCode = (int)HttpStatusCode.OK;
+                    response.Message = "Usuario resgistrado";
+                    response.userId = Users.ID;
+
+                }
+
+                return Json(response);
+            }
+            catch (Exception e)
+            {
+
+                response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                response.Message = e.Message;
+
+                return Json(response);
+            }
+        }
+
     }
 }

@@ -128,9 +128,9 @@ namespace Infraestructure.Repositorys
                             command.Parameters.AddWithValue("@GroupID", group);
                             command.Parameters.AddWithValue("@TematicaID", tematicId);
 
-                            using (var reader = command.ExecuteReader())
+                            using (var reader = await command.ExecuteReaderAsync())
                             {
-                                while (await reader.ReadAsync())
+                                while (reader.Read())
                                 {
                                     Assets assets = new Assets
                                     {
@@ -139,7 +139,7 @@ namespace Infraestructure.Repositorys
                                         Description = reader["Description"].ToString(),
                                         Image = reader["Image"] != DBNull.Value ? (byte[])reader["Image"] : null,
                                         TypeContent = reader["TypeContent"].ToString(),
-                                        ExternalLink = reader["ExternalLink"] != DBNull.Value ? reader["ExternalLink"].ToString():"",
+                                        ExternalLink = reader["ExternalLink"] != DBNull.Value ? reader["ExternalLink"].ToString() : "",
                                         AssetPublic = reader["AssetPublic"].ToString(),
                                         Downloadable = (bool)reader["Downloadable"],
                                         TipoAssetID = reader["TipoAssetID"] != DBNull.Value ? Convert.ToInt32(reader["TipoAssetID"]) : 0,

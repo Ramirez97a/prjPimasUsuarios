@@ -9,7 +9,7 @@ namespace ApplicationCore.Services
 {
    public interface IServiceGroup
     {
-        Task<IEnumerable<Tematicas>> getTematicByGroup(int id);
+        Task<IEnumerable<OrderedTree>> getTematicByGroup(int id);
         Task<GroupT> getbyId(int assetId);
 
     }

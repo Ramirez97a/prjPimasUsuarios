@@ -21,7 +21,7 @@ namespace ApplicationCore.Services
             return await repository.getbyId(id);
         }
 
-        public async Task<IEnumerable<Tematicas>> getTematicByGroup(int id)
+        public async Task<IEnumerable<OrderedTree>> getTematicByGroup(int id)
         {
             return await repository.getTematicByGroup(id);
         }

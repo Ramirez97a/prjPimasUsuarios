@@ -1,7 +1,7 @@
 ﻿
 
 $(document).ready(function () {
-  
+
     function showLoader() {
         document.getElementById('overlay').style.display = 'block';
         document.getElementById('loader').style.display = 'block';
@@ -20,12 +20,12 @@ $(document).ready(function () {
         contengrupoElement.removeAttribute('style');
     }, 2000);
 
- 
-     
+
+
     $('#filtros').on('click', function (event) {
         event.preventDefault();
         var idTematica = document.getElementById('idfantastaSubtematica').value;
-      
+
         var cardContairnerAssest = document.getElementById('cardContairnerAssest');
         cardContairnerAssest.removeAttribute('style');
         obtenerDatosGetByTematicYAgregarElemento(idTematica);
@@ -35,11 +35,6 @@ $(document).ready(function () {
         obtenerDatosYAgregarElemento();
 
     });
-    //$('#vertodos').on('click', function (event) {
-    
-      
-
-    //});
 
     $(document).on('click', '#vertodos', function () {
         event.preventDefault();
@@ -48,11 +43,11 @@ $(document).ready(function () {
         var lblhidden = document.querySelectorAll('[id*="lblhidden"]');
 
         obtenerDatosYAgregarElemento();
-      
+
         elements.forEach(function (element) {
             element.classList.remove('show');
-        });    
-        
+        });
+
         tematicaElement.setAttribute('aria-expanded', 'false');
 
 
@@ -60,11 +55,16 @@ $(document).ready(function () {
         lblhidden.forEach(function (element) {
             element.style.display = "none";
         });
-        
+
     })
-  
+
     $(document).on('click', '#subtematica', function () {
         event.preventDefault();
+    })
+    $(document).on('click', '#VerGrupos', function () {
+
+        window.location.href = `/group/Index?`;
+
     })
 
     $(document).on('click', '#filtros', function () {
@@ -73,6 +73,7 @@ $(document).ready(function () {
         var cardContairnerAssest = document.getElementById('cardContairnerAssest');
         cardContairnerAssest.removeAttribute('style');
     })
+
     $(document).on('click', '#tematicatxt', function () {
         var elements = document.querySelectorAll('[id*="lblhidden"]');
 
@@ -82,35 +83,12 @@ $(document).ready(function () {
         });
     })
 
-    $(document).on('click', '#tematicatxt', function () {
-        
-        var tematicaid;
-        var elementosA = document.querySelectorAll('[data-bs-toggle="collapse"]');
-        var spanUnidad = document.getElementById('unidadHeader');
-        elementosA.forEach(function (elementoA) {
-            if (elementoA.getAttribute('aria-expanded') === 'true') {
-                tematicaid = elementoA.getAttribute('value');
-
-                if (tematicaid == 1) {
-                    spanUnidad.textContent = 'Limites';
-                }
-                else {
-                    spanUnidad.textContent = 'Derivadas';
-                }
-            }
-        });
-       
-     
-     })
-
-   
-  
 });
 
 
 function obtenerDatosGetByTematicYAgregarElemento(idTematica) {
-    var idGrupo = window.location.pathname.split('/').pop();   
-    
+    var idGrupo = window.location.pathname.split('/').pop();
+
     var url = `/api/Assets/byTematic?tematicId=${idTematica}&group=${idGrupo}`;
     fetch(url, {
         method: "GET",
@@ -124,8 +102,7 @@ function obtenerDatosGetByTematicYAgregarElemento(idTematica) {
             }
             return response.json();
         })
-        .then(data => {
-         
+        .then(data => {          
             agregarAssest(data);
         })
         .catch(error => {
@@ -134,11 +111,10 @@ function obtenerDatosGetByTematicYAgregarElemento(idTematica) {
 }
 
 
-function obtenerDatosYAgregarElemento() {
+function obtenerDatosYAgregarElemento(idfiltro) {
     var idGrupo = window.location.pathname.split('/').pop();
     var url = `/api/Assets/getByGroupLow?id=${idGrupo}`;
-  
-  
+
 
     fetch(url, {
         method: "GET",
@@ -153,8 +129,10 @@ function obtenerDatosYAgregarElemento() {
             return response.json();
         })
         .then(data => {
-          
-            agregarAssest(data);
+            console.log("esta es la data");
+            console.log(data);
+            console.log(" fin esta es la data");
+            agregarAssest(data, idfiltro);
         })
         .catch(error => {
             console.error('Error en la solicitud:', error);
@@ -180,9 +158,9 @@ function obtenerDatosSubtematicasYAgregarElemento() {
             return response.json();
         })
         .then(data => {
-          
+            
             agregarElementosTematicas(data);
-           /* agregarAssest(data);*/
+            /* agregarAssest(data);*/
         })
         .catch(error => {
             console.error('Error en la solicitud:', error);
@@ -190,121 +168,235 @@ function obtenerDatosSubtematicasYAgregarElemento() {
 }
 
 function agregarElementosTematicas(data) {
-    var ul = document.getElementById('accordionExample');
-    const tematicas = [
-        { id: 1, nombre: 'Limites' },
-        { id: 2, nombre: 'Derivadas' }
-    ];
+    const ul = document.getElementById('accordionExample');
+    ul.innerHTML = ''; // Limpiar el contenido actual
 
-    // Limpiar el contenido actual de la lista
-    ul.innerHTML = '';
-
-    // Agregar el contenido HTML antes del bucle forEach
-    var contenidoInicial = `
-        <li class="menu active ">
+    const contenidoInicial = `
+       <li class="menu active ">
             <a href="#" class="dropdown-toggle" id="btnhome">
                 <div>
                     <img src="/Content/imagenes/Logo_inicio.png" alt="logo" width="30px" height="30px" style="margin-right:40px;"><span>PIMAS</span>
                 </div>
             </a>
-           
         </li>
-        <li class="menu  ">
-            <a href="#" class="dropdown-toggle" id="vertodos" >
+        <li class="menu">
+            <a href="#" class="tematicaid"  id="VerGrupos">
                 <div>
-                   <span>Ver todos</span>
+                    <span>Grupos</span>
                 </div>
             </a>
-
         </li>
-
-
+        <li class="menu">
+            <a href="#" class="tematicaid"  id="vertodos">
+                <div>
+                    <span>Todos los Archivos</span>
+                </div>
+            </a>
+        </li>
     `;
     ul.innerHTML += contenidoInicial;
 
-    // Objeto para almacenar temáticas agrupadas por ParentTematicaID
-    var tematicasAgrupadas = {};
+    const tematicasAgrupadas = {};
 
-    data.Data.forEach((item, index) => {
-        if (item.NombreTematica && item.ParentTematicaID) {
-            const tematicaId = item.ParentTematicaID;
-            const tematica = item.NombreTematica;
-            const tematicaIDItem = item.TematicaID; // Nuevo - obtener el TematicaID
-            // Crear un array si no existe para el ParentTematicaID actual
-            tematicasAgrupadas[tematicaId] = tematicasAgrupadas[tematicaId] || [];
+    data.Data.forEach((item) => {
+        const { Id, Nombre, Hijos, Nietos } = item;
 
-            // Agregar la tematica al array correspondiente
-            tematicasAgrupadas[tematicaId].push({ tematica, tematicaIDItem });
+        if (Nombre && Hijos.length > 0) {
+            tematicasAgrupadas[Id] = tematicasAgrupadas[Id] || [];
+            tematicasAgrupadas[Id].push({ Nombre, Hijos, Nietos });
         }
     });
 
-    // Recorrer el objeto y agregar las temáticas al DOM
     for (const [tematicaId, tematicasArray] of Object.entries(tematicasAgrupadas)) {
-        var nuevoLi = document.createElement('li');
-        nuevoLi.className = 'menu';
-
-        const tematicaEncontrada = tematicas.find(t => t.id == tematicaId);
+        const nuevoLi = document.createElement('li');
+        nuevoLi.className = '';
 
         nuevoLi.innerHTML = `
-            <a href="#tematica_${tematicaId}" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle" id="tematicatxt" value="${tematicaId}" >
-                <div>
-                    <span id="idUnidad">Unidad: ${tematicaEncontrada.nombre}</span>
-                </div>
-                <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </div>
-            </a>
-            <ul class="collapse submenu list-unstyled" id="tematica_${tematicaId}" data-bs-parent="#accordionExample">
-                ${tematicasArray.map(({ tematica, tematicaIDItem }) => `<li><a href="component_tabs.html"  data-tematica-id-item="${tematicaIDItem}"  id="subtematica">${tematica}</a></li>`).join('')}
-            </ul>
-        `;
+                    <input id="group-${tematicaId}" type="checkbox" hidden />
+                    <label for="group-${tematicaId}"  class="tematicaid" id="tematicatxt"  data-tematica-id-item="${tematicaId}" value="${tematicasArray[0]?.Nombre}">
+                        <span  class="fa fa-angle-right"></span>${tematicasArray[0]?.Nombre || ''}
+                    </label>
+
+                    <ul class="group-list">
+                        ${tematicasArray[0]?.Hijos.map(subtema => {
+            const tieneNietos = tematicasArray[0]?.Nietos.some(nieto => nieto.ParentTematicaID === subtema.TematicaID);
+
+            return tieneNietos ? `
+                                <li>
+                                    <input id="sub-group-${subtema.TematicaID}" type="checkbox" hidden />
+                                    <label for="sub-group-${subtema.TematicaID}" data-tematica-id-item="${subtema.TematicaID}" value="${subtema.NombreTematica}" id="SubtematicaHijos">
+                                        <span  class="fa fa-angle-right"></span>${subtema.NombreTematica}
+                                    </label>
+                                    <ul class="sub-group-list">
+                                        ${tematicasArray[0]?.Nietos.filter(nieto => nieto.ParentTematicaID === subtema.TematicaID).map(nieto => `
+                                            <li>
+                                                <a href="#" data-tematica-id-item="${nieto.TematicaID}">${nieto.NombreTematica}</a>
+                                            </li>`).join('')}
+                                    </ul>
+                                </li>
+                            ` : `
+                                <li>
+                                    <label for="sub-group-${subtema.TematicaID}" data-tematica-id-item="${subtema.TematicaID}" value="${subtema.NombreTematica}" id="SubtematicaHijos">
+                                        <span ></span>${subtema.NombreTematica}
+                                    </label>
+
+                                </li>`;
+        }).join('')}
+                    </ul>
+         `;
+
+
         ul.appendChild(nuevoLi);
     }
 
-    // Agregar evento para gestionar el estado de los elementos
-    ul.querySelectorAll('[data-bs-toggle="collapse"]').forEach((element) => {
-        element.addEventListener('click', function() {
-            const collapseTarget = document.querySelector(element.getAttribute('href'));
-            ul.querySelectorAll('.collapse.show').forEach((collapse) => {
-                if (collapse !== collapseTarget) {
-                    collapse.classList.remove('show');
-                }
-            });
-        });
-    });
     obtenerdatosnav();
 }
 
 
-function agregarAssest(data) {   
+function agregarAssest(data, idfiltro) {
+    console.log(idfiltro);
+    let imageUrl;
+
+    if (idfiltro === "1") {
+        imageUrl = "/Content/imagenes/rojo.png";
+    }
+    else if (idfiltro === "2") {
+        imageUrl = "/Content/imagenes/Amarillo.png";
+
+    }
+    else if (idfiltro === "3") {
+        imageUrl = "/Content/imagenes/rosado.png";
+
+    }
+    else if (idfiltro === "4") {
+        imageUrl = "/Content/imagenes/VERDE.png";
+
+    }
+   
+
     const cardContainer = document.getElementById("cardContairnerAssest");
     cardContainer.innerHTML = "";
-    data.Data.forEach(asset => {      
-        const card = document.createElement("div");
-        card.className = "col mb-2";
-        card.style.maxWidth = "300px";
 
-        // Crea la estructura de la tarjeta
-        const imageSrc = asset.Image ? `data:image/png;base64,${asset.Image}` : "/Content/imagenes/Imagen.jpeg";
-        card.innerHTML = `
-            <div class="card h-100">
-                <img src="${imageSrc}" class="card-img-top" alt="Asset Image" style="width: 100%; height: 100%;">
-                <div class="card-body d-flex flex-column align-items-center justify-content-center">
-                    <h6 style="color: #038512; font-weight:bold;" class="text-center">${asset.Title}</h6>
-                    <p class="text-center">${asset.Description}</p>
-                    <a href='/group/ShowAssets?id=${asset.ID} 'target="_blank" class="btn btn-primary">Ver contenido</a>
+    if (idfiltro) {      
+
+        const asset = data.Data.find(asset => asset.TipoAssetID === parseInt(idfiltro)); // Filtrar el asset que cumple con el filtro
+        if (asset) {
+            const cardColumn = document.createElement("div");
+            cardColumn.className = "col-lg-4 col-md-6 col-sm-12"; // Ocupa 4 columnas en pantallas grandes, 6 columnas en pantallas medianas y 12 columnas en pantallas pequeñas
+
+            const card = document.createElement("div");
+            card.className = "card mb-3";
+            card.id = "cardContenedor";
+            card.style.maxWidth = "100%"; // Ancho máximo para cada tarjeta
+            card.setAttribute("data-value", `${asset.TipoAssetID}`);
+
+            // Crea la estructura de la tarjeta
+            const imageSrc = asset.Image ? `data:image/png;base64,${asset.Image}` : "/Content/imagenes/Imagen.jpeg";
+            card.innerHTML = `
+            <div class="row g-0">
+                <div class="col">
+                    <div style="height: 100%;">
+                        <img src="${imageUrl}" class="img-fluid rounded-start" style="object-fit: cover; width: 100%; height: 100%;" alt="Asset Image">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card-body">
+                        <h5 class="card-title">${asset.Title}</h5>
+                        <p class="card-text">${asset.Description}</p>
+                        <a href='/group/ShowAssets?id=${asset.ID}' target="_blank" class="btn btn-primary">Ver contenido</a>
+                    </div>
                 </div>
             </div>
-        `;      
-        cardContainer.appendChild(card);
-    });
+        `;
+
+            cardColumn.appendChild(card);
+            cardContainer.appendChild(cardColumn);
+        }
+    } else {
+        data.Data.forEach(asset => {
+            let imagenUrl;
+            if (asset.TipoAssetID === 1) {
+                imagenUrl = "/Content/imagenes/rojo.png";
+            }
+            else if (asset.TipoAssetID === 2) {
+                imagenUrl = "/Content/imagenes/Amarillo.png";
+
+            }
+            else if (asset.TipoAssetID === 3) {
+                imagenUrl = "/Content/imagenes/rosado.png";
+
+            }
+            else if (asset.TipoAssetID === 4) {
+                imagenUrl = "/Content/imagenes/VERDE.png";
+
+            }
+            const cardColumn = document.createElement("div");
+            cardColumn.className = "col-lg-4 col-md-6 col-sm-12"; // Ocupa 4 columnas en pantallas grandes, 6 columnas en pantallas medianas y 12 columnas en pantallas pequeñas
+
+            const card = document.createElement("div");
+            card.className = "card mb-3";
+            card.id = "cardContenedor";
+            card.style.maxWidth = "100%"; // Ancho máximo para cada tarjeta
+            card.setAttribute("data-value", `${asset.TipoAssetID}`);
+
+            // Crea la estructura de la tarjeta
+            const imageSrc = asset.Image ? `data:image/png;base64,${asset.Image}` : "/Content/imagenes/Imagen.jpeg";
+            card.innerHTML = `
+                <div class="row g-0">
+                    <div class="col">
+                    <div style="height: 100%;">
+                        <img src="${imagenUrl}" class="img-fluid rounded-start" style="height: 100%;" alt="Asset Image">
+                    </div>
+                </div>
+                    <div class="col">
+                        <div class="card-body">
+                            <h5 class="card-title">${asset.Title}</h5>
+                            <p class="card-text">${asset.Description}</p>
+                            <a href='/group/ShowAssets?id=${asset.ID}' target="_blank" class="btn btn-primary">Ver contenido</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            cardColumn.appendChild(card);
+            cardContainer.appendChild(cardColumn);
+        });
+    }
 }
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const filtros = document.querySelectorAll("#filtros");
+    filtros.forEach(filtro => {
+        filtro.addEventListener("click", function (event) {
+            event.preventDefault();
+            const idfiltro = filtro.getAttribute("data-value");
+            console.log("este es el id del filtro ");
+            console.log(idfiltro);
+            obtenerDatosYAgregarElemento(idfiltro)
+        });
+    });
+});
+
+//function filtrarTarjetas(valorFiltro) {
+//    const tarjetas = document.querySelectorAll("#cardContairnerAssest .card");
+//    tarjetas.forEach(tarjeta => {
+//        const tarjetaValue = tarjeta.getAttribute("data-value");
+//        if (tarjetaValue === valorFiltro || valorFiltro === "all") {
+//            tarjeta.style.display = "block";
+//        } else {
+//            tarjeta.style.display = "none";
+//        }
+//    });
+//}
+
+
+
 
 function obtenerDatosgetGruposYAgregarElemento() {
     var idGrupo = window.location.pathname.split('/').pop();
     var url = `/api/Group/id?id=${idGrupo}`;
     var nameGrupo = document.getElementById('Grupo');
- 
+
 
 
     fetch(url, {
@@ -320,9 +412,9 @@ function obtenerDatosgetGruposYAgregarElemento() {
             return response.json();
         })
         .then(data => {
-                
+
             nameGrupo.textContent = `${data.Data.Description}`;
-         
+
         })
         .catch(error => {
             console.error('Error en la solicitud:', error);
@@ -331,47 +423,57 @@ function obtenerDatosgetGruposYAgregarElemento() {
 
 obtenerDatosYAgregarElemento();
 obtenerDatosSubtematicasYAgregarElemento();
-
 obtenerDatosgetGruposYAgregarElemento();
-//obtenerDatosgetGruposYAgregarElemento();
+
 
 
 
 function obtenerdatosnav() {
-    var tematicaid;    
-    var subtematica;
-    var subtematicaTxt;
-    var ul = document.getElementById('accordionExample');    
-    var elementosA = document.querySelectorAll('[data-bs-toggle="collapse"]');
-    var spanUnidad = document.getElementById('subtematicasHeader');
+    var ul = document.getElementById('accordionExample');
+    var spanSubtematicasHeader = document.getElementById('subtematicasHeader');
+    var spanUnidadHeader = document.getElementById('unidadHeader');
     var profesor = document.getElementById('profesor');
+    var tematicaNameElements = document.querySelectorAll('#tematicatxt');
+    var SubtematicaHijosElements = document.querySelectorAll('#SubtematicaHijos');
+
+    function handleTematicaClick(element) {
+        var tematicaValue = element.getAttribute('value');
+        spanSubtematicasHeader.textContent = "";
+        spanUnidadHeader.textContent = tematicaValue;
+    }
+
+    function handleSubtematicaClick(element) {
+        var subtematicaValue = element.getAttribute('value');
+        console.log(subtematicaValue);
+        spanSubtematicasHeader.textContent = subtematicaValue;
+    }
+
+    function handleAccordionItemClick(element) {
+        var subtematicaId = element.getAttribute('data-tematica-id-item');
+        console.log(subtematicaId);
+
+        profesor.textContent = 'Profesor Prueba';
+        document.getElementById('idfantastaSubtematica').value = subtematicaId;
+
+        obtenerDatosGetByTematicYAgregarElemento(subtematicaId);
+    }
+
     ul.querySelectorAll('[data-tematica-id-item]').forEach((element) => {
-
         element.addEventListener('click', function () {
-            subtematica = element.getAttribute('data-tematica-id-item');
-            subtematicaTxt = element.innerHTML;
-
-
-            elementosA.forEach(function (elementoA) {
-                if (elementoA.getAttribute('aria-expanded') === 'true') {
-                    tematicaid = elementoA.getAttribute('value');
-
-
-                }
-            });
-
-            spanUnidad.textContent = `${subtematicaTxt}`;
-            profesor.textContent = 'Profesor Prueba';
-            document.getElementById('idfantastaSubtematica').value = `${subtematica}`;
-
-            obtenerDatosGetByTematicYAgregarElemento(subtematica);
-
-           
-          
-           
+            handleAccordionItemClick(element);
         });
-        
+    });
+
+    tematicaNameElements.forEach(function (element) {
+        element.addEventListener('click', function () {
+            handleTematicaClick(element);
+        });
+    });
+
+    SubtematicaHijosElements.forEach(function (element) {
+        element.addEventListener('click', function () {
+            handleSubtematicaClick(element);
+        });
     });
 }
 
-  

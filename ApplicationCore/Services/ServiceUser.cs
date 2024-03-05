@@ -35,5 +35,10 @@ namespace ApplicationCore.Services
             string codifiedPass = Security.EncrypthAES(userPassword);
             return await repository.Login(usermail, codifiedPass);
         }
+
+        public async Task<Users> Register(Users user)
+        {
+            return await repository.Register(user);
+        }
     }
 }

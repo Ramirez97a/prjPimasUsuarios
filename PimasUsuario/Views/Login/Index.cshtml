@@ -1,42 +1,58 @@
-﻿
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <title>Login Cover | CORK - Multipurpose Bootstrap Dashboard Template </title>
+   
+</head>
+<body class="form">
 
 
-<div class="form-container">
-    @*@using (Html.BeginForm("Login", "Login", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {*@
-        <div class="brand-wrapper">
-            <img src="~/Content/Imagenes/Logo_inicio.png" alt="logo" class="logo" style="width: 100px;position: absolute;left: 60px;margin-top: 31px;">
-        </div>
+    <div class="form-container">
         <div class="form-form">
-
             <div class="form-form-wrap">
                 <div class="form-container">
                     <div class="form-content">
 
-                        <h1 class="" style="text-align:center; margin-bottom:50px;">Inicio de Sesión</h1>
+                        <h1 class="">Inicio de Sesión</h1>
                         <form class="text-left">
                             <div class="form">
-                                <div id="email-field" class="field-wrapper input">
-                                    <input id="email" name="email" type="text" value="" placeholder="Email">
+
+                                <div id="username-field" class="field-wrapper input">
+
+                                    <input id="email" name="username" type="text" class="" placeholder="Email">
                                 </div>
-                                @*mb-2*@
-                                <div id="email-field" class="field-wrapper input">
-                                    <input id="password" name="password" type="text" value="" placeholder="Contraseña">
+
+                                <div id="password-field" class="field-wrapper input mb-2">
+                                    <input id="password" name="password" type="password" class="" placeholder="Contraseña">
                                 </div>
                                 <div class="d-sm-flex justify-content-between">
+                                    <div class="field-wrapper toggle-pass">
+                                        <p class="d-inline-block">Mostrar Contraseña </p>
+                                        <label class="switch s-primary">
+                                            <input type="checkbox" id="toggle-password" class="d-none">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="d-sm-flex justify-content-between mt-4">
 
                                     <button style="border-radius: 10px;" type="button" class="btn btn-block" id="btnsuccesLogin">
                                         Ingresar
                                     </button>
                                 </div>
+                                <div class="field-wrapper mt-5">
 
-                                <div class="field-wrapper">
                                     <a href="@Url.Action("ForgotPassword", "Login")" class="forgot-pass-link">¿Has olvidado la contraseña?</a>
                                 </div>
+                                <div class="field-wrapper mt-5">
+                                    <span>¿No estás registrado?<strong><a href="@Url.Action("CreateUser", "Login")" class=""> Registar</a></strong></span>
+                                
+                                </div>
+
 
                             </div>
                         </form>
@@ -49,8 +65,9 @@
             <div class="l-image">
             </div>
         </div>
-    
     </div>
 
 
 
+</body>
+</html>

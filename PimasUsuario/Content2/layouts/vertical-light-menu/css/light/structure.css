@@ -761,7 +761,7 @@ body .navbar .dark-mode, body:not(.dark) .navbar .dark-mode {
 ===============
 */
 .sidebar-wrapper {
-  width: 212px;
+  width: 240px;
   position: fixed;
   z-index: 1030;
   transition: width 0.1s, left 0.1s;

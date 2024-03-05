@@ -14,5 +14,7 @@ namespace Infraestructure.Repositorys
         Task<IEnumerable<GroupT>> getGropsByUser(int userId);
 
         Task<Users> getById(int id);
+
+        Task<Users> Register(Users user);
     }
 }

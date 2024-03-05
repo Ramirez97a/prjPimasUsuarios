@@ -17,21 +17,22 @@ namespace PimasUsuario.Controllers
         {
             IEnumerable<GroupT> lista = null;
             IServiceUsers _ServiceUsers = new ServiceUser();
-
-
-            //int id = userId;
-
+          
             Users user = (Users)Session["User"];
 
             lista = await _ServiceUsers.getGropsByUser(user.ID);
-           
+
             ViewBag.UserId = user.ID;
+            
 
             return View(lista);
         }
         public ActionResult Grupos()
         {
-           
+            Users user = (Users)Session["User"];
+            
+            ViewBag.UserId = 99900;
+
 
             return View();
         }
@@ -65,5 +66,6 @@ namespace PimasUsuario.Controllers
                 return null;
             }
         }
+       
     }
 }
