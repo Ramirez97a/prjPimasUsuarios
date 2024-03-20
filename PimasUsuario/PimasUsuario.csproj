@@ -1297,6 +1297,11 @@
     <Content Include="Content\imagenes\fondo_404.jpg" />
     <Content Include="Content\imagenes\group_icon_129531.png" />
     <Content Include="Content\imagenes\Imagen.jpeg" />
+    <Content Include="Content\imagenes\libro1.0.png" />
+    <Content Include="Content\imagenes\libro2.png" />
+    <Content Include="Content\imagenes\libro3.png" />
+    <Content Include="Content\imagenes\libro4.png" />
+    <Content Include="Content\imagenes\libro5.png" />
     <Content Include="Content\imagenes\logo-home-129x128.png" />
     <Content Include="Content\imagenes\LogoPlataforma1920x1380-02.png" />
     <Content Include="Content\imagenes\Logo_inicio.png" />
