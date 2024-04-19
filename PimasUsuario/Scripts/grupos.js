@@ -102,7 +102,7 @@ function obtenerDatosGetByTematicYAgregarElemento(idTematica) {
             }
             return response.json();
         })
-        .then(data => {          
+        .then(data => {
             agregarAssest(data);
         })
         .catch(error => {
@@ -158,7 +158,7 @@ function obtenerDatosSubtematicasYAgregarElemento() {
             return response.json();
         })
         .then(data => {
-            
+
             agregarElementosTematicas(data);
             /* agregarAssest(data);*/
         })
@@ -272,19 +272,19 @@ function agregarAssest(data, idfiltro) {
     //    imageUrl = "/Content/imagenes/VERDE.png";
 
     //}
-   
-    imagenUrl = "/Content/imagenes/libro1.png";
+
+    imagenUrl = "/Content/imagenes/Theory-and-Exercises.png";
     const cardContainer = document.getElementById("cardContairnerAssest");
     cardContainer.innerHTML = "";
 
-    if (idfiltro) {      
+    if (idfiltro) {
 
         const asset = data.Data.find(asset => asset.TipoAssetID === parseInt(idfiltro)); // Filtrar el asset que cumple con el filtro
-        if (asset) {          
-            
+        if (asset) {
+
             const card = document.createElement("div");
             card.className = "col mb-4";
-            card.id = "cardContenedor";          
+            card.id = "cardContenedor";
             card.setAttribute("data-value", `${asset.TipoAssetID}`);
 
             // Crea la estructura de la tarjeta
@@ -293,34 +293,47 @@ function agregarAssest(data, idfiltro) {
              <div class="card">
                 <div id="conteinerImg_${asset.TipoAssetID}" class="imgcontenedor"> <img src="${imagenUrl}" id="imgcard" class="card-img-top" alt="..."> </div>
                 <div class="card-body">
-                    <h5 class="card-title">${asset.Title} eee</h5>
+                    <h5 class="card-title">${asset.Title} </h5>
                     <p class="card-text">${asset.Description}</p>
                     <a href='/group/ShowAssets?id=${asset.ID}' target="_blank" class="btn btn-primary">Ver contenido</a>
                 </div>
             </div>
         `;
-                   
+
             cardContainer.appendChild(card);
         }
     } else {
         data.Data.forEach(asset => {
             let imagenUrl;
-            //if (asset.TipoAssetID === 1) {
-            //    imagenUrl = "/Content/imagenes/rojo.png";
-            //}
-            //else if (asset.TipoAssetID === 2) {
-            //    imagenUrl = "/Content/imagenes/Amarillo.png";
+            if (asset.TipoAssetID === 1) {
+                imagenUrl = "/Content/imagenes/-Default-Icon-1.png";
+            }
+            else if (asset.TipoAssetID === 2) {
+                imagenUrl = "/Content/imagenes/Activities.png";
 
-            //}
-            //else if (asset.TipoAssetID === 3) {
-            //    imagenUrl = "/Content/imagenes/rosado.png";
+            }
+            else if (asset.TipoAssetID === 3) {
+                imagenUrl = "/Content/imagenes/Additional-Exercises-with-Answers.png";
 
-            //}
-            //else if (asset.TipoAssetID === 4) {
-            //    imagenUrl = "/Content/imagenes/VERDE.png";
+            }
+            else if (asset.TipoAssetID === 4) {
+                imagenUrl = "/Content/imagenes/Answers-to-Activities.png";
 
-            //}
-            imagenUrl = "/Content/imagenes/libro1.png";
+            }
+            else if (asset.TipoAssetID === 5) {
+                imagenUrl = "/Content/imagenes/See-All-content-1.png";
+
+            }
+            else if (asset.TipoAssetID === 6) {
+                imagenUrl = "/Content/imagenes/Answers-to-Exercises-1.png";
+
+            }
+            else if (asset.TipoAssetID === 7) {
+                imagenUrl = "/Content/imagenes/Summary.png";
+
+            }
+
+            //imagenUrl = "/Content/imagenes/Theory-and-Exercises.png";
 
             const card = document.createElement("div");
             card.className = "col mb-4";
@@ -333,13 +346,15 @@ function agregarAssest(data, idfiltro) {
             <div class="card">
                 <div id="conteinerImg_${asset.TipoAssetID}" class="imgcontenedor"> <img src="${imagenUrl}" id="imgcard" class="card-img-top" alt="..."> </div>
                 <div class="card-body">
-                    <h5 class="card-title">${asset.Title} eee</h5>
+                    <h5 class="card-title">${asset.Title} </h5>
                     <p class="card-text">${asset.Description}</p>
-                    <a href='/group/ShowAssets?id=${asset.ID}' target="_blank" class="btn btn-primary">Ver contenido</a>
+                    <a href='/group/ShowAssets?id=${asset.ID}' target="_blank" class="btn btn-primary"><img src="/Content/imagenes/See-All-content-2.png" alt="Icono de actividades" style="width: 30px; height: auto;"> Ver Contenido
+                    </a>
+
                 </div>
             </div>
         `;
-           
+
             cardContainer.appendChild(card);
         });
     }
