@@ -102,7 +102,7 @@ function obtenerDatosGetByTematicYAgregarElemento(idTematica) {
             }
             return response.json();
         })
-        .then(data => {          
+        .then(data => {
             agregarAssest(data);
         })
         .catch(error => {
@@ -158,7 +158,7 @@ function obtenerDatosSubtematicasYAgregarElemento() {
             return response.json();
         })
         .then(data => {
-            
+
             agregarElementosTematicas(data);
             /* agregarAssest(data);*/
         })
@@ -255,7 +255,7 @@ function agregarElementosTematicas(data) {
 
 function agregarAssest(data, idfiltro) {
     console.log(idfiltro);
-    let imageUrl;
+    let imagenUrl;
 
     //if (idfiltro === "1") {
     //    imageUrl = "/Content/imagenes/rojo.png";
@@ -272,73 +272,102 @@ function agregarAssest(data, idfiltro) {
     //    imageUrl = "/Content/imagenes/VERDE.png";
 
     //}
-    imagenUrl = "/Content/imagenes/libro5.png";
 
+    imagenUrl = "/Content/imagenes/Theory-and-Exercises.png";
     const cardContainer = document.getElementById("cardContairnerAssest");
     cardContainer.innerHTML = "";
 
-    if (idfiltro) {      
+    if (idfiltro) {
 
         const asset = data.Data.find(asset => asset.TipoAssetID === parseInt(idfiltro)); // Filtrar el asset que cumple con el filtro
-        if (asset) {          
-            const card = document.createElement("div");
-            card.className = "col mb-4";
-            card.id = "cardContenedor";
-            card.setAttribute("data-value", `${asset.TipoAssetID}`);
+        if (asset) {
+            const cardColumn = document.createElement("div");
+            cardColumn.className = "col-lg-4 col-md-6 col-sm-12"; // Ocupa 4 columnas en pantallas grandes, 6 columnas en pantallas medianas y 12 columnas en pantallas pequeñas
 
-            // Crea la estructura de la tarjeta
-            const imageSrc = asset.Image ? `data:image/png;base64,${asset.Image}` : "/Content/imagenes/Imagen.jpeg";
-            card.innerHTML = `
-                 <div class="card">
-                    <div id="conteinerImg_${asset.TipoAssetID}"> <img src="${imagenUrl}" class="cardImg card-img-top" id="cardimg" alt="..."> </div>
+            cardColumn.className = "col-lg-4 col-md-6 col-sm-12"; // Ocupa 4 columnas en pantallas grandes, 6 columnas en pantallas medianas y 12 columnas en pantallas pequeñas
+
+            cardColumn.className = "col-lg-4 col-md-6 col-sm-12"; // Ocupa 4 columnas en pantallas grandes, 6 columnas en pantallas medianas y 12 columnas en pantallas pequeñas
+
+            cardColumn.className = "col-lg-4 col-md-6 col-sm-12"; // Ocupa 4 columnas en pantallas grandes, 6 columnas en pantallas medianas y 12 columnas en pantallas pequeñas
+
+             <div class="card">
+                <div id="conteinerImg_${asset.TipoAssetID}" class="imgcontenedor"> <img src="${imagenUrl}" id="imgcard" class="card-img-top" alt="..."> </div>
+                <div class="card-body">
+                    <h5 class="card-title">${asset.Title} </h5>
+                    <p class="card-text">${asset.Description}</p>
+                    <a href='/group/ShowAssets?id=${asset.ID}' target="_blank" class="btn btn-primary">Ver contenido</a>
+                </div>
+            </div>
+        `;
+                </div>
+                <div class="col">
                     <div class="card-body">
-                        <h5 class="card-title">${asset.Title} eee</h5>
+                        <h5 class="card-title">${asset.Title}</h5>
                         <p class="card-text">${asset.Description}</p>
                         <a href='/group/ShowAssets?id=${asset.ID}' target="_blank" class="btn btn-primary">Ver contenido</a>
-                     </div>
-                </div>
-             `;
+            if (asset.TipoAssetID === 1) {
+                imagenUrl = "/Content/imagenes/-Default-Icon-1.png";
+            }
+            else if (asset.TipoAssetID === 2) {
+                imagenUrl = "/Content/imagenes/Activities.png";
 
-            cardContainer.appendChild(card);
-        }
-    } else {
-        data.Data.forEach(asset => {
+            }
+            else if (asset.TipoAssetID === 3) {
+                imagenUrl = "/Content/imagenes/Additional-Exercises-with-Answers.png";
             let imagenUrl;
-            //if (asset.TipoAssetID === 1) {
-            //    imagenUrl = "/Content/imagenes/rojo.png";
-            //}
-            //else if (asset.TipoAssetID === 2) {
-            //    imagenUrl = "/Content/imagenes/Amarillo.png";
+            }
+            else if (asset.TipoAssetID === 4) {
+                imagenUrl = "/Content/imagenes/Answers-to-Activities.png";
+
+            }
+            else if (asset.TipoAssetID === 5) {
+                imagenUrl = "/Content/imagenes/See-All-content-1.png";
+
+            }
+            else if (asset.TipoAssetID === 6) {
+                imagenUrl = "/Content/imagenes/Answers-to-Exercises-1.png";
+
+            }
+            else if (asset.TipoAssetID === 7) {
+                imagenUrl = "/Content/imagenes/Summary.png";
+            else if (asset.TipoAssetID === 2) {
+            }
+
+            //imagenUrl = "/Content/imagenes/Theory-and-Exercises.png";
+            else if (asset.TipoAssetID === 3) {
+                imagenUrl = "/Content/imagenes/rosado.png";
+
+            }
+            card.className = "col mb-4";
+            card.id = "cardContenedor_";
+            }
+            const cardColumn = document.createElement("div");
+            cardColumn.className = "col-lg-4 col-md-6 col-sm-12"; // Ocupa 4 columnas en pantallas grandes, 6 columnas en pantallas medianas y 12 columnas en pantallas pequeñas
 
             //}
-            //else if (asset.TipoAssetID === 3) {
-            //    imagenUrl = "/Content/imagenes/rosado.png";
+            <div class="card">
+                <div id="conteinerImg_${asset.TipoAssetID}" class="imgcontenedor"> <img src="${imagenUrl}" id="imgcard" class="card-img-top" alt="..."> </div>
+                <div class="card-body">
+                    <h5 class="card-title">${asset.Title} </h5>
+                    <p class="card-text">${asset.Description}</p>
+                    <a href='/group/ShowAssets?id=${asset.ID}' target="_blank" class="btn btn-primary"><img src="/Content/imagenes/See-All-content-2.png" alt="Icono de actividades" style="width: 30px; height: auto;"> Ver Contenido
+                    </a>
 
-            //}
-            //else if (asset.TipoAssetID === 4) {
-            //    imagenUrl = "/Content/imagenes/VERDE.png";
-
-            //}
-            imagenUrl = "/Content/imagenes/libro5.png";
-            const card = document.createElement("div");
-            card.className = "col mb-4 ";
-            card.id = "cardContenedor";          
-            card.setAttribute("data-value", `${asset.TipoAssetID}`);
-
-            // Crea la estructura de la tarjeta
-            const imageSrc = asset.Image ? `data:image/png;base64,${asset.Image}` : "/Content/imagenes/Imagen.jpeg";
-            card.innerHTML = `
-                 <div class="card" style="width:400px;" id="card">
-                         <div id="conteinerImg_${asset.TipoAssetID}" class="conteinerImg"> <img src="${imagenUrl}" class="cardImg card-img-top" id="cardimg" alt="..."> </div>
-                    <div class="card-body">
-                        <h5 class="card-title">${asset.Title} ggg</h5>
-                        <p class="card-text">${asset.Description}</p>
-                        <a href='/group/ShowAssets?id=${asset.ID}' target="_blank" class="btn btn-primary">Ver contenido</a>
-                     </div>
                 </div>
-             `;
-          
+            </div>
+        `;
+
             cardContainer.appendChild(card);
+                        <div class="card-body">
+                            <h5 class="card-title">${asset.Title}</h5>
+                            <p class="card-text">${asset.Description}</p>
+                            <a href='/group/ShowAssets?id=${asset.ID}' target="_blank" class="btn btn-primary">Ver contenido</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            cardColumn.appendChild(card);
+            cardContainer.appendChild(cardColumn);
         });
     }
 }
