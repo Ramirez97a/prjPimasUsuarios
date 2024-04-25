@@ -31,18 +31,24 @@ $(document).ready(function () {
         obtenerDatosGetByTematicYAgregarElemento(idTematica);
 
     });
-    $('#filtrosAll').on('click', function (event) {
-        obtenerDatosYAgregarElemento();
+    $('#filtrosAll1').on('click', function (event) {
+        $('.filtro').prop('checked', false);
+        let filtro = 0;
+        let vertodos = true;
+        obtenerDatosYAgregarElemento(filtro, vertodos);
 
     });
 
-    $(document).on('click', '#vertodos', function () {
+    $(document).on('click', '#filtrosAll', function () {
         event.preventDefault();
+        let filtro = 0;
+        let vertodos = true;
         var elements = document.querySelectorAll('.show');
         var tematicaElement = document.getElementById('tematicatxt');
         var lblhidden = document.querySelectorAll('[id*="lblhidden"]');
 
-        obtenerDatosYAgregarElemento();
+        $('.filtro').prop('checked', false);       
+        obtenerDatosYAgregarElemento(filtro, vertodos);
 
         elements.forEach(function (element) {
             element.classList.remove('show');
@@ -83,6 +89,8 @@ $(document).ready(function () {
         });
     })
 
+  
+       
 });
 
 
@@ -111,7 +119,7 @@ function obtenerDatosGetByTematicYAgregarElemento(idTematica) {
 }
 
 
-function obtenerDatosYAgregarElemento(idfiltro) {
+function obtenerDatosYAgregarElemento(idfiltro, vertodos) {
     var idGrupo = window.location.pathname.split('/').pop();
     var url = `/api/Assets/getByGroupLow?id=${idGrupo}`;
 
@@ -132,7 +140,7 @@ function obtenerDatosYAgregarElemento(idfiltro) {
             console.log("esta es la data");
             console.log(data);
             console.log(" fin esta es la data");
-            agregarAssest(data, idfiltro);
+            agregarAssest(data, idfiltro, vertodos);
         })
         .catch(error => {
             console.error('Error en la solicitud:', error);
@@ -253,96 +261,62 @@ function agregarElementosTematicas(data) {
 }
 
 
-function agregarAssest(data, idfiltro) {
+function agregarAssest(data, idfiltro, vertodos = false) {
     console.log(idfiltro);
     let imagenUrl;
 
-    //if (idfiltro === "1") {
-    //    imageUrl = "/Content/imagenes/rojo.png";
-    //}
-    //else if (idfiltro === "2") {
-    //    imageUrl = "/Content/imagenes/Amarillo.png";
-
-    //}
-    //else if (idfiltro === "3") {
-    //    imageUrl = "/Content/imagenes/rosado.png";
-
-    //}
-    //else if (idfiltro === "4") {
-    //    imageUrl = "/Content/imagenes/VERDE.png";
-
-    //}
 
     imagenUrl = "/Content/imagenes/Theory-and-Exercises.png";
     const cardContainer = document.getElementById("cardContairnerAssest");
     cardContainer.innerHTML = "";
 
-    if (idfiltro) {
+    if (idfiltro && idfiltro.length > 0) {
 
-        const asset = data.Data.find(asset => asset.TipoAssetID === parseInt(idfiltro)); // Filtrar el asset que cumple con el filtro
-        if (asset) {
+        // Aseguramos que idFiltros sea un array de números
+        const idFiltrosNumeros = idfiltro.map(id => parseInt(id));
 
-            const card = document.createElement("div");
-            card.className = "col mb-4";
-            card.id = "cardContenedor";
-            card.setAttribute("data-value", `${asset.TipoAssetID}`);
+        const asset = data.Data.filter(asset => idFiltrosNumeros.includes(asset.TipoAssetID));
+        console.log("assets:", asset);
 
-            // Crea la estructura de la tarjeta
-            const imageSrc = asset.Image ? `data:image/png;base64,${asset.Image}` : "/Content/imagenes/Imagen.jpeg";
-            card.innerHTML = `
-             <div class="card">
-                <div id="conteinerImg_${asset.TipoAssetID}" class="imgcontenedor"> <img src="${imagenUrl}" id="imgcard" class="card-img-top" alt="..."> </div>
-                <div class="card-body">
-                    <h5 class="card-title">${asset.Title} </h5>
-                    <p class="card-text">${asset.Description}</p>
-                    <a href='/group/ShowAssets?id=${asset.ID}' target="_blank" class="btn btn-primary">Ver contenido</a>
-                </div>
-            </div>
-        `;
+        if (asset)
+        {
+            asset.forEach(asset => {
+                let imagenUrl;
+                if (asset.TipoAssetID === 1) {
+                    imagenUrl = "/Content/imagenes/-Default-Icon-1.png";
+                }
+                else if (asset.TipoAssetID === 2) {
+                    imagenUrl = "/Content/imagenes/Activities.png";
 
-            cardContainer.appendChild(card);
-        }
-    } else {
-        data.Data.forEach(asset => {
-            let imagenUrl;
-            if (asset.TipoAssetID === 1) {
-                imagenUrl = "/Content/imagenes/-Default-Icon-1.png";
-            }
-            else if (asset.TipoAssetID === 2) {
-                imagenUrl = "/Content/imagenes/Activities.png";
+                }
+                else if (asset.TipoAssetID === 3) {
+                    imagenUrl = "/Content/imagenes/Additional-Exercises-with-Answers.png";
 
-            }
-            else if (asset.TipoAssetID === 3) {
-                imagenUrl = "/Content/imagenes/Additional-Exercises-with-Answers.png";
+                }
+                else if (asset.TipoAssetID === 4) {
+                    imagenUrl = "/Content/imagenes/Answers-to-Activities.png";
 
-            }
-            else if (asset.TipoAssetID === 4) {
-                imagenUrl = "/Content/imagenes/Answers-to-Activities.png";
+                }
+                else if (asset.TipoAssetID === 5) {
+                    imagenUrl = "/Content/imagenes/See-All-content-1.png";
 
-            }
-            else if (asset.TipoAssetID === 5) {
-                imagenUrl = "/Content/imagenes/See-All-content-1.png";
+                }
+                else if (asset.TipoAssetID === 6) {
+                    imagenUrl = "/Content/imagenes/Answers-to-Exercises-1.png";
 
-            }
-            else if (asset.TipoAssetID === 6) {
-                imagenUrl = "/Content/imagenes/Answers-to-Exercises-1.png";
+                }
+                else if (asset.TipoAssetID === 7) {
+                    imagenUrl = "/Content/imagenes/Summary.png";
 
-            }
-            else if (asset.TipoAssetID === 7) {
-                imagenUrl = "/Content/imagenes/Summary.png";
+                }
+                const card = document.createElement("div");
+                card.className = "col mb-4";
+                card.id = "cardContenedor_";
+                card.setAttribute("data-value", `${asset.TipoAssetID}`);
 
-            }
-
-            //imagenUrl = "/Content/imagenes/Theory-and-Exercises.png";
-
-            const card = document.createElement("div");
-            card.className = "col mb-4";
-            card.id = "cardContenedor_";
-            card.setAttribute("data-value", `${asset.TipoAssetID}`);
-
-            // Crea la estructura de la tarjeta
-            const imageSrc = asset.Image ? `data:image/png;base64,${asset.Image}` : "/Content/imagenes/Imagen.jpeg";
-            card.innerHTML = `
+                // Crea la estructura de la tarjeta
+                const imageSrc = asset.Image ? `data:image/png;base64,${asset.Image}` : "/Content/imagenes/Imagen.jpeg";
+                card.innerHTML = `
             <div class="card">
                 <div id="conteinerImg_${asset.TipoAssetID}" class="imgcontenedor"> <img src="${imagenUrl}" id="imgcard" class="card-img-top" alt="..."> </div>
                 <div class="card-body">
@@ -355,37 +329,99 @@ function agregarAssest(data, idfiltro) {
             </div>
         `;
 
-            cardContainer.appendChild(card);
-        });
+                cardContainer.appendChild(card);
+            });
+        }
+    }
+    else
+    {
+        if (vertodos == true) {
+            data.Data.forEach(asset => {
+                let imagenUrl;
+                if (asset.TipoAssetID === 1) {
+                    imagenUrl = "/Content/imagenes/-Default-Icon-1.png";
+                }
+                else if (asset.TipoAssetID === 2) {
+                    imagenUrl = "/Content/imagenes/Activities.png";
+
+                }
+                else if (asset.TipoAssetID === 3) {
+                    imagenUrl = "/Content/imagenes/Additional-Exercises-with-Answers.png";
+
+                }
+                else if (asset.TipoAssetID === 4) {
+                    imagenUrl = "/Content/imagenes/Answers-to-Activities.png";
+
+                }
+                else if (asset.TipoAssetID === 5) {
+                    imagenUrl = "/Content/imagenes/See-All-content-1.png";
+
+                }
+                else if (asset.TipoAssetID === 6) {
+                    imagenUrl = "/Content/imagenes/Answers-to-Exercises-1.png";
+
+                }
+                else if (asset.TipoAssetID === 7) {
+                    imagenUrl = "/Content/imagenes/Summary.png";
+
+                }
+
+                //imagenUrl = "/Content/imagenes/Theory-and-Exercises.png";
+
+                const card = document.createElement("div");
+                card.className = "col mb-4";
+                card.id = "cardContenedor_";
+                card.setAttribute("data-value", `${asset.TipoAssetID}`);
+
+                // Crea la estructura de la tarjeta
+                const imageSrc = asset.Image ? `data:image/png;base64,${asset.Image}` : "/Content/imagenes/Imagen.jpeg";
+                card.innerHTML = `
+                <div class="card">
+                    <div id="conteinerImg_${asset.TipoAssetID}" class="imgcontenedor"> <img src="${imagenUrl}" id="imgcard" class="card-img-top" alt="..."> </div>
+                    <div class="card-body">
+                        <h5 class="card-title">${asset.Title} </h5>
+                        <p class="card-text">${asset.Description}</p>
+                        <a href='/group/ShowAssets?id=${asset.ID}' target="_blank" class="btn btn-primary"><img src="/Content/imagenes/See-All-content-2.png" alt="Icono de actividades" style="width: 30px; height: auto;"> Ver Contenido
+                        </a>
+
+                    </div>
+                </div>
+            `;
+
+                cardContainer.appendChild(card);
+            });
+        }
+        
     }
 }
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    const filtros = document.querySelectorAll("#filtros");
+    const filtros = document.querySelectorAll(".filtro");
+
     filtros.forEach(filtro => {
-        filtro.addEventListener("click", function (event) {
-            event.preventDefault();
-            const idfiltro = filtro.getAttribute("data-value");
-            console.log("este es el id del filtro ");
-            console.log(idfiltro);
-            obtenerDatosYAgregarElemento(idfiltro)
+        filtro.addEventListener("change", function (event) {
+           
+            actualizarFiltrosActivos();
         });
     });
+
+    function actualizarFiltrosActivos() {
+      
+        const valoresActivos = [];
+      
+        filtros.forEach(filtro => {
+            if (filtro.checked) {
+                valoresActivos.push(filtro.value);
+            }
+        });     
+       
+        obtenerDatosYAgregarElemento(valoresActivos);
+        
+    }
 });
 
-//function filtrarTarjetas(valorFiltro) {
-//    const tarjetas = document.querySelectorAll("#cardContairnerAssest .card");
-//    tarjetas.forEach(tarjeta => {
-//        const tarjetaValue = tarjeta.getAttribute("data-value");
-//        if (tarjetaValue === valorFiltro || valorFiltro === "all") {
-//            tarjeta.style.display = "block";
-//        } else {
-//            tarjeta.style.display = "none";
-//        }
-//    });
-//}
-
+               
 
 
 
