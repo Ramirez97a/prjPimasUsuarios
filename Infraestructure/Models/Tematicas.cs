@@ -9,7 +9,6 @@
 
 namespace Infraestructure.Models
 {
-    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -20,29 +19,17 @@ namespace Infraestructure.Models
         {
             this.Tematicas1 = new HashSet<Tematicas>();
             this.Assets = new HashSet<Assets>();
-          
         }
     
         public int TematicaID { get; set; }
         public string NombreTematica { get; set; }
         public Nullable<int> ParentTematicaID { get; set; }
-
-     
-      
-
-
-        [JsonIgnore]
-
+        public string CodColor { get; set; }
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tematicas> Tematicas1 { get; set; }
-
-        [JsonIgnore]
-
         public virtual Tematicas Tematicas2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-
-        [JsonIgnore]
-
         public virtual ICollection<Assets> Assets { get; set; }
     }
 }
