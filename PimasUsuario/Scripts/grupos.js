@@ -31,30 +31,65 @@ $(document).ready(function () {
         obtenerDatosGetByTematicYAgregarElemento(idTematica);
 
     });
-    $('#filtrosAll').on('click', function (event) {
-        obtenerDatosYAgregarElemento();
+    $('#filtrosAll1').on('click', function (event) {
+        $('.filtro').prop('checked', false);
+        let filtro = 0;
+        let vertodos = true;
+        $('#carImagen3').css('background-color', '');
+        obtenerDatosYAgregarElemento(filtro, vertodos);
 
     });
 
-    $(document).on('click', '#vertodos', function () {
+    $(document).on('click', '#filtrosAll', function () {
         event.preventDefault();
+        let filtro = 0;
+        let vertodos = true;
         var elements = document.querySelectorAll('.show');
         var tematicaElement = document.getElementById('tematicatxt');
         var lblhidden = document.querySelectorAll('[id*="lblhidden"]');
 
-        obtenerDatosYAgregarElemento();
+        $('.filtro').prop('checked', false);       
+        obtenerDatosYAgregarElemento(filtro, vertodos);
 
         elements.forEach(function (element) {
             element.classList.remove('show');
         });
-
         tematicaElement.setAttribute('aria-expanded', 'false');
-
 
         // Itera sobre los elementos y elimina el atributo style
         lblhidden.forEach(function (element) {
             element.style.display = "none";
         });
+        $('#carImagen1').css('background-color', ''); $('#carImagen2').css('background-color', '');  
+        $('#carImagen3').css('background-color', ''); $('#carImagen4').css('background-color', '');  
+        $('#carImagen5').css('background-color', ''); $('#carImagen6').css('background-color', '');
+        $('#carImagen7').css('background-color', ''); $('#carImagen8').css('background-color', '');  
+        
+    })
+    $(document).on('click', '#vertodos', function () {
+        event.preventDefault();
+        let filtro = 0;
+        let vertodos = true;
+        var elements = document.querySelectorAll('.show');
+        var tematicaElement = document.getElementById('tematicatxt');
+        var lblhidden = document.querySelectorAll('[id*="lblhidden"]');
+
+        $('.filtro').prop('checked', false);
+        obtenerDatosYAgregarElemento(filtro, vertodos);
+
+        elements.forEach(function (element) {
+            element.classList.remove('show');
+        });
+        tematicaElement.setAttribute('aria-expanded', 'false');
+
+        // Itera sobre los elementos y elimina el atributo style
+        lblhidden.forEach(function (element) {
+            element.style.display = "none";
+        });
+        $('#carImagen1').css('background-color', ''); $('#carImagen2').css('background-color', '');
+        $('#carImagen3').css('background-color', ''); $('#carImagen4').css('background-color', '');
+        $('#carImagen5').css('background-color', ''); $('#carImagen6').css('background-color', '');
+        $('#carImagen7').css('background-color', ''); $('#carImagen8').css('background-color', '');
 
     })
 
@@ -67,12 +102,7 @@ $(document).ready(function () {
 
     })
 
-    $(document).on('click', '#filtros', function () {
-        $('#collapseExample').collapse('hide');
-
-        var cardContairnerAssest = document.getElementById('cardContairnerAssest');
-        cardContairnerAssest.removeAttribute('style');
-    })
+   
 
     $(document).on('click', '#tematicatxt', function () {
         var elements = document.querySelectorAll('[id*="lblhidden"]');
@@ -83,6 +113,72 @@ $(document).ready(function () {
         });
     })
 
+    $(document).on('click', '#carImg1', function () {
+
+        if ($('#f1').is(':checked')) {
+            $('#carImagen1').css('background-color', '#0E1726');    
+        } else {
+            $('#carImagen1').css('background-color', '');    
+        }        
+    })
+    $(document).on('click', '#carImg2', function () {
+
+        if ($('#f2').is(':checked')) {
+            $('#carImagen2').css('background-color', '#0E1726');
+        } else {
+            $('#carImagen2').css('background-color', '');
+        }
+    })
+    $(document).on('click', '#carImg3', function () {
+
+        if ($('#f3').is(':checked')) {
+            $('#carImagen3').css('background-color', '#0E1726');
+        } else {
+            $('#carImagen3').css('background-color', '');
+        }
+    })
+    $(document).on('click', '#carImg4', function () {
+
+        if ($('#f4').is(':checked')) {
+            $('#carImagen4').css('background-color', '#0E1726');
+        } else {
+            $('#carImagen4').css('background-color', '');
+        }
+    })
+    $(document).on('click', '#carImg5', function () {
+
+        if ($('#f5').is(':checked')) {
+            $('#carImagen5').css('background-color', '#0E1726');
+        } else {
+            $('#carImagen5').css('background-color', '');
+        }
+    })
+    $(document).on('click', '#carImg6', function () {
+
+        if ($('#f6').is(':checked')) {
+            $('#carImagen6').css('background-color', '#0E1726');
+        } else {
+            $('#carImagen6').css('background-color', '');
+        }
+    })
+    $(document).on('click', '#carImg7', function () {
+
+        if ($('#f7').is(':checked')) {
+            $('#carImagen7').css('background-color', '#0E1726');
+        } else {
+            $('#carImagen7').css('background-color', '');
+        }
+    })
+    $(document).on('click', '#carImg8', function () {
+
+        if ($('#f8').is(':checked')) {
+            $('#carImagen8').css('background-color', '#0E1726');
+        } else {
+            $('#carImagen8').css('background-color', '');
+        }
+    })
+
+       
 });
 
 
@@ -103,7 +199,10 @@ function obtenerDatosGetByTematicYAgregarElemento(idTematica) {
             return response.json();
         })
         .then(data => {
-            agregarAssest(data);
+            let filtro = 0;
+            let vertodos = true;
+
+            agregarAssest(data, filtro, vertodos);
         })
         .catch(error => {
             console.error('Error en la solicitud:', error);
@@ -111,7 +210,7 @@ function obtenerDatosGetByTematicYAgregarElemento(idTematica) {
 }
 
 
-function obtenerDatosYAgregarElemento(idfiltro) {
+function obtenerDatosYAgregarElemento(idfiltro, vertodos) {
     var idGrupo = window.location.pathname.split('/').pop();
     var url = `/api/Assets/getByGroupLow?id=${idGrupo}`;
 
@@ -132,7 +231,7 @@ function obtenerDatosYAgregarElemento(idfiltro) {
             console.log("esta es la data");
             console.log(data);
             console.log(" fin esta es la data");
-            agregarAssest(data, idfiltro);
+            agregarAssest(data, idfiltro, vertodos);
         })
         .catch(error => {
             console.error('Error en la solicitud:', error);
@@ -158,7 +257,7 @@ function obtenerDatosSubtematicasYAgregarElemento() {
             return response.json();
         })
         .then(data => {
-
+            console.log(data);
             agregarElementosTematicas(data);
             /* agregarAssest(data);*/
         })
@@ -253,98 +352,62 @@ function agregarElementosTematicas(data) {
 }
 
 
-function agregarAssest(data, idfiltro) {
+function agregarAssest(data, idfiltro, vertodos = false) {
     console.log(idfiltro);
     let imagenUrl;
 
-    //if (idfiltro === "1") {
-    //    imageUrl = "/Content/imagenes/rojo.png";
-    //}
-    //else if (idfiltro === "2") {
-    //    imageUrl = "/Content/imagenes/Amarillo.png";
-
-    //}
-    //else if (idfiltro === "3") {
-    //    imageUrl = "/Content/imagenes/rosado.png";
-
-    //}
-    //else if (idfiltro === "4") {
-    //    imageUrl = "/Content/imagenes/VERDE.png";
-
-    //}
 
     imagenUrl = "/Content/imagenes/Theory-and-Exercises.png";
     const cardContainer = document.getElementById("cardContairnerAssest");
     cardContainer.innerHTML = "";
 
-    if (idfiltro) {
+    if (idfiltro && idfiltro.length > 0) {
 
-        const asset = data.Data.find(asset => asset.TipoAssetID === parseInt(idfiltro)); // Filtrar el asset que cumple con el filtro
-        if (asset) {
-            const cardColumn = document.createElement("div");
-            cardColumn.className = "col-lg-4 col-md-6 col-sm-12"; // Ocupa 4 columnas en pantallas grandes, 6 columnas en pantallas medianas y 12 columnas en pantallas pequeñas
+        // Aseguramos que idFiltros sea un array de números
+        const idFiltrosNumeros = idfiltro.map(id => parseInt(id));
 
-            cardColumn.className = "col-lg-4 col-md-6 col-sm-12"; // Ocupa 4 columnas en pantallas grandes, 6 columnas en pantallas medianas y 12 columnas en pantallas pequeñas
+        const asset = data.Data.filter(asset => idFiltrosNumeros.includes(asset.TipoAssetID));
+        console.log("assets:", asset);
 
-            cardColumn.className = "col-lg-4 col-md-6 col-sm-12"; // Ocupa 4 columnas en pantallas grandes, 6 columnas en pantallas medianas y 12 columnas en pantallas pequeñas
+        if (asset)
+        {
+            asset.forEach(asset => {
+                let imagenUrl;
+                if (asset.TipoAssetID === 1) {
+                    imagenUrl = "/Content/imagenes/-Default-Icon-1.png";
+                }
+                else if (asset.TipoAssetID === 2) {
+                    imagenUrl = "/Content/imagenes/Activities.png";
 
-            cardColumn.className = "col-lg-4 col-md-6 col-sm-12"; // Ocupa 4 columnas en pantallas grandes, 6 columnas en pantallas medianas y 12 columnas en pantallas pequeñas
+                }
+                else if (asset.TipoAssetID === 3) {
+                    imagenUrl = "/Content/imagenes/Additional-Exercises-with-Answers.png";
 
-             <div class="card">
-                <div id="conteinerImg_${asset.TipoAssetID}" class="imgcontenedor"> <img src="${imagenUrl}" id="imgcard" class="card-img-top" alt="..."> </div>
-                <div class="card-body">
-                    <h5 class="card-title">${asset.Title} </h5>
-                    <p class="card-text">${asset.Description}</p>
-                    <a href='/group/ShowAssets?id=${asset.ID}' target="_blank" class="btn btn-primary">Ver contenido</a>
-                </div>
-            </div>
-        `;
-                </div>
-                <div class="col">
-                    <div class="card-body">
-                        <h5 class="card-title">${asset.Title}</h5>
-                        <p class="card-text">${asset.Description}</p>
-                        <a href='/group/ShowAssets?id=${asset.ID}' target="_blank" class="btn btn-primary">Ver contenido</a>
-            if (asset.TipoAssetID === 1) {
-                imagenUrl = "/Content/imagenes/-Default-Icon-1.png";
-            }
-            else if (asset.TipoAssetID === 2) {
-                imagenUrl = "/Content/imagenes/Activities.png";
+                }
+                else if (asset.TipoAssetID === 4) {
+                    imagenUrl = "/Content/imagenes/Answers-to-Activities.png";
 
-            }
-            else if (asset.TipoAssetID === 3) {
-                imagenUrl = "/Content/imagenes/Additional-Exercises-with-Answers.png";
-            let imagenUrl;
-            }
-            else if (asset.TipoAssetID === 4) {
-                imagenUrl = "/Content/imagenes/Answers-to-Activities.png";
+                }
+                else if (asset.TipoAssetID === 5) {
+                    imagenUrl = "/Content/imagenes/See-All-content-1.png";
 
-            }
-            else if (asset.TipoAssetID === 5) {
-                imagenUrl = "/Content/imagenes/See-All-content-1.png";
+                }
+                else if (asset.TipoAssetID === 6) {
+                    imagenUrl = "/Content/imagenes/Answers-to-Exercises-1.png";
 
-            }
-            else if (asset.TipoAssetID === 6) {
-                imagenUrl = "/Content/imagenes/Answers-to-Exercises-1.png";
+                }
+                else if (asset.TipoAssetID === 7) {
+                    imagenUrl = "/Content/imagenes/Summary.png";
 
-            }
-            else if (asset.TipoAssetID === 7) {
-                imagenUrl = "/Content/imagenes/Summary.png";
-            else if (asset.TipoAssetID === 2) {
-            }
+                }
+                const card = document.createElement("div");
+                card.className = "col mb-4";
+                card.id = "cardContenedor_";
+                card.setAttribute("data-value", `${asset.TipoAssetID}`);
 
-            //imagenUrl = "/Content/imagenes/Theory-and-Exercises.png";
-            else if (asset.TipoAssetID === 3) {
-                imagenUrl = "/Content/imagenes/rosado.png";
-
-            }
-            card.className = "col mb-4";
-            card.id = "cardContenedor_";
-            }
-            const cardColumn = document.createElement("div");
-            cardColumn.className = "col-lg-4 col-md-6 col-sm-12"; // Ocupa 4 columnas en pantallas grandes, 6 columnas en pantallas medianas y 12 columnas en pantallas pequeñas
-
-            //}
+                // Crea la estructura de la tarjeta
+                const imageSrc = asset.Image ? `data:image/png;base64,${asset.Image}` : "/Content/imagenes/Imagen.jpeg";
+                card.innerHTML = `
             <div class="card">
                 <div id="conteinerImg_${asset.TipoAssetID}" class="imgcontenedor"> <img src="${imagenUrl}" id="imgcard" class="card-img-top" alt="..."> </div>
                 <div class="card-body">
@@ -357,47 +420,109 @@ function agregarAssest(data, idfiltro) {
             </div>
         `;
 
-            cardContainer.appendChild(card);
-                        <div class="card-body">
-                            <h5 class="card-title">${asset.Title}</h5>
-                            <p class="card-text">${asset.Description}</p>
-                            <a href='/group/ShowAssets?id=${asset.ID}' target="_blank" class="btn btn-primary">Ver contenido</a>
-                        </div>
+                cardContainer.appendChild(card);
+            });
+        }
+    }
+    else
+    {
+        if (vertodos == true) {
+            data.Data.forEach(asset => {
+                let imagenUrl;
+                if (asset.TipoAssetID === 1) {
+                    imagenUrl = "/Content/imagenes/-Default-Icon-1.png";
+                }
+                else if (asset.TipoAssetID === 2) {
+                    imagenUrl = "/Content/imagenes/Activities.png";
+
+                }
+                else if (asset.TipoAssetID === 3) {
+                    imagenUrl = "/Content/imagenes/Additional-Exercises-with-Answers.png";
+
+                }
+                else if (asset.TipoAssetID === 4) {
+                    imagenUrl = "/Content/imagenes/Answers-to-Activities.png";
+
+                }
+                else if (asset.TipoAssetID === 5) {
+                    imagenUrl = "/Content/imagenes/See-All-content-1.png";
+
+                }
+                else if (asset.TipoAssetID === 6) {
+                    imagenUrl = "/Content/imagenes/Answers-to-Exercises-1.png";
+
+                }
+                else if (asset.TipoAssetID === 7) {
+                    imagenUrl = "/Content/imagenes/Summary.png";
+
+                }
+
+                //imagenUrl = "/Content/imagenes/Theory-and-Exercises.png";
+
+                const card = document.createElement("div");
+                card.className = "col mb-4";
+                card.id = "cardContenedor_";
+                card.setAttribute("data-value", `${asset.TipoAssetID}`);
+
+                // Crea la estructura de la tarjeta
+                const imageSrc = asset.Image ? `data:image/png;base64,${asset.Image}` : "/Content/imagenes/Imagen.jpeg";
+                card.innerHTML = `
+                <div class="card">
+                    <div id="conteinerImg_${asset.TipoAssetID}" class="imgcontenedor"> <img src="${imagenUrl}" id="imgcard" class="card-img-top" alt="..."> </div>
+                    <div class="card-body">
+                        <h5 class="card-title">${asset.Title} </h5>
+                        <p class="card-text">${asset.Description}</p>
+                        <a href='/group/ShowAssets?id=${asset.ID}' target="_blank" class="btn btn-primary"><img src="/Content/imagenes/See-All-content-2.png" alt="Icono de actividades" style="width: 30px; height: auto;"> Ver Contenido
+                        </a>
+
                     </div>
                 </div>
             `;
-            cardColumn.appendChild(card);
-            cardContainer.appendChild(cardColumn);
-        });
+
+                cardContainer.appendChild(card);
+            });
+        }
+        
     }
 }
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    const filtros = document.querySelectorAll("#filtros");
-    filtros.forEach(filtro => {
-        filtro.addEventListener("click", function (event) {
-            event.preventDefault();
-            const idfiltro = filtro.getAttribute("data-value");
-            console.log("este es el id del filtro ");
-            console.log(idfiltro);
-            obtenerDatosYAgregarElemento(idfiltro)
+    const filtros = document.querySelectorAll(".filtro");
+    const imagenes = document.querySelectorAll(".tarjetaImagen");
+
+    imagenes.forEach(imagen => {
+        imagen.addEventListener("click", function () {
+            // Obtener el data-value de la imagen para identificar el checkbox correcto
+            $('#collapseExample').collapse('hide');
+            const dataValue = this.getAttribute('data-value');
+            const checkbox = document.querySelector(`#f${dataValue}`);
+
+            // Cambiar el estado del checkbox
+            checkbox.checked = !checkbox.checked;
+
+            // Llamar a la función de actualizar filtros activos después de cambiar el estado del checkbox
+            actualizarFiltrosActivos();
         });
     });
+
+    function actualizarFiltrosActivos() {
+        const valoresActivos = [];
+
+        // Recopilar los valores de los checkboxes que están marcados
+        filtros.forEach(filtro => {
+            if (filtro.checked) {
+                valoresActivos.push(filtro.value);
+            }
+        });
+
+        // Llamar a la función que maneja la respuesta de los filtros activos
+        obtenerDatosYAgregarElemento(valoresActivos);
+    }
+
 });
 
-//function filtrarTarjetas(valorFiltro) {
-//    const tarjetas = document.querySelectorAll("#cardContairnerAssest .card");
-//    tarjetas.forEach(tarjeta => {
-//        const tarjetaValue = tarjeta.getAttribute("data-value");
-//        if (tarjetaValue === valorFiltro || valorFiltro === "all") {
-//            tarjeta.style.display = "block";
-//        } else {
-//            tarjeta.style.display = "none";
-//        }
-//    });
-//}
-
+               
 
 
 
