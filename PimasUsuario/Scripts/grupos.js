@@ -35,6 +35,7 @@ $(document).ready(function () {
         $('.filtro').prop('checked', false);
         let filtro = 0;
         let vertodos = true;
+        $('#carImagen3').css('background-color', '');
         obtenerDatosYAgregarElemento(filtro, vertodos);
 
     });
@@ -53,14 +54,42 @@ $(document).ready(function () {
         elements.forEach(function (element) {
             element.classList.remove('show');
         });
-
         tematicaElement.setAttribute('aria-expanded', 'false');
-
 
         // Itera sobre los elementos y elimina el atributo style
         lblhidden.forEach(function (element) {
             element.style.display = "none";
         });
+        $('#carImagen1').css('background-color', ''); $('#carImagen2').css('background-color', '');  
+        $('#carImagen3').css('background-color', ''); $('#carImagen4').css('background-color', '');  
+        $('#carImagen5').css('background-color', ''); $('#carImagen6').css('background-color', '');
+        $('#carImagen7').css('background-color', ''); $('#carImagen8').css('background-color', '');  
+        
+    })
+    $(document).on('click', '#vertodos', function () {
+        event.preventDefault();
+        let filtro = 0;
+        let vertodos = true;
+        var elements = document.querySelectorAll('.show');
+        var tematicaElement = document.getElementById('tematicatxt');
+        var lblhidden = document.querySelectorAll('[id*="lblhidden"]');
+
+        $('.filtro').prop('checked', false);
+        obtenerDatosYAgregarElemento(filtro, vertodos);
+
+        elements.forEach(function (element) {
+            element.classList.remove('show');
+        });
+        tematicaElement.setAttribute('aria-expanded', 'false');
+
+        // Itera sobre los elementos y elimina el atributo style
+        lblhidden.forEach(function (element) {
+            element.style.display = "none";
+        });
+        $('#carImagen1').css('background-color', ''); $('#carImagen2').css('background-color', '');
+        $('#carImagen3').css('background-color', ''); $('#carImagen4').css('background-color', '');
+        $('#carImagen5').css('background-color', ''); $('#carImagen6').css('background-color', '');
+        $('#carImagen7').css('background-color', ''); $('#carImagen8').css('background-color', '');
 
     })
 
@@ -73,12 +102,7 @@ $(document).ready(function () {
 
     })
 
-    $(document).on('click', '#filtros', function () {
-        $('#collapseExample').collapse('hide');
-
-        var cardContairnerAssest = document.getElementById('cardContairnerAssest');
-        cardContairnerAssest.removeAttribute('style');
-    })
+   
 
     $(document).on('click', '#tematicatxt', function () {
         var elements = document.querySelectorAll('[id*="lblhidden"]');
@@ -89,7 +113,71 @@ $(document).ready(function () {
         });
     })
 
-  
+    $(document).on('click', '#carImg1', function () {
+
+        if ($('#f1').is(':checked')) {
+            $('#carImagen1').css('background-color', '#0E1726');    
+        } else {
+            $('#carImagen1').css('background-color', '');    
+        }        
+    })
+    $(document).on('click', '#carImg2', function () {
+
+        if ($('#f2').is(':checked')) {
+            $('#carImagen2').css('background-color', '#0E1726');
+        } else {
+            $('#carImagen2').css('background-color', '');
+        }
+    })
+    $(document).on('click', '#carImg3', function () {
+
+        if ($('#f3').is(':checked')) {
+            $('#carImagen3').css('background-color', '#0E1726');
+        } else {
+            $('#carImagen3').css('background-color', '');
+        }
+    })
+    $(document).on('click', '#carImg4', function () {
+
+        if ($('#f4').is(':checked')) {
+            $('#carImagen4').css('background-color', '#0E1726');
+        } else {
+            $('#carImagen4').css('background-color', '');
+        }
+    })
+    $(document).on('click', '#carImg5', function () {
+
+        if ($('#f5').is(':checked')) {
+            $('#carImagen5').css('background-color', '#0E1726');
+        } else {
+            $('#carImagen5').css('background-color', '');
+        }
+    })
+    $(document).on('click', '#carImg6', function () {
+
+        if ($('#f6').is(':checked')) {
+            $('#carImagen6').css('background-color', '#0E1726');
+        } else {
+            $('#carImagen6').css('background-color', '');
+        }
+    })
+    $(document).on('click', '#carImg7', function () {
+
+        if ($('#f7').is(':checked')) {
+            $('#carImagen7').css('background-color', '#0E1726');
+        } else {
+            $('#carImagen7').css('background-color', '');
+        }
+    })
+    $(document).on('click', '#carImg8', function () {
+
+        if ($('#f8').is(':checked')) {
+            $('#carImagen8').css('background-color', '#0E1726');
+        } else {
+            $('#carImagen8').css('background-color', '');
+        }
+    })
+
        
 });
 
@@ -111,7 +199,10 @@ function obtenerDatosGetByTematicYAgregarElemento(idTematica) {
             return response.json();
         })
         .then(data => {
-            agregarAssest(data);
+            let filtro = 0;
+            let vertodos = true;
+
+            agregarAssest(data, filtro, vertodos);
         })
         .catch(error => {
             console.error('Error en la solicitud:', error);
@@ -166,7 +257,7 @@ function obtenerDatosSubtematicasYAgregarElemento() {
             return response.json();
         })
         .then(data => {
-
+            console.log(data);
             agregarElementosTematicas(data);
             /* agregarAssest(data);*/
         })
@@ -398,27 +489,37 @@ function agregarAssest(data, idfiltro, vertodos = false) {
 
 document.addEventListener("DOMContentLoaded", function () {
     const filtros = document.querySelectorAll(".filtro");
+    const imagenes = document.querySelectorAll(".tarjetaImagen");
 
-    filtros.forEach(filtro => {
-        filtro.addEventListener("change", function (event) {
-           
+    imagenes.forEach(imagen => {
+        imagen.addEventListener("click", function () {
+            // Obtener el data-value de la imagen para identificar el checkbox correcto
+            $('#collapseExample').collapse('hide');
+            const dataValue = this.getAttribute('data-value');
+            const checkbox = document.querySelector(`#f${dataValue}`);
+
+            // Cambiar el estado del checkbox
+            checkbox.checked = !checkbox.checked;
+
+            // Llamar a la función de actualizar filtros activos después de cambiar el estado del checkbox
             actualizarFiltrosActivos();
         });
     });
 
     function actualizarFiltrosActivos() {
-      
         const valoresActivos = [];
-      
+
+        // Recopilar los valores de los checkboxes que están marcados
         filtros.forEach(filtro => {
             if (filtro.checked) {
                 valoresActivos.push(filtro.value);
             }
-        });     
-       
+        });
+
+        // Llamar a la función que maneja la respuesta de los filtros activos
         obtenerDatosYAgregarElemento(valoresActivos);
-        
     }
+
 });
 
                
