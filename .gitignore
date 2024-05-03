@@ -1,6 +1,8 @@
 ###################
 # compiled source #
 ###################
+
+
 *.com
 *.class
 *.dll
@@ -77,3 +79,8 @@ _[Ss]cripts
 *.ncrunchsolution
 *.dot[Cc]over
 .vs/AgriStock/FileContentIndex/3397a96f-3e03-48c8-8f8c-55502a7b770e.vsidx
+####################
+# Ignoring specific files #
+####################
+.vs/prjPimasUsuarios/v17/DocumentLayout.json
+.vs/prjPimasUsuarios/v17/fileList.bin
