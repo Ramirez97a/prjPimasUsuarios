@@ -117,7 +117,7 @@ $(document).ready(function () {
     $(document).on('click', '#carImg1', function () {
 
         if ($('#f1').is(':checked')) {
-            $('#carImagen1').css('background-color', '#0E1726');    
+            $('#carImagen1').css('background-color', '#0d5d3b');    
         } else {
             $('#carImagen1').css('background-color', '');    
         }        
@@ -125,7 +125,7 @@ $(document).ready(function () {
     $(document).on('click', '#carImg2', function () {
 
         if ($('#f2').is(':checked')) {
-            $('#carImagen2').css('background-color', '#0E1726');
+            $('#carImagen2').css('background-color', '#0d5d3b');
         } else {
             $('#carImagen2').css('background-color', '');
         }
@@ -133,7 +133,7 @@ $(document).ready(function () {
     $(document).on('click', '#carImg3', function () {
 
         if ($('#f3').is(':checked')) {
-            $('#carImagen3').css('background-color', '#0E1726');
+            $('#carImagen3').css('background-color', '#0d5d3b');
         } else {
             $('#carImagen3').css('background-color', '');
         }
@@ -141,7 +141,7 @@ $(document).ready(function () {
     $(document).on('click', '#carImg4', function () {
 
         if ($('#f4').is(':checked')) {
-            $('#carImagen4').css('background-color', '#0E1726');
+            $('#carImagen4').css('background-color', '#0d5d3b');
         } else {
             $('#carImagen4').css('background-color', '');
         }
@@ -149,7 +149,7 @@ $(document).ready(function () {
     $(document).on('click', '#carImg5', function () {
 
         if ($('#f5').is(':checked')) {
-            $('#carImagen5').css('background-color', '#0E1726');
+            $('#carImagen5').css('background-color', '#0d5d3b');
         } else {
             $('#carImagen5').css('background-color', '');
         }
@@ -157,7 +157,7 @@ $(document).ready(function () {
     $(document).on('click', '#carImg6', function () {
 
         if ($('#f6').is(':checked')) {
-            $('#carImagen6').css('background-color', '#0E1726');
+            $('#carImagen6').css('background-color', '#0d5d3b');
         } else {
             $('#carImagen6').css('background-color', '');
         }
@@ -165,7 +165,7 @@ $(document).ready(function () {
     $(document).on('click', '#carImg7', function () {
 
         if ($('#f7').is(':checked')) {
-            $('#carImagen7').css('background-color', '#0E1726');
+            $('#carImagen7').css('background-color', '#0d5d3b');
         } else {
             $('#carImagen7').css('background-color', '');
         }
@@ -173,7 +173,7 @@ $(document).ready(function () {
     $(document).on('click', '#carImg9', function () {
 
         if ($('#f8').is(':checked')) {
-            $('#carImagen8').css('background-color', '#0E1726');
+            $('#carImagen8').css('background-color', '#0d5d3b');
         } else {
             $('#carImagen8').css('background-color', '');
         }

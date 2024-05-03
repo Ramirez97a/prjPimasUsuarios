@@ -7,15 +7,15 @@
       "RelativeMoniker": "D:0:0:{3E3503A0-6909-4B89-B732-5D0B5CE1B60F}|PimasUsuario\\PimasUsuario.csproj|solutionrelative:pimasusuario\\scripts\\grupos.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3E3503A0-6909-4B89-B732-5D0B5CE1B60F}|PimasUsuario\\PimasUsuario.csproj|c:\\users\\ricar\\onedrive\\escritorio\\sssinertica\\prjpimasusuarios\\pimasusuario\\views\\group\\grupos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{3E3503A0-6909-4B89-B732-5D0B5CE1B60F}|PimasUsuario\\PimasUsuario.csproj|solutionrelative:pimasusuario\\views\\group\\grupos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{3E3503A0-6909-4B89-B732-5D0B5CE1B60F}|PimasUsuario\\PimasUsuario.csproj|c:\\users\\ricar\\onedrive\\escritorio\\sssinertica\\prjpimasusuarios\\pimasusuario\\content\\navlateral.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{3E3503A0-6909-4B89-B732-5D0B5CE1B60F}|PimasUsuario\\PimasUsuario.csproj|solutionrelative:pimasusuario\\content\\navlateral.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3E3503A0-6909-4B89-B732-5D0B5CE1B60F}|PimasUsuario\\PimasUsuario.csproj|c:\\users\\ricar\\onedrive\\escritorio\\sssinertica\\prjpimasusuarios\\pimasusuario\\views\\shared\\_layoutdash.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{3E3503A0-6909-4B89-B732-5D0B5CE1B60F}|PimasUsuario\\PimasUsuario.csproj|C:\\Users\\ricar\\OneDrive\\Escritorio\\ssSinertica\\prjPimasUsuarios\\pimasusuario\\views\\group\\grupos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3E3503A0-6909-4B89-B732-5D0B5CE1B60F}|PimasUsuario\\PimasUsuario.csproj|solutionrelative:pimasusuario\\views\\group\\grupos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3E3503A0-6909-4B89-B732-5D0B5CE1B60F}|PimasUsuario\\PimasUsuario.csproj|C:\\Users\\ricar\\OneDrive\\Escritorio\\ssSinertica\\prjPimasUsuarios\\pimasusuario\\views\\shared\\_layoutdash.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{3E3503A0-6909-4B89-B732-5D0B5CE1B60F}|PimasUsuario\\PimasUsuario.csproj|solutionrelative:pimasusuario\\views\\shared\\_layoutdash.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
@@ -38,13 +38,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "navLateral.css",
               "DocumentMoniker": "C:\\Users\\ricar\\OneDrive\\Escritorio\\ssSinertica\\prjPimasUsuarios\\PimasUsuario\\Content\\navLateral.css",
               "RelativeDocumentMoniker": "PimasUsuario\\Content\\navLateral.css",
               "ToolTip": "C:\\Users\\ricar\\OneDrive\\Escritorio\\ssSinertica\\prjPimasUsuarios\\PimasUsuario\\Content\\navLateral.css",
               "RelativeToolTip": "PimasUsuario\\Content\\navLateral.css",
-              "ViewState": "AQIAABgAAAAAAAAAAAAAACYAAAATAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAaAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
               "WhenOpened": "2024-05-02T22:48:03.412Z",
               "EditorCaption": ""
@@ -59,12 +59,11 @@
               "RelativeToolTip": "PimasUsuario\\Views\\Shared\\_LayoutDash.cshtml",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-05-02T20:12:10.533Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-02T20:12:10.533Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Grupos.cshtml",
               "DocumentMoniker": "C:\\Users\\ricar\\OneDrive\\Escritorio\\ssSinertica\\prjPimasUsuarios\\PimasUsuario\\Views\\group\\Grupos.cshtml",
               "RelativeDocumentMoniker": "PimasUsuario\\Views\\group\\Grupos.cshtml",
@@ -72,8 +71,7 @@
               "RelativeToolTip": "PimasUsuario\\Views\\group\\Grupos.cshtml",
               "ViewState": "AQIAAMYAAAAAAAAAAAAAAM0AAAA/AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-04-30T19:25:20.893Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-30T19:25:20.893Z"
             },
             {
               "$type": "Document",
@@ -83,7 +81,7 @@
               "RelativeDocumentMoniker": "PimasUsuario\\Scripts\\grupos.js",
               "ToolTip": "C:\\Users\\ricar\\OneDrive\\Escritorio\\ssSinertica\\prjPimasUsuarios\\PimasUsuario\\Scripts\\grupos.js",
               "RelativeToolTip": "PimasUsuario\\Scripts\\grupos.js",
-              "ViewState": "AQIAAAYCAAAAAAAAAAAAAAwCAAARAAAA",
+              "ViewState": "AQIAAIcAAAAAAAAAAAAswJUAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2024-04-30T15:57:40.084Z",
               "EditorCaption": ""
