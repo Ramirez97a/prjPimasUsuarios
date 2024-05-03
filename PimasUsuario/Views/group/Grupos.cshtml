@@ -13,11 +13,13 @@
             display:flex;
             justify-content:center;
         }
-        #imgcard{
-            width:200px;
-            height:200px;
+        #imgcard {
+            width: 200px;
+            height: 200px;
+           
         }
-        #conteinerImg_1 {
+        
+        /*        #conteinerImg_1 {
             background-color: #ff6961;
         }
         #conteinerImg_2 {
@@ -25,9 +27,10 @@
         }
         #conteinerImg_3 {
             background-color: #fdfd96;
-        }
-        #conteinerImg_4 {
-            background-color: #84b6f4;
+        }*/
+        .imgcontenedor {
+            /*background-color: #84b6f4;*/
+            padding-top: 10px;
         }
 
     </style>
@@ -57,9 +60,7 @@
                         <label for="inputEmail4">Capitulo: <span id="subtematicasHeader"></span></label>
                         <input type="text" name="name" id="idfantastaSubtematica" value="" style="display:none;" />
                     </div>
-                    <div id="lblhidden" style="display:none;">
-                        <label for="inputEmail4">Profesor: <span id="profesor"></span></label>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -199,12 +200,12 @@
                                 <div class="card-body">
                                     <div class="row d-flex flex-column align-items-center justify-content-center">
                                         <div class="col-md-6 col-sm-6 col-12 d-flex flex-column align-items-center justify-content-center">
-                                            <img src="~/Content/imagenes/Proyectos.png" style="width: 50px; height: 50px;" data-value="8" class="tarjetaImagen" id="carImg8"/>
-                                            <a href="#" data-value="8" id="filtros"> <h6 style="color: #3DA1BF;" class="text-center">Proyectos</h6></a>
+                                            <img src="~/Content/imagenes/Proyectos.png" style="width: 50px; height: 50px;" data-value="9" class="tarjetaImagen" id="carImg8"/>
+                                            <a href="#" data-value="9" id="filtros"> <h6 style="color: #3DA1BF;" class="text-center">Profundización</h6></a>
                                         </div>
                                         <div class="col-sm-1 ">
                                             <div class="form-check">
-                                                <input class="form-check-input filtro" style="display:none;" type="checkbox" value="8" data-value="8" id="f8" style="display: block; border: 2px solid #3DA1BF; ">
+                                                <input class="form-check-input filtro" style="display:none;" type="checkbox" value="8" data-value="9" id="f9" style="display: block; border: 2px solid #3DA1BF; ">
                                             </div>
                                         </div>
                                     </div>

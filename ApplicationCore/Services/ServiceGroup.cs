@@ -25,5 +25,10 @@ namespace ApplicationCore.Services
         {
             return await repository.getTematicByGroup(id);
         }
+        public async Task<Tematicas> GetCodColorByTematicaId(int tematicaId)
+        {
+           
+            return await repository.GetCodColorByTematicaId(tematicaId);
+        }
     }
 }

@@ -85,5 +85,42 @@ namespace PimasUsuario.Controllers.Api
                 return Json(response);
             }
         }
+        [HttpGet]
+        [Route("getcolorbyID")]
+        public async Task<IHttpActionResult> colorbyID(int tematicaId)
+        {
+            ResponseModel response = new ResponseModel();
+            try
+            {
+                IServiceGroup service = new ServiceGroup();
+
+                Tematicas tematicas = await service.GetCodColorByTematicaId(tematicaId);
+                if (tematicas == null)
+                {
+                    response.StatusCode = (int)HttpStatusCode.NotFound;
+                    response.Message = "tematica color no encontrada ";
+                }
+                else
+                {
+                    response.StatusCode = (int)HttpStatusCode.OK;
+                    response.Message = "Tematicas encontrados";
+                    response.Data = tematicas;
+                }
+
+
+                return Json(response);
+            }   
+            catch (Exception e)
+            {
+
+                response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                response.Message = e.Message;
+
+                return Json(response);
+            }
+        }
+
+
+
     }
 }

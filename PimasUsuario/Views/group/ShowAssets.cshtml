@@ -46,7 +46,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="text-right mt-3">
-                    <a  class="btn btn-outline-dark btn-lg" ><i class="far fa-arrow-alt-circle-left"></i> Regresar</a>
+                    <a  class="btn btn-outline-dark btn-lg" id="regresar" ><i class="far fa-arrow-alt-circle-left"></i> Regresar</a>
                 </div>
             </div>
         </div>
@@ -186,10 +186,25 @@
         </script>
 
         <script>
-            // Función de retroceso
-            function goBack() {
-                window.history.back();
-            }
+            $(document).ready(function () {
+                // Evento de clic en el botón regresar
+
+
+                $(document).on('click', '#regresar', function () {
+                    event.preventDefault();
+                    if (document.referrer.indexOf(window.location.hostname) !== -1) {
+
+                        history.back();
+                    } else {
+
+                        window.close();
+                    }
+                })
+
+              
+            });
+         
+            
         </script>
 </body>
 </html>

@@ -25,6 +25,7 @@ namespace Infraestructure.Models
     
         public int TematicaID { get; set; }
         public string NombreTematica { get; set; }
+        public string CodColor { get; set; }
         public Nullable<int> ParentTematicaID { get; set; }
 
      
