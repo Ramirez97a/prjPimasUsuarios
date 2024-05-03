@@ -1316,6 +1316,7 @@
     <Content Include="Content\imagenes\PDF.jpeg" />
     <Content Include="Content\imagenes\Plataforma register 1920x1380 %281%29.jpg" />
     <Content Include="Content\imagenes\PlataformaLogin.jpg" />
+    <Content Include="Content\imagenes\Profundización.png" />
     <Content Include="Content\imagenes\Projects.png" />
     <Content Include="Content\imagenes\Proyectos.png" />
     <Content Include="Content\imagenes\Respuestas de las Actividades.png" />

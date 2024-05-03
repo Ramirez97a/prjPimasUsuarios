@@ -11,6 +11,7 @@ namespace ApplicationCore.Services
     {
         Task<IEnumerable<OrderedTree>> getTematicByGroup(int id);
         Task<GroupT> getbyId(int assetId);
+        Task<Tematicas> GetCodColorByTematicaId(int tematicaId);
 
     }
 }

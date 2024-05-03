@@ -18,6 +18,7 @@ $(document).ready(function () {
         hideLoader();
         var contengrupoElement = document.getElementById('contengrupo');
         contengrupoElement.removeAttribute('style');
+        obtenerYEnviarTematicaIds();
     }, 2000);
 
 
@@ -169,7 +170,7 @@ $(document).ready(function () {
             $('#carImagen7').css('background-color', '');
         }
     })
-    $(document).on('click', '#carImg8', function () {
+    $(document).on('click', '#carImg9', function () {
 
         if ($('#f8').is(':checked')) {
             $('#carImagen8').css('background-color', '#0E1726');
@@ -257,7 +258,7 @@ function obtenerDatosSubtematicasYAgregarElemento() {
             return response.json();
         })
         .then(data => {
-            console.log(data);
+            console.log("agregarElementosTematicas: " +data);
             agregarElementosTematicas(data);
             /* agregarAssest(data);*/
         })
@@ -271,7 +272,7 @@ function agregarElementosTematicas(data) {
     ul.innerHTML = ''; // Limpiar el contenido actual
 
     const contenidoInicial = `
-       <li class="menu active ">
+        <li class="menu active ">
             <a href="#" class="dropdown-toggle" id="btnhome">
                 <div>
                     <img src="/Content/imagenes/Logo_inicio.png" alt="logo" width="30px" height="30px" style="margin-right:40px;"><span>PIMAS</span>
@@ -279,14 +280,14 @@ function agregarElementosTematicas(data) {
             </a>
         </li>
         <li class="menu">
-            <a href="#" class="tematicaid"  id="VerGrupos">
+            <a href="#" class="tematicaid" id="VerGrupos">
                 <div>
                     <span>Grupos</span>
                 </div>
             </a>
         </li>
         <li class="menu">
-            <a href="#" class="tematicaid"  id="vertodos">
+            <a href="#" class="todosArchivos" id="vertodos">
                 <div>
                     <span>Todos los Archivos</span>
                 </div>
@@ -310,46 +311,112 @@ function agregarElementosTematicas(data) {
         const nuevoLi = document.createElement('li');
         nuevoLi.className = '';
 
-        nuevoLi.innerHTML = `
-                    <input id="group-${tematicaId}" type="checkbox" hidden />
-                    <label for="group-${tematicaId}"  class="tematicaid" id="tematicatxt"  data-tematica-id-item="${tematicaId}" value="${tematicasArray[0]?.Nombre}">
-                        <span  class="fa fa-angle-right"></span>${tematicasArray[0]?.Nombre || ''}
-                    </label>
+        const hijosUnicos = {};
+        const nietosUnicos = {};
 
-                    <ul class="group-list">
-                        ${tematicasArray[0]?.Hijos.map(subtema => {
+        nuevoLi.innerHTML = `
+            <input id="group-${tematicaId}" type="checkbox" hidden />
+            <label for="group-${tematicaId}" class="tematicatxt" id="tematicatxt" data-tematica-id-item="${tematicaId}" value="${tematicasArray[0]?.Nombre}">
+                <span class="fa fa-angle-right"></span>${tematicasArray[0]?.Nombre || ''}
+            </label>
+
+            <ul class="group-list">
+                ${tematicasArray[0]?.Hijos.filter(subtema => {
+            if (!hijosUnicos[subtema.TematicaID]) {
+                hijosUnicos[subtema.TematicaID] = true;
+                return true;
+            }
+            return false;
+        }).map(subtema => {
             const tieneNietos = tematicasArray[0]?.Nietos.some(nieto => nieto.ParentTematicaID === subtema.TematicaID);
 
             return tieneNietos ? `
-                                <li>
-                                    <input id="sub-group-${subtema.TematicaID}" type="checkbox" hidden />
-                                    <label for="sub-group-${subtema.TematicaID}" data-tematica-id-item="${subtema.TematicaID}" value="${subtema.NombreTematica}" id="SubtematicaHijos">
-                                        <span  class="fa fa-angle-right"></span>${subtema.NombreTematica}
-                                    </label>
-                                    <ul class="sub-group-list">
-                                        ${tematicasArray[0]?.Nietos.filter(nieto => nieto.ParentTematicaID === subtema.TematicaID).map(nieto => `
-                                            <li>
-                                                <a href="#" data-tematica-id-item="${nieto.TematicaID}">${nieto.NombreTematica}</a>
-                                            </li>`).join('')}
-                                    </ul>
-                                </li>
-                            ` : `
-                                <li>
-                                    <label for="sub-group-${subtema.TematicaID}" data-tematica-id-item="${subtema.TematicaID}" value="${subtema.NombreTematica}" id="SubtematicaHijos">
-                                        <span ></span>${subtema.NombreTematica}
-                                    </label>
-
-                                </li>`;
+                        <li>
+                            <input id="sub-group-${subtema.TematicaID}" type="checkbox" hidden />
+                            <label for="sub-group-${subtema.TematicaID}" data-tematica-id-item="${subtema.TematicaID}" value="${subtema.NombreTematica}" id="SubtematicaHijos" style="background-color: red;">
+                                <span class="fa fa-angle-right"></span>${subtema.NombreTematica}
+                            </label>
+                            <ul class="sub-group-list">
+                                ${tematicasArray[0]?.Nietos.filter(nieto => {
+                if (nieto.ParentTematicaID === subtema.TematicaID && !nietosUnicos[nieto.TematicaID]) {
+                    nietosUnicos[nieto.TematicaID] = true;
+                    return true;
+                }
+                return false;
+            }).map(nieto => `
+                                    <li>
+                                        <a href="#" data-tematica-id-item="${nieto.TematicaID}">${nieto.NombreTematica}</a>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </li>
+                    ` : `
+                        <li>
+                            <label for="sub-group-${subtema.TematicaID}" data-tematica-id-item="${subtema.TematicaID}" value="${subtema.NombreTematica}" id="SubtematicaHijos">
+                                <span></span>${subtema.NombreTematica}
+                            </label>
+                        </li>`;
         }).join('')}
-                    </ul>
-         `;
-
+            </ul>
+        `;
 
         ul.appendChild(nuevoLi);
     }
 
     obtenerdatosnav();
 }
+
+function obtenerYEnviarTematicaIds() {
+    const labels = document.querySelectorAll('.tematicatxt');
+    const tematicaIDs = [];
+
+    labels.forEach(element => {
+        const tematicaID = element.getAttribute('data-tematica-id-item');
+        tematicaIDs.push(tematicaID);
+    });
+
+    
+    tematicaIDs.forEach(tematicaID => {
+        enviarATuAPI(tematicaID);
+    });
+}
+
+function enviarATuAPI(tematicaIDs) {
+    console.log(tematicaIDs);
+    var url = `/api/Group/getcolorbyID?tematicaId=${tematicaIDs}`;
+   
+    $.ajax({
+        url: url,
+        type: 'GET',
+        contentType: 'application/json',  
+        data: JSON.stringify({ tematicaId: tematicaIDs }),  
+        success: function (data) {
+            console.log("prueba data" + data);
+            cambiarColor(data);
+        },
+        error: function (xhr, status, error) {
+            console.error('Error al enviar datos DEL COLOR:', xhr.responseText);
+        }
+    });
+}
+function cambiarColor(data) {
+    if (!data || !data.Data) {
+        console.error('No se encontró Data en la respuesta:', data);
+        return;
+    }
+
+    const labels = document.querySelectorAll('.tematicatxt');
+    labels.forEach(element => {
+        const tematicaID = element.getAttribute('data-tematica-id-item');
+
+       
+        if (data.Data.TematicaID && data.Data.TematicaID.toString() === tematicaID) {
+         
+            element.style.backgroundColor = '#' + data.Data.CodColor;
+        }
+    });
+}
+
 
 
 function agregarAssest(data, idfiltro, vertodos = false) {
@@ -374,30 +441,34 @@ function agregarAssest(data, idfiltro, vertodos = false) {
             asset.forEach(asset => {
                 let imagenUrl;
                 if (asset.TipoAssetID === 1) {
-                    imagenUrl = "/Content/imagenes/-Default-Icon-1.png";
+                    imagenUrl = "/Content/imagenes/TeoríayEjercicios.png";
                 }
                 else if (asset.TipoAssetID === 2) {
-                    imagenUrl = "/Content/imagenes/Activities.png";
+                    imagenUrl = "/Content/imagenes/Solucionesdeloejercicios.png";
 
                 }
                 else if (asset.TipoAssetID === 3) {
-                    imagenUrl = "/Content/imagenes/Additional-Exercises-with-Answers.png";
+                    imagenUrl = "/Content/imagenes/Actividades.png";
 
                 }
                 else if (asset.TipoAssetID === 4) {
-                    imagenUrl = "/Content/imagenes/Answers-to-Activities.png";
+                    imagenUrl = "/Content/imagenes/RespuestasdelasActividades.png";
 
                 }
                 else if (asset.TipoAssetID === 5) {
-                    imagenUrl = "/Content/imagenes/See-All-content-1.png";
+                    imagenUrl = "/Content/imagenes/Resumen.png";
 
                 }
                 else if (asset.TipoAssetID === 6) {
-                    imagenUrl = "/Content/imagenes/Answers-to-Exercises-1.png";
+                    imagenUrl = "/Content/imagenes/EjerciciosAdicionales.png";
 
                 }
                 else if (asset.TipoAssetID === 7) {
-                    imagenUrl = "/Content/imagenes/Summary.png";
+                    imagenUrl = "/Content/imagenes/Autoevaluación.png";
+
+                }
+                else if (asset.TipoAssetID === 9) {
+                    imagenUrl = "/Content/imagenes/Profundización";
 
                 }
                 const card = document.createElement("div");
@@ -408,7 +479,7 @@ function agregarAssest(data, idfiltro, vertodos = false) {
                 // Crea la estructura de la tarjeta
                 const imageSrc = asset.Image ? `data:image/png;base64,${asset.Image}` : "/Content/imagenes/Imagen.jpeg";
                 card.innerHTML = `
-            <div class="card">
+            <div class="card" style="min-height: 450px !important;" >
                 <div id="conteinerImg_${asset.TipoAssetID}" class="imgcontenedor"> <img src="${imagenUrl}" id="imgcard" class="card-img-top" alt="..."> </div>
                 <div class="card-body">
                     <h5 class="card-title">${asset.Title} </h5>
@@ -430,30 +501,34 @@ function agregarAssest(data, idfiltro, vertodos = false) {
             data.Data.forEach(asset => {
                 let imagenUrl;
                 if (asset.TipoAssetID === 1) {
-                    imagenUrl = "/Content/imagenes/-Default-Icon-1.png";
+                    imagenUrl = "/Content/imagenes/TeoríayEjercicios.png";
                 }
                 else if (asset.TipoAssetID === 2) {
-                    imagenUrl = "/Content/imagenes/Activities.png";
+                    imagenUrl = "/Content/imagenes/Solucionesdeloejercicios.png";
 
                 }
                 else if (asset.TipoAssetID === 3) {
-                    imagenUrl = "/Content/imagenes/Additional-Exercises-with-Answers.png";
+                    imagenUrl = "/Content/imagenes/Actividades.png";
 
                 }
                 else if (asset.TipoAssetID === 4) {
-                    imagenUrl = "/Content/imagenes/Answers-to-Activities.png";
+                    imagenUrl = "/Content/imagenes/RespuestasdelasActividades.png";
 
                 }
                 else if (asset.TipoAssetID === 5) {
-                    imagenUrl = "/Content/imagenes/See-All-content-1.png";
+                    imagenUrl = "/Content/imagenes/Resumen.png";
 
                 }
                 else if (asset.TipoAssetID === 6) {
-                    imagenUrl = "/Content/imagenes/Answers-to-Exercises-1.png";
+                    imagenUrl = "/Content/imagenes/EjerciciosAdicionales.png";
 
                 }
                 else if (asset.TipoAssetID === 7) {
-                    imagenUrl = "/Content/imagenes/Summary.png";
+                    imagenUrl = "/Content/imagenes/Autoevaluación.png";
+
+                }
+                else if (asset.TipoAssetID === 9) {
+                    imagenUrl = "/Content/imagenes/Profundización";
 
                 }
 
@@ -467,7 +542,7 @@ function agregarAssest(data, idfiltro, vertodos = false) {
                 // Crea la estructura de la tarjeta
                 const imageSrc = asset.Image ? `data:image/png;base64,${asset.Image}` : "/Content/imagenes/Imagen.jpeg";
                 card.innerHTML = `
-                <div class="card">
+                <div class="card" style="min-height: 450px !important;">
                     <div id="conteinerImg_${asset.TipoAssetID}" class="imgcontenedor"> <img src="${imagenUrl}" id="imgcard" class="card-img-top" alt="..."> </div>
                     <div class="card-body">
                         <h5 class="card-title">${asset.Title} </h5>
@@ -490,7 +565,7 @@ function agregarAssest(data, idfiltro, vertodos = false) {
 document.addEventListener("DOMContentLoaded", function () {
     const filtros = document.querySelectorAll(".filtro");
     const imagenes = document.querySelectorAll(".tarjetaImagen");
-
+ 
     imagenes.forEach(imagen => {
         imagen.addEventListener("click", function () {
             // Obtener el data-value de la imagen para identificar el checkbox correcto
@@ -521,10 +596,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
-
-               
-
-
+              
 
 function obtenerDatosgetGruposYAgregarElemento() {
     var idGrupo = window.location.pathname.split('/').pop();
@@ -559,9 +631,6 @@ obtenerDatosYAgregarElemento();
 obtenerDatosSubtematicasYAgregarElemento();
 obtenerDatosgetGruposYAgregarElemento();
 
-
-
-
 function obtenerdatosnav() {
     var ul = document.getElementById('accordionExample');
     var spanSubtematicasHeader = document.getElementById('subtematicasHeader');
@@ -586,7 +655,7 @@ function obtenerdatosnav() {
         var subtematicaId = element.getAttribute('data-tematica-id-item');
         console.log(subtematicaId);
 
-        profesor.textContent = 'Profesor Prueba';
+        //profesor.textContent = 'Profesor Prueba';
         document.getElementById('idfantastaSubtematica').value = subtematicaId;
 
         obtenerDatosGetByTematicYAgregarElemento(subtematicaId);

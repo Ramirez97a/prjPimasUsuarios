@@ -1,8 +1,10 @@
 ﻿using Infraestructure.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -214,5 +216,51 @@ namespace Infraestructure.Repositorys
                 throw;
             }
         }
+        public async Task<Tematicas> GetCodColorByTematicaId(int tematicaId)
+        {
+            Tematicas oTematicas = new Tematicas();
+            try
+            {
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+                    var connectionString = ctx.Database.Connection.ConnectionString;
+
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {
+                        await connection.OpenAsync();
+
+                        using (SqlCommand cmd = new SqlCommand("Sp_getColorByTematicaID", connection))
+                        {
+                            cmd.Parameters.Add("@TematicaId", SqlDbType.Int).Value = tematicaId;
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                            {
+                                while (await reader.ReadAsync())
+                                {
+                                    oTematicas.TematicaID = Convert.ToInt32(reader["TematicaID"]);
+                                    oTematicas.CodColor = reader["CodColor"].ToString();
+                                   
+                                }
+                            }
+                        }
+                    }
+                }
+                return oTematicas;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "Error en la base de datos: " + dbEx.Message;
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "Error al obtener el usuario: " + ex.Message;
+                throw new Exception(mensaje);
+            }
+        }
+
+
     }
 }
