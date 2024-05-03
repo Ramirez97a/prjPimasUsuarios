@@ -15,7 +15,7 @@ namespace PimasUsuario.Controllers.Api
     public class GroupApiController : ApiController
     {
         [HttpGet]
-        [Route("tematics")]
+        [Route("tematicas")]
         public async Task<IHttpActionResult> getAsset(int id)
         {
             ResponseModel response = new ResponseModel();
@@ -28,13 +28,13 @@ namespace PimasUsuario.Controllers.Api
                 if (tematicas == null || !tematicas.Any())
                 {
                     response.StatusCode = (int)HttpStatusCode.NotFound;
-                    response.Message = "Temanicas no encontrado verifique el id del grupo ";
+                    response.Message = "Temáticas no encontradas verifique el id del grupo ";
 
                 }
                 else
                 {
                     response.StatusCode = (int)HttpStatusCode.OK;
-                    response.Message = "Tematicas encontrados";
+                    response.Message = "Temáticas encontradas";
                     response.Data = tematicas;
                 }
 
@@ -64,13 +64,13 @@ namespace PimasUsuario.Controllers.Api
                 if (group == null )
                 {
                     response.StatusCode = (int)HttpStatusCode.NotFound;
-                    response.Message = "Temanicas no encontrado verifique el id del grupo ";
+                    response.Message = "Temáticas no encontrado.  Verifique el id del grupo.";
 
                 }
                 else
                 {
                     response.StatusCode = (int)HttpStatusCode.OK;
-                    response.Message = "Tematicas encontrados";
+                    response.Message = "Temáticas encontradas";
                     response.Data = group;
                 }
 
@@ -98,12 +98,12 @@ namespace PimasUsuario.Controllers.Api
                 if (tematicas == null)
                 {
                     response.StatusCode = (int)HttpStatusCode.NotFound;
-                    response.Message = "tematica color no encontrada ";
+                    response.Message = "Temática color no encontrada.";
                 }
                 else
                 {
                     response.StatusCode = (int)HttpStatusCode.OK;
-                    response.Message = "Tematicas encontrados";
+                    response.Message = "Temáticas encontradas";
                     response.Data = tematicas;
                 }
 

@@ -243,7 +243,7 @@ function obtenerDatosYAgregarElemento(idfiltro, vertodos) {
 
 function obtenerDatosSubtematicasYAgregarElemento() {
     var idGrupo = window.location.pathname.split('/').pop();
-    var url = `/api/Group/tematics?id=${idGrupo}`;
+    var url = `/api/Group/tematicas?id=${idGrupo}`;
 
     fetch(url, {
         method: "GET",
