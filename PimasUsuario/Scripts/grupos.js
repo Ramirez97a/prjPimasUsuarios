@@ -19,6 +19,7 @@ $(document).ready(function () {
         var contengrupoElement = document.getElementById('contengrupo');
         contengrupoElement.removeAttribute('style');
         obtenerYEnviarTematicaIds();
+
     }, 2000);
 
 
@@ -113,7 +114,7 @@ $(document).ready(function () {
             element.removeAttribute("style");
         });
     })
-
+    //Para cambiar de color al hacer click en el filtro de actividades
     $(document).on('click', '#carImg1', function () {
 
         if ($('#f1').is(':checked')) {
@@ -202,7 +203,7 @@ $(document).ready(function () {
             $('#carImagen11').css('background-color', '');
         }
     })
-
+    // Fin para cambiar de color al hacer click en el filtro de actividades
        
 });
 
@@ -239,7 +240,6 @@ function obtenerDatosYAgregarElemento(idfiltro, vertodos) {
     var idGrupo = window.location.pathname.split('/').pop();
     var url = `/api/Assets/getByGroupLow?id=${idGrupo}`;
 
-
     fetch(url, {
         method: "GET",
         headers: {
@@ -253,9 +253,7 @@ function obtenerDatosYAgregarElemento(idfiltro, vertodos) {
             return response.json();
         })
         .then(data => {
-            console.log("esta es la data");
-            console.log(data);
-            console.log(" fin esta es la data");
+           
             agregarAssest(data, idfiltro, vertodos);
         })
         .catch(error => {
@@ -282,14 +280,13 @@ function obtenerDatosSubtematicasYAgregarElemento() {
             return response.json();
         })
         .then(data => {
-            console.log("agregarElementosTematicas: " +data);
             agregarElementosTematicas(data);
-            /* agregarAssest(data);*/
         })
         .catch(error => {
             console.error('Error en la solicitud:', error);
         });
 }
+
 
 function agregarElementosTematicas(data) {
     const ul = document.getElementById('accordionExample');
@@ -386,7 +383,7 @@ function agregarElementosTematicas(data) {
 
         ul.appendChild(nuevoLi);
     }
-
+    obtenerYEnviarTematicaIds();
     obtenerdatosnav();
 }
 
@@ -405,8 +402,9 @@ function obtenerYEnviarTematicaIds() {
     });
 }
 
+//Funcion para hacer la consulta de las tematicas y obtener el codigo hexadecimal del color 
 function enviarATuAPI(tematicaIDs) {
-    console.log(tematicaIDs);
+
     var url = `/api/Group/getcolorbyID?tematicaId=${tematicaIDs}`;
    
     $.ajax({
@@ -414,8 +412,7 @@ function enviarATuAPI(tematicaIDs) {
         type: 'GET',
         contentType: 'application/json',  
         data: JSON.stringify({ tematicaId: tematicaIDs }),  
-        success: function (data) {
-            console.log("prueba data" + data);
+        success: function (data) {           
             cambiarColor(data);
         },
         error: function (xhr, status, error) {
@@ -423,6 +420,8 @@ function enviarATuAPI(tematicaIDs) {
         }
     });
 }
+
+//Funcion para poner los colores del nav padres 
 function cambiarColor(data) {
     if (!data || !data.Data) {
         console.error('No se encontró Data en la respuesta:', data);
@@ -442,9 +441,13 @@ function cambiarColor(data) {
 }
 
 
-
+//Funcion que crea los assest o las card de los los assest que trae la data 
 function agregarAssest(data, idfiltro, vertodos = false) {
-    console.log(idfiltro);
+    
+    const idSubtematica = $('#idfantastaSubtematica').val();
+
+    const SubtematicID = parseInt(idSubtematica);
+
     let imagenUrl;
 
 
@@ -456,9 +459,12 @@ function agregarAssest(data, idfiltro, vertodos = false) {
 
         // Aseguramos que idFiltros sea un array de números
         const idFiltrosNumeros = idfiltro.map(id => parseInt(id));
+              
 
-        const asset = data.Data.filter(asset => idFiltrosNumeros.includes(asset.TipoAssetID));
-        console.log("assets:", asset);
+        const asset = data.Data.filter(asset =>
+            idFiltrosNumeros.includes(asset.TipoAssetID) && asset.TematicaId === SubtematicID
+        );
+   
 
         if (asset)
         {
@@ -511,31 +517,37 @@ function agregarAssest(data, idfiltro, vertodos = false) {
                 card.className = "col mb-4";
                 card.id = "cardContenedor_";
                 card.setAttribute("data-value", `${asset.TipoAssetID}`);
+                card.setAttribute("data-tematica", `${asset.TematicaId}`);
 
                 // Crea la estructura de la tarjeta
                 const imageSrc = asset.Image ? `data:image/png;base64,${asset.Image}` : "/Content/imagenes/Imagen.jpeg";
                 card.innerHTML = `
-            <div class="card" style="min-height: 450px !important;" >
-                <div id="conteinerImg_${asset.TipoAssetID}" class="imgcontenedor"> <img src="${imagenUrl}" id="imgcard" class="card-img-top" alt="..."> </div>
-                <div class="card-body">
-                    <h5 class="card-title" >${asset.Title} </h5>
-                    <p class="card-text">${asset.Description}</p>
-                    <a href='/group/ShowAssets?id=${asset.ID}' target="_blank" class="btn btn-primary"><img src="/Content/imagenes/See-All-content-2.png" alt="Icono de actividades" style="width: 30px; height: auto;"> Ver Contenido
-                    </a>
+                <div class="card" style="min-height: 450px !important;" >
+                    <div id="conteinerImg_${asset.TipoAssetID}" class="imgcontenedor"> <img src="${imagenUrl}" id="imgcard" class="card-img-top" alt="..."> </div>
+                    <div class="card-body">
+                        <h5 class="card-title" >${asset.Title} </h5>
+                        <p class="card-text">${asset.Description}</p>
+                        <a href='/group/ShowAssets?id=${asset.ID}' target="_blank" class="btn btn-primary"><img src="/Content/imagenes/See-All-content-2.png" alt="Icono de actividades" style="width: 30px; height: auto;"> Ver Contenido
+                        </a>
 
+                    </div>
                 </div>
-            </div>
-        `;
+            `;
 
                 cardContainer.appendChild(card);
             });
         }
+    }
+    else if (idfiltro && idfiltro.length == 0) {
+
+        obtenerDatosGetByTematicYAgregarElemento(idSubtematica);
     }
     else
     {
         if (vertodos == true) {
             data.Data.forEach(asset => {
                 let imagenUrl;
+
                 if (asset.TipoAssetID === 1) {
                     imagenUrl = "/Content/imagenes/TeoríayEjercicios.png";
                 }
@@ -585,6 +597,7 @@ function agregarAssest(data, idfiltro, vertodos = false) {
                 card.className = "col mb-4";
                 card.id = "cardContenedor_";
                 card.setAttribute("data-value", `${asset.TipoAssetID}`);
+                card.setAttribute("data-tematica", `${asset.TematicaId}`);
 
                 // Crea la estructura de la tarjeta
                 const imageSrc = asset.Image ? `data:image/png;base64,${asset.Image}` : "/Content/imagenes/Imagen.jpeg";
@@ -604,6 +617,7 @@ function agregarAssest(data, idfiltro, vertodos = false) {
                 cardContainer.appendChild(card);
             });
         }
+        
         
     }
 }
@@ -709,13 +723,12 @@ function obtenerdatosnav() {
 
     function handleSubtematicaClick(element) {
         var subtematicaValue = element.getAttribute('value');
-        console.log(subtematicaValue);
+    
         spanSubtematicasHeader.textContent = subtematicaValue;
     }
 
     function handleAccordionItemClick(element) {
         var subtematicaId = element.getAttribute('data-tematica-id-item');
-        console.log(subtematicaId);
 
         //profesor.textContent = 'Profesor Prueba';
         document.getElementById('idfantastaSubtematica').value = subtematicaId;

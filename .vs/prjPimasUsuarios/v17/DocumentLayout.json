@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\ricar\\OneDrive\\Escritorio\\ssSinertica\\prjPimasUsuarios\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3E3503A0-6909-4B89-B732-5D0B5CE1B60F}|PimasUsuario\\PimasUsuario.csproj|c:\\users\\ricar\\onedrive\\escritorio\\sssinertica\\prjpimasusuarios\\pimasusuario\\scripts\\grupos.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{3E3503A0-6909-4B89-B732-5D0B5CE1B60F}|PimasUsuario\\PimasUsuario.csproj|solutionrelative:pimasusuario\\scripts\\grupos.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{3E3503A0-6909-4B89-B732-5D0B5CE1B60F}|PimasUsuario\\PimasUsuario.csproj|C:\\Users\\ricar\\OneDrive\\Escritorio\\ssSinertica\\prjPimasUsuarios\\pimasusuario\\views\\group\\grupos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{3E3503A0-6909-4B89-B732-5D0B5CE1B60F}|PimasUsuario\\PimasUsuario.csproj|solutionrelative:pimasusuario\\views\\group\\grupos.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3E3503A0-6909-4B89-B732-5D0B5CE1B60F}|PimasUsuario\\PimasUsuario.csproj|c:\\users\\ricar\\onedrive\\escritorio\\sssinertica\\prjpimasusuarios\\pimasusuario\\scripts\\grupos.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{3E3503A0-6909-4B89-B732-5D0B5CE1B60F}|PimasUsuario\\PimasUsuario.csproj|solutionrelative:pimasusuario\\scripts\\grupos.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -30,26 +30,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Grupos.cshtml",
               "DocumentMoniker": "C:\\Users\\ricar\\OneDrive\\Escritorio\\ssSinertica\\prjPimasUsuarios\\PimasUsuario\\Views\\group\\Grupos.cshtml",
               "RelativeDocumentMoniker": "PimasUsuario\\Views\\group\\Grupos.cshtml",
               "ToolTip": "C:\\Users\\ricar\\OneDrive\\Escritorio\\ssSinertica\\prjPimasUsuarios\\PimasUsuario\\Views\\group\\Grupos.cshtml",
               "RelativeToolTip": "PimasUsuario\\Views\\group\\Grupos.cshtml",
-              "ViewState": "AQIAAAYBAAAAAAAAAAAAABoBAAAaAAAA",
+              "ViewState": "AQIAACAAAAAAAAAAAAAAACsAAAAsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-04-30T19:25:20.893Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "grupos.js",
               "DocumentMoniker": "C:\\Users\\ricar\\OneDrive\\Escritorio\\ssSinertica\\prjPimasUsuarios\\PimasUsuario\\Scripts\\grupos.js",
               "RelativeDocumentMoniker": "PimasUsuario\\Scripts\\grupos.js",
               "ToolTip": "C:\\Users\\ricar\\OneDrive\\Escritorio\\ssSinertica\\prjPimasUsuarios\\PimasUsuario\\Scripts\\grupos.js",
               "RelativeToolTip": "PimasUsuario\\Scripts\\grupos.js",
-              "ViewState": "AQIAAPgAAAAAAAAAAAAAAAgBAAAAAAAA",
+              "ViewState": "AQIAANUAAAAAAAAAAAAAAOkAAAATAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2024-04-30T15:57:40.084Z",
               "EditorCaption": ""
