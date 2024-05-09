@@ -305,11 +305,12 @@ span.red {
 }
 .card .card-title {
   color: #0e1726;
+  min-height:100px;
   line-height: 1.5;
 }
-.card .card-text {
-  color: #888ea8;
-}
+    .card .card-text {
+        color: #888ea8;        min-height: 100px;
+    }
 .card .media img.card-media-image {
   border-radius: 50%;
   width: 45px;

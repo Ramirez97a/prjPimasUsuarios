@@ -170,12 +170,36 @@ $(document).ready(function () {
             $('#carImagen7').css('background-color', '');
         }
     })
-    $(document).on('click', '#carImg9', function () {
+    $(document).on('click', '#carImg8', function () {
 
         if ($('#f8').is(':checked')) {
             $('#carImagen8').css('background-color', '#0d5d3b');
         } else {
             $('#carImagen8').css('background-color', '');
+        }
+    })
+    $(document).on('click', '#carImg9', function () {
+
+        if ($('#f9').is(':checked')) {
+            $('#carImagen9').css('background-color', '#0d5d3b');
+        } else {
+            $('#carImagen9').css('background-color', '');
+        }
+    })
+    $(document).on('click', '#carImg10', function () {
+
+        if ($('#f10').is(':checked')) {
+            $('#carImagen10').css('background-color', '#0d5d3b');
+        } else {
+            $('#carImagen10').css('background-color', '');
+        }
+    })
+    $(document).on('click', '#carImg11', function () {
+
+        if ($('#f11').is(':checked')) {
+            $('#carImagen11').css('background-color', '#0d5d3b');
+        } else {
+            $('#carImagen11').css('background-color', '');
         }
     })
 
@@ -467,8 +491,20 @@ function agregarAssest(data, idfiltro, vertodos = false) {
                     imagenUrl = "/Content/imagenes/Autoevaluación.png";
 
                 }
+                else if (asset.TipoAssetID === 8) {
+                    imagenUrl = "/Content/imagenes/Proyectos.png";
+
+                }
                 else if (asset.TipoAssetID === 9) {
-                    imagenUrl = "/Content/imagenes/Profundización";
+                    imagenUrl = "/Content/imagenes/Profundización.png";
+
+                }
+                else if (asset.TipoAssetID === 10) {
+                    imagenUrl = "/Content/imagenes/Didáctica.png";
+
+                }
+                else if (asset.TipoAssetID === 11) {
+                    imagenUrl = "/Content/imagenes/Paraexámenes.png";
 
                 }
                 const card = document.createElement("div");
@@ -482,7 +518,7 @@ function agregarAssest(data, idfiltro, vertodos = false) {
             <div class="card" style="min-height: 450px !important;" >
                 <div id="conteinerImg_${asset.TipoAssetID}" class="imgcontenedor"> <img src="${imagenUrl}" id="imgcard" class="card-img-top" alt="..."> </div>
                 <div class="card-body">
-                    <h5 class="card-title">${asset.Title} </h5>
+                    <h5 class="card-title" >${asset.Title} </h5>
                     <p class="card-text">${asset.Description}</p>
                     <a href='/group/ShowAssets?id=${asset.ID}' target="_blank" class="btn btn-primary"><img src="/Content/imagenes/See-All-content-2.png" alt="Icono de actividades" style="width: 30px; height: auto;"> Ver Contenido
                     </a>
@@ -527,11 +563,22 @@ function agregarAssest(data, idfiltro, vertodos = false) {
                     imagenUrl = "/Content/imagenes/Autoevaluación.png";
 
                 }
-                else if (asset.TipoAssetID === 9) {
-                    imagenUrl = "/Content/imagenes/Profundización";
+                else if (asset.TipoAssetID === 8) {
+                    imagenUrl = "/Content/imagenes/Proyectos.png";
 
                 }
+                else if (asset.TipoAssetID === 9) {
+                    imagenUrl = "/Content/imagenes/Profundización.png";
 
+                }
+                else if (asset.TipoAssetID === 10) {
+                    imagenUrl = "/Content/imagenes/Didáctica.png";
+
+                }
+                else if (asset.TipoAssetID === 11) {
+                    imagenUrl = "/Content/imagenes/Paraexámenes.png";
+
+                }
                 //imagenUrl = "/Content/imagenes/Theory-and-Exercises.png";
 
                 const card = document.createElement("div");
@@ -565,6 +612,7 @@ function agregarAssest(data, idfiltro, vertodos = false) {
 document.addEventListener("DOMContentLoaded", function () {
     const filtros = document.querySelectorAll(".filtro");
     const imagenes = document.querySelectorAll(".tarjetaImagen");
+    const cardContainerImg = document.querySelectorAll(".cardContainerImg");
  
     imagenes.forEach(imagen => {
         imagen.addEventListener("click", function () {
@@ -581,6 +629,20 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    //cardContainerImg.forEach(imagen => {
+    //    imagen.addEventListener("click", function () {
+    //        // Obtener el data-value de la imagen para identificar el checkbox correcto
+    //        $('#collapseExample').collapse('hide');
+    //        const dataValue = this.getAttribute('data-value');
+    //        const checkbox = document.querySelector(`#f${dataValue}`);
+
+    //        // Cambiar el estado del checkbox
+    //        checkbox.checked = !checkbox.checked;
+
+    //        // Llamar a la función de actualizar filtros activos después de cambiar el estado del checkbox
+    //        actualizarFiltrosActivos();
+    //    });
+    //});
     function actualizarFiltrosActivos() {
         const valoresActivos = [];
 
