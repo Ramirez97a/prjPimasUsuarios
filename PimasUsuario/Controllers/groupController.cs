@@ -31,7 +31,7 @@ namespace PimasUsuario.Controllers
         {
             Users user = (Users)Session["User"];
             
-            ViewBag.UserId = 99900;
+            ViewBag.UserId = user.ID;
 
 
             return View();

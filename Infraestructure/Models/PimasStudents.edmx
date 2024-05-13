@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Pimas_PlataformaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Pimas_PlataformaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Tematicas">
           <Key>
             <PropertyRef Name="TematicaID" />
@@ -12,6 +12,7 @@
           <Property Name="TematicaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NombreTematica" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ParentTematicaID" Type="int" />
+          <Property Name="CodColor" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="TipoAssets">
           <Key>
@@ -25,7 +26,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Content" Type="image" />
           <Property Name="Image" Type="image" />
@@ -114,6 +115,7 @@
           <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Privacy" Type="int" Nullable="false" />
           <Property Name="Expiration" Type="date" Nullable="false" />
+          <Property Name="Image" Type="image" />
         </EntityType>
         <EntityType Name="Invitation">
           <Key>
@@ -736,8 +738,7 @@
             <End Role="WallAssets" EntitySet="WallAssets" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Pimas_PlataformaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -751,6 +752,7 @@
           <NavigationProperty Name="Tematicas1" Relationship="Self.FK__Tematicas__Paren__20ACD28B" FromRole="Tematicas" ToRole="Tematicas1" />
           <NavigationProperty Name="Tematicas2" Relationship="Self.FK__Tematicas__Paren__20ACD28B" FromRole="Tematicas1" ToRole="Tematicas" />
           <NavigationProperty Name="Assets" Relationship="Self.FK_Assets_Tematica" FromRole="Tematicas" ToRole="Assets" />
+          <Property Name="CodColor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="TipoAssets">
           <Key>
@@ -765,7 +767,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Content" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
@@ -870,6 +872,7 @@
           <NavigationProperty Name="Status" Relationship="Self.FK_GroupT" FromRole="GroupT" ToRole="Status" />
           <NavigationProperty Name="Organization" Relationship="Self.FK_Organization" FromRole="GroupT" ToRole="Organization" />
           <NavigationProperty Name="Wall" Relationship="Self.FK_Wall_Group" FromRole="GroupT" ToRole="Wall" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="Invitation">
           <Key>
@@ -1434,6 +1437,7 @@
           <EntitySetMapping Name="Tematicas">
             <EntityTypeMapping TypeName="Pimas_PlataformaModel.Tematicas">
               <MappingFragment StoreEntitySet="Tematicas">
+                <ScalarProperty Name="CodColor" ColumnName="CodColor" />
                 <ScalarProperty Name="TematicaID" ColumnName="TematicaID" />
                 <ScalarProperty Name="NombreTematica" ColumnName="NombreTematica" />
                 <ScalarProperty Name="ParentTematicaID" ColumnName="ParentTematicaID" />
@@ -1533,6 +1537,7 @@
           <EntitySetMapping Name="GroupT">
             <EntityTypeMapping TypeName="Pimas_PlataformaModel.GroupT">
               <MappingFragment StoreEntitySet="GroupT">
+                <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
                 <ScalarProperty Name="StatusID" ColumnName="StatusID" />

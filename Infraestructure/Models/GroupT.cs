@@ -9,6 +9,7 @@
 
 namespace Infraestructure.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -21,13 +22,15 @@ namespace Infraestructure.Models
             this.UsersGroupT = new HashSet<UsersGroupT>();
             this.Wall = new HashSet<Wall>();
         }
-    
+        [JsonIgnore]
+        public string PropiedadIgnorada { get; set; }
         public int ID { get; set; }
         public int OrganizationID { get; set; }
         public int StatusID { get; set; }
         public string Description { get; set; }
         public int Privacy { get; set; }
         public System.DateTime Expiration { get; set; }
+        public byte[] Image { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AssetsGroup> AssetsGroup { get; set; }

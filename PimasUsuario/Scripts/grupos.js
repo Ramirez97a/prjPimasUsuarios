@@ -1,7 +1,7 @@
 ﻿
 
 $(document).ready(function () {
-
+    obtenerDatosSubtematicasYAgregarElemento();
     function showLoader() {
         document.getElementById('overlay').style.display = 'block';
         document.getElementById('loader').style.display = 'block';
@@ -628,7 +628,7 @@ function obtenerDatosgetGruposYAgregarElemento() {
 }
 
 obtenerDatosYAgregarElemento();
-obtenerDatosSubtematicasYAgregarElemento();
+
 obtenerDatosgetGruposYAgregarElemento();
 
 function obtenerdatosnav() {
